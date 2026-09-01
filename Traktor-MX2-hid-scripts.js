@@ -421,8 +421,10 @@ class FxPresetButton {
     }
 
     linkOutputs() {
-        engine.makeConnection("[QuickEffectRack1_[Channel1]]", "loaded_chain_preset", this.quickFxButtonCallback.bind(this)).trigger();
-        engine.makeConnection("[QuickEffectRack1_[Channel2]]", "loaded_chain_preset", this.quickFxButtonCallback.bind(this)).trigger();
+        engine.makeConnection("[QuickEffectRack1_[Channel1]]", "loaded_chain_preset",
+            this.quickFxButtonCallback.bind(this)).trigger();
+        engine.makeConnection("[QuickEffectRack1_[Channel2]]", "loaded_chain_preset",
+            this.quickFxButtonCallback.bind(this)).trigger();
     }
 
     disableOutputs() {
@@ -1116,11 +1118,13 @@ class Deck {
     }
 
     previewButtonCallback(value, _group, _key) {
-        this.controller.setOutput(this.group, "!preview", this.mapLedValue(value, this.outputColorMap.libraryColor), true);
+        this.controller.setOutput(this.group, "!preview",
+            this.mapLedValue(value, this.outputColorMap.libraryColor), true);
     }
 
     viewButtonCallback(value, _group, _key) {
-        this.controller.setOutput(this.group, "!view", this.mapLedValue(value, this.outputColorMap.libraryColor), true);
+        this.controller.setOutput(this.group, "!view",
+            this.mapLedValue(value, this.outputColorMap.libraryColor), true);
     }
 
     outputCallback(value, group, key) {
@@ -1502,13 +1506,15 @@ class PadButton {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, padColor - 2, false);
             } else {
-                this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.dim, false);
+                this.controller.setOutput(this.deck.group, this.output,
+                    this.outputColorMap.inactivePadColor.dim, false);
             }
         } else {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, padColor, false);
             } else {
-                this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, false);
+                this.controller.setOutput(this.deck.group, this.output,
+                    this.outputColorMap.inactivePadColor.full, false);
             }
         }
 
@@ -1525,7 +1531,8 @@ class PadButton {
                         this.outputColorMap.activePadColor.full, true);
                 }
             } else {
-                this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
+                this.controller.setOutput(this.deck.group, this.output,
+                    this.outputColorMap.inactivePadColor.full, true);
             }
         } else {
             this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.unconnectedPadColor.dim, true);
