@@ -200,7 +200,7 @@ const Settings = {
         engine.getSetting("qfxPreset2") || 2,
         engine.getSetting("qfxPreset3") || 3,
         engine.getSetting("qfxPreset4") || 4,
-        engine.getSetting("qfxPreset5") || 5,
+        engine.getSetting("qfxPreset5") || 11,
     ],
 
     // Jogging and nudging sensitivity
