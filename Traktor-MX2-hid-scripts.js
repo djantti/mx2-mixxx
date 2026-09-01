@@ -1176,22 +1176,19 @@ class Deck {
         this.controller.setOutput(group, key, ledValue, true);
     }
 
-    vuMeterCallback(value, group, _key) {
+    vuMeterCallback(value, _group, _key) {
         // Figure out the number of illuminated segments
         const scaledValue = value * 8.0;
         const fullIllumCount = Math.floor(scaledValue);
+        const ledBrightness = Settings.brightMeterSegments ? LedFull : LedDim;
 
         for (let i = 1; i <= 8; i++) {
             const key = `!vu_meter_${ i }`;
 
             if (i < fullIllumCount) {
-                if (Settings.brightMeterSegments) {
-                    this.controller.setOutput(group, key, LedFull, false);
-                } else {
-                    this.controller.setOutput(group, key, LedDim, false);
-                }
+                this.controller.setOutput(this.group, key, ledBrightness, false);
             } else {
-                this.controller.setOutput(group, key, LedOff, false);
+                this.controller.setOutput(this.group, key, LedOff, false);
             }
         }
 
