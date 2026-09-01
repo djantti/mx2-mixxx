@@ -642,7 +642,7 @@ class Deck {
             this.linkLed(this.group, "track_loaded", this.bottomLedsCallback);
         }
 
-        this.linkLed(this.group, "peak_indicator", this.peakCallback, false);
+        this.linkLed(this.group, "peak_indicator", this.peakIndicatorCallback, false);
         this.linkLed(this.group, "vu_meter", this.vuMeterCallback, false);
     }
 
@@ -1173,7 +1173,7 @@ class Deck {
         this.controller.OutputPackets.outputReport0x80.send();
     }
 
-    peakCallback(value, group, key) {
+    peakIndicatorCallback(value, group, key) {
         const ledValue = value ? LedFull : LedOff;
         this.controller.setOutput(group, key, ledValue, true);
     }
