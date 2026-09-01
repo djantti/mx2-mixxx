@@ -477,6 +477,8 @@ class Deck {
 
         this.outputColorMap = this.mx2.outputColorMap;
 
+        this.vuMeterState = new Array(8).fill(LedOff);
+
         this.moveEncoderPressed = false;
         this.loopEncoderPressed = false;
         this.shiftPressed = false;
@@ -1182,17 +1184,23 @@ class Deck {
         const fullIllumCount = Math.floor(scaledValue);
         const ledBrightness = Settings.brightMeterSegments ? LedFull : LedDim;
 
-        for (let i = 1; i <= 8; i++) {
-            const key = `!vu_meter_${ i }`;
+        let sendUpdate = false;
 
-            if (i < fullIllumCount) {
-                this.controller.setOutput(this.group, key, ledBrightness, false);
-            } else {
-                this.controller.setOutput(this.group, key, LedOff, false);
+        for (let i = 0; i < 8; i++) {
+            const ledUpdate = i < fullIllumCount ? ledBrightness : LedOff;
+
+            if (ledUpdate !== this.vuMeterState[i]) {
+                this.controller.setOutput(this.group, `!vu_meter_${i + 1}`, ledUpdate, false);
+                // Store the new segment state
+                this.vuMeterState[i] = ledUpdate;
+                sendUpdate = true;
             }
         }
 
-        this.controller.OutputPackets.outputReport0x80.send();
+        // Only send the report if LED states have changed
+        if (sendUpdate) {
+            this.controller.OutputPackets.outputReport0x80.send();
+        }
     }
 
     setPadMode(padMode) {
