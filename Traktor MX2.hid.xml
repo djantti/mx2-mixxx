@@ -456,7 +456,7 @@
           <value label="White" color="#ffffff" default="true">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for Quick FX toggle buttons.
+          Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting.
         </description>
       </option>
       <option
@@ -506,7 +506,7 @@
           <value label="White" color="#ffffff" default="true">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for talkback button.
+          Color for the talkback button.
         </description>
       </option>
     </group>
