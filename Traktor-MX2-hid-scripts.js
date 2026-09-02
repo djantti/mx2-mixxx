@@ -869,20 +869,15 @@ class Deck {
     }
 
     playButtonHandler(field) {
-        if (field.value === 0) {
-            return;
-        }
-
         if (this.shiftPressed) {
-            const locked = engine.getValue(this.group, "keylock");
-            engine.setValue(this.group, "keylock", !locked);
-        } else {
-            const playing = engine.getValue(this.group, "play");
+            engine.setValue(this.group, "start_stop", field.value);
+        } else if (field.value === 1) {
             // Failsafe to disable scratching if the timer has not yet executed after a backspin
             if (engine.isScratching(this.number)) {
                 engine.scratchDisable(this.number, false);
             }
-            engine.setValue(this.group, "play", !playing);
+
+            script.toggleControl(this.group, "play");
         }
     }
 

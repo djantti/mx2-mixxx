@@ -29,7 +29,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 13 | JOG button | Set jogwheel to jog mode ||
 | 14 | Jog wheel | <p>*Touch* the top of the jog wheel and turn it to scratch</p><p>*Turn* the jog wheel from the edge to nudge the track</p> | *Turn* the jog wheel to seek quickly while stopped |
 | 15 | SHIFT button | Activates secondary functions when held ||
-| 16 | PLAY button | Toggle track playback ||
+| 16 | PLAY button | Toggle track playback | Go to track start and stop |
 | 17 | CUE button | Set default cue point | Jump to cue point and stop |
 | 18 | Move encoder | <p>*Press* and *hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* to control stem track volume while pad 5–8 is held</p> | *Press* to activate and jump to current loop while stopping playback |
 | 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and turn loop encoder (**20**) to change track pitch</p> ||
