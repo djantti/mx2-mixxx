@@ -494,7 +494,6 @@ class Deck {
         this.activePadMode = 0;
 
         this.syncEnabledTime = NaN;
-        this.syncEnabledTimer = 0;
         this.syncLongPress = false;
 
         // 0 = turntable mode, 1 = jog mode
