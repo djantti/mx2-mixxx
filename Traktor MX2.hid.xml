@@ -27,7 +27,7 @@
         <value label="Mojito">Mojito</value>
         <value label="Synthwave">Synthwave</value>
         <description>
-          Color theme for button LEDs. Select 'Custom' to use colors defined below.
+          Sets the color theme for button LEDs. Select 'Custom' to use colors defined in the 'Custom color theme' section.
         </description>
       </option>
       <option
@@ -36,7 +36,7 @@
         type="boolean"
         default="true">
         <description>
-          Use on-screen stem and hotcue colors for pad LEDs
+          Use on-screen colors for pad LEDs. This only applies to hotcue and stem modes.
         </description>
       </option>
       <option
@@ -54,14 +54,14 @@
         type="boolean"
         default="true">
         <description>
-          Use bottom panel LEDs to indicate deck playback state.
+          Use bottom panel LEDs to indicate deck state. Effect colors can be customized in the 'Bottom panel colors' section.
         </description>
       </option>
     </group>
     <group label="Custom theme colors">
       <option
         variable="focusColor"
-        label="Focus button"
+        label="Effect focus button"
         type="enum">
           <value label="Aqua" color="#00ff49">aqua</value>
           <value label="Azalea" color="#ff477e">azalea</value>
@@ -86,7 +86,7 @@
       </option>
       <option
         variable="effectColor"
-        label="Effect buttons"
+        label="Effect toggle buttons"
         type="enum">
           <value label="Aqua" color="#00ff49">aqua</value>
           <value label="Azalea" color="#ff477e">azalea</value>
@@ -161,7 +161,7 @@
       </option>
       <option
         variable="jogModeColor"
-        label="Jogwheel mode buttons"
+        label="Wheel mode buttons"
         type="enum">
           <value label="Aqua" color="#00ff49">aqua</value>
           <value label="Azalea" color="#ff477e">azalea</value>
@@ -181,7 +181,7 @@
           <value label="White" color="#ffffff">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for jogwheel mode buttons.
+          Color for jog wheel mode buttons.
         </description>
       </option>
       <option
@@ -331,7 +331,7 @@
           <value label="White" color="#ffffff" default="true">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for unconnected / modifier pads.
+          Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads.
         </description>
       </option>
       <option
@@ -356,7 +356,7 @@
           <value label="White" color="#ffffff" default="true">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for inactive pads.
+          Color for connected, but currently inactive pads.
         </description>
       </option>
       <option
@@ -381,7 +381,7 @@
           <value label="White" color="#ffffff">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for active pads.
+          Color for currently active pads.
         </description>
       </option>
       <option
@@ -406,7 +406,7 @@
           <value label="White" color="#ffffff">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for alternate mode pads.
+          Color for currently active pads in alternate mode. This includes looping samplers and pads activated while holding 'Shift'.
         </description>
       </option>
       <option
@@ -456,7 +456,7 @@
           <value label="White" color="#ffffff" default="true">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Color for headphone cue buttons.
+          Color for Quick FX toggle buttons.
         </description>
       </option>
       <option
@@ -559,7 +559,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Bottom panel LED color when a track is playing.
+            Bottom panel LED color when a track is currently playing.
           </description>
         </option>
         <option
@@ -584,7 +584,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Bottom panel LED color when a loop is active.
+            Bottom panel LED color when a loop is currently active.
           </description>
         </option>
         <option
@@ -609,12 +609,12 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Bottom panel LED color when the playing track is about to end.
+            Bottom panel LED color when the currently playing track is about to end.
           </description>
         </option>
       </row>
     </group>
-    <group label="Quick effect colors">
+    <group label="Quick FX colors">
       <row orientation="vertical">
         <option
           variable="qfxColor1"
@@ -638,7 +638,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Color for quick effect preset button 1.
+            Color for Quick FX preset button '1'.
           </description>
         </option>
         <option
@@ -663,7 +663,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Color for quick effect preset button 2.
+            Color for Quick FX preset button '2'.
           </description>
         </option>
         <option
@@ -688,7 +688,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Color for quick effect preset button 3.
+            Color for Quick FX preset button '3'.
           </description>
         </option>
         <option
@@ -713,7 +713,7 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00" default="true">yellow</value>
           <description>
-            Color for quick effect preset button 4.
+            Color for Quick FX preset button '4'.
           </description>
         </option>
         <option
@@ -738,12 +738,12 @@
             <value label="White" color="#ffffff">white</value>
             <value label="Yellow" color="#ffff00">yellow</value>
           <description>
-            Color for filter quick FX preset button.
+            Color for 'Filter' Quick FX preset button.
           </description>
         </option>
       </row>
     </group>
-    <group label="Quick effect presets">
+    <group label="Quick FX presets">
       <row orientation="vertical">
         <option
           variable="qfxPreset1"
@@ -754,7 +754,7 @@
           step="1"
           default="1">
           <description>
-            Quick effect chain to load when preset button 1 is pressed.
+            Quick FX chain to load when preset button '1' is pressed.
           </description>
         </option>
         <option
@@ -766,7 +766,7 @@
           step="1"
           default="2">
           <description>
-            Quick effect chain to load when preset button 2 is pressed.
+            Quick FX chain to load when preset button '2' is pressed.
           </description>
         </option>
         <option
@@ -778,7 +778,7 @@
           step="1"
           default="3">
           <description>
-            Quick effect chain to load when preset button 3 is pressed.
+            Quick FX chain to load when preset button '3' is pressed.
           </description>
         </option>
         <option
@@ -790,7 +790,7 @@
           step="1"
           default="4">
           <description>
-            Quick effect chain to load when preset button 4 is pressed.
+            Quick FX chain to load when preset button '4' is pressed.
           </description>
         </option>
         <option
@@ -802,7 +802,7 @@
           step="1"
           default="11">
           <description>
-            Quick effect chain to load when filter preset button is pressed.
+            Quick FX chain to load when 'Filter' preset button is pressed.
           </description>
         </option>
       </row>
@@ -816,7 +816,7 @@
         <value label="Medium" default="true">0.5</value>
         <value label="High">0.75</value>
         <description>
-          Sensitivity for turning the wheel by touching only the outer ring.
+          Sensitivity for turning the wheel by touching only the outer ring. Higher settings will allow for faster jogging and nudging movement.
         </description>
       </option>
       <option
@@ -827,7 +827,7 @@
         <value label="Medium" default="true">0.5</value>
         <value label="High">0.75</value>
         <description>
-          Jog wheel movement smoothing factor.
+          Controls jog wheel movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement.
         </description>
       </option>
       <option
@@ -838,7 +838,7 @@
         <value label="Medium" default="true">1e-6</value>
         <value label="High">1e-7</value>
         <description>
-          Jog wheel input dead zone.
+          Adjusts the jog-wheel input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive.
         </description>
       </option>
     </group>
