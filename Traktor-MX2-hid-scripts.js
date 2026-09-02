@@ -479,6 +479,7 @@ class Deck {
 
         this.outputColorMap = this.mx2.outputColorMap;
 
+        // VU meter LED segment states
         this.vuMeterState = new Array(8).fill(LedOff);
 
         this.moveEncoderPressed = false;
@@ -1967,7 +1968,7 @@ class EffectParameter {
                     this.toggleButton();
                     this.longPressTimer = engine.beginTimer(300, () => {
                         this.isLongPressed = true;
-                        this.longPressTimer= 0;
+                        this.longPressTimer = 0;
                     }, true);
                 }
             }
