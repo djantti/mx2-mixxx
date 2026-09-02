@@ -349,27 +349,24 @@ class Mixer {
     }
 
     talkoverHandler(field) {
-        if (field.value) {
-            if (this.talkoverPressedTimer === 0) {
-                // Start long press timer
-                this.talkoverPressedTimer = engine.beginTimer(300, () => {
-                    // Reset microphone button timer if active
-                    if (this.talkoverPressedTimer !== 0) {
-                        this.talkoverPressedTimer = 0;
-                    }
-                }, true);
-            }
+        if (field.value === 1) {
+            this.talkoverPressedTimer = engine.beginTimer(300, () => {
+                this.talkoverPressedTimer = 0;
+            }, true);
 
             script.toggleControl("[Microphone]", "talkover");
-        } else {
-            if (this.talkoverPressedTimer !== 0) {
-                // Activate permanently on short press release
-                this.talkoverPressedTimer = 0;
-            } else {
-                engine.setValue("[Microphone]", "talkover", 0);
-            }
+            return;
         }
-    };
+
+        if (this.talkoverPressedTimer !== 0) {
+            // Activate permanently on short press release
+            engine.stopTimer(this.talkoverPressedTimer);
+            this.talkoverPressedTimer = 0;
+        } else {
+            // Disable talkover on long press release
+            engine.setValue("[Microphone]", "talkover", 0);
+        }
+    }
 
     gainHandler(field) {
         if (Settings.enableMasterGain) {
@@ -1775,16 +1772,22 @@ class EffectUnit {
     focusButtonHandler(field) {
         if (field.value === 1) {
             this.effectFocusTimer = engine.beginTimer(300, () => {
+                this.effectFocusTimer = 0;
                 this.focusLongPress();
             }, true);
+
+            return;
+        }
+
+        if (this.focusSelectMode) {
+            this.focusLongRelease();
         } else {
-            if (this.focusSelectMode) {
-                this.focusLongRelease();
-            } else {
+            if (this.effectFocusTimer !== 0) {
                 engine.stopTimer(this.effectFocusTimer);
                 this.effectFocusTimer = 0;
-                this.focusShortRelease();
             }
+
+            this.focusShortRelease();
         }
     }
 
@@ -1987,29 +1990,34 @@ class EffectParameter {
     effectButtonHandler(field) {
         if (field.value === 1) {
             if (this.effectUnit.shiftPressed()) {
-                script.triggerControl(`${ this.groupPrefix }_Effect${ this.number }]`, "next_effect");
-            } else {
-                if (this.effectUnit.focusSelectMode) {
-                    this.effectUnit.setFocusedEffect(this.number);
-                } else {
-                    this.toggleButton();
-                    this.longPressTimer = engine.beginTimer(300, () => {
-                        this.isLongPressed = true;
-                        this.longPressTimer = 0;
-                    }, true);
-                }
-            }
-        } else {
-            if (this.longPressTimer !== 0) {
-                engine.stopTimer(this.longPressTimer);
-                this.longPressTimer = 0;
+                script.triggerControl(`${this.groupPrefix}_Effect${this.number}`, "next_effect");
+                return;
             }
 
-            if (this.isLongPressed) {
-                this.toggleButton();
+            if (this.effectUnit.focusSelectMode) {
+                this.effectUnit.setFocusedEffect(this.number);
+                return;
             }
 
             this.isLongPressed = false;
+            this.toggleButton();
+
+            this.longPressTimer = engine.beginTimer(300, () => {
+                this.isLongPressed = true;
+                this.longPressTimer = 0;
+            }, true);
+
+            return;
+        }
+
+        if (this.longPressTimer !== 0) {
+            engine.stopTimer(this.longPressTimer);
+            this.longPressTimer = 0;
+        }
+
+        if (this.isLongPressed) {
+            this.isLongPressed = false;
+            this.toggleButton();
         }
     }
 
