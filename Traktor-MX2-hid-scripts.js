@@ -496,6 +496,9 @@ class Deck {
         this.syncEnabledTime = NaN;
         this.syncLongPress = false;
 
+        this.mstLongPressTimer = 0;
+        this.mstLongPress = false;
+
         // 0 = turntable mode, 1 = jog mode
         this.jogMode = 0;
 
@@ -551,7 +554,7 @@ class Deck {
         this.registerButton("!jog", config.jogButton, this.jogModeButtonHandler);
         this.registerButton("!shift", config.shiftButton, this.shiftButtonHandler);
         this.registerButton("sync_enabled", config.sncButton, this.sncButtonHandler);
-        this.registerButton("sync_leader", config.mstButton);
+        this.registerButton("sync_leader", config.mstButton, this.mstButtonHandler);
         this.registerButton("keylock", config.keylockButton, this.keylockButtonHandler);
         this.registerButton("!hotcues", config.hotcueButton, this.padModeButtonHandler);
         this.registerButton("!stems", config.stemButton, this.padModeButtonHandler);
@@ -823,6 +826,31 @@ class Deck {
             }
             engine.setValue(this.group, "sync_enabled", 0);
         }
+    }
+
+    mstButtonHandler(field) {
+        if (field.value === 1) {
+            this.mstLongPressTimer = engine.beginTimer(300, () => {
+                this.mstLongPress = true;
+                this.mstLongPressTimer = 0;
+            }, true);
+
+            return;
+        }
+
+        if (this.mstLongPressTimer !== 0) {
+            engine.stopTimer(this.mstLongPressTimer);
+            this.mstLongPressTimer = 0;
+        }
+
+        if (this.mstLongPress) {
+            const rateRange = engine.getValue(this.group, "rateRange");
+            engine.setValue(this.group, "rateRange", rateRange < 0.9 ? 0.9 : 0.08);
+        } else {
+            script.toggleControl(this.group, "sync_leader");
+        }
+
+        this.mstLongPress = false;
     }
 
     keylockButtonHandler(field) {
