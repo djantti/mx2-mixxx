@@ -41,8 +41,8 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 25 | Pad buttons 1–4 | <p>**Hotcues mode:** Seek to a set hotcue position. Otherwise set hotcue at the current position.</p><p>**Stems mode:** Toggle stem track mute</p><p>**Samples mode:** Play loaded sampler track. If the sampler is empty, load the selected track.</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1/16, 1/8, 1/4 or 1/2 beats</p>| <p>**Hotcues mode:** Clear a set hotcue</p><p>**Samples mode:** Eject the currently loaded track</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
 | 26 | Pad buttons 5–8 | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Stems mode:** *Hold* to use as function modifiers for move (**18**) and loop (**20**) encoders.</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1, 2, 4 or 8 beats</p> | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
 | 27 | SNC button | <p>*Press* to sync tempo and phase (if quantize is active)</p><p>*Hold* to activate sync lock and *press* again to disable it</p> | Sync phase to the other deck |
-| 28 | MST button | *Press* to set deck as the sync leader. *Hold* to enable / disable long range tempo fader. ||
-| 29 | Tempo fader | Adjust playback speed ||
+| 28 | MST button | *Press* to set deck as the sync leader. *Hold* to enable / disable long range rate fader. ||
+| 29 | Rate fader | Adjust playback speed ||
 
 ### Mixer deck columns (30–39)
 
