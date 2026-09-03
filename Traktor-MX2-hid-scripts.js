@@ -67,7 +67,7 @@ const DefaultTheme = {
     playColor: LedColors.green,
 
     // Keylock button
-    keylockColor: LedColors.yellow,
+    keylockColor: LedColors.magenta,
 
     // Pad mode select buttons
     inactivePadModeColor: LedColors.sky,
@@ -85,8 +85,9 @@ const DefaultTheme = {
     // Alternate function pad buttons
     altPadColor: LedColors.orange,
 
-    // Sync button
-    syncColor: LedColors.magenta,
+    // Sync buttons
+    syncColor: LedColors.yellow,
+    altSyncColor: LedColors.red,
 
     // FX button color
     fxColor: LedColors.white,
@@ -112,6 +113,7 @@ const FrostbiteTheme = {
     activePadColor: LedColors.sky,
     altPadColor: LedColors.purple,
     syncColor: LedColors.celeste,
+    altSyncColor: LedColors.purple,
     fxColor: LedColors.white,
     pflColor: LedColors.celeste,
     micColor: LedColors.white
@@ -122,7 +124,7 @@ const MojitoTheme = {
     effectColor: LedColors.honey,
     libraryColor: LedColors.lime,
     transportColor: LedColors.sky,
-    jogModeColor: LedColors.lime,
+    jogModeColor: LedColors.green,
     cueColor: LedColors.lime,
     playColor: LedColors.sky,
     keylockColor: LedColors.lime,
@@ -132,7 +134,8 @@ const MojitoTheme = {
     inactivePadColor: LedColors.lime,
     activePadColor: LedColors.sky,
     altPadColor: LedColors.honey,
-    syncColor: LedColors.lime,
+    syncColor: LedColors.green,
+    altSyncColor: LedColors.honey,
     fxColor: LedColors.white,
     pflColor: LedColors.lime,
     micColor: LedColors.sky
@@ -154,6 +157,7 @@ const SynthwaveTheme = {
     activePadColor: LedColors.orange,
     altPadColor: LedColors.magenta,
     syncColor: LedColors.sky,
+    altSyncColor: LedColors.orange,
     fxColor: LedColors.white,
     pflColor: LedColors.magenta,
     micColor: LedColors.sky
@@ -496,6 +500,8 @@ class Deck {
         this.mstLongPressTimer = 0;
         this.mstLongPress = false;
 
+        this.defaultRateRange = 0.08;
+
         // 0 = turntable mode, 1 = jog mode
         this.jogMode = 0;
 
@@ -627,7 +633,8 @@ class Deck {
         this.linkLed(this.group, "slip_enabled", this.outputCallback);
         this.linkLed(this.group, "reverse", this.outputCallback);
         this.linkLed(this.group, "sync_enabled", this.outputCallback);
-        this.linkLed(this.group, "sync_leader", this.outputCallback);
+        this.linkLed(this.group, "sync_leader", this.mstButtonCallback);
+        this.linkLed(this.group, "rateRange", this.mstButtonCallback);
         this.linkLed(this.group, "keylock", this.outputCallback);
         this.linkLed(this.group, "cue_indicator", this.outputCallback);
         this.linkLed(this.group, "play_indicator", this.outputCallback);
@@ -842,7 +849,7 @@ class Deck {
 
         if (this.mstLongPress) {
             const rateRange = engine.getValue(this.group, "rateRange");
-            engine.setValue(this.group, "rateRange", rateRange < 0.9 ? 0.9 : 0.08);
+            engine.setValue(this.group, "rateRange", rateRange < 1 ? 1 : this.defaultRateRange);
         } else {
             script.toggleControl(this.group, "sync_leader");
         }
@@ -1145,6 +1152,29 @@ class Deck {
     viewButtonCallback(value, _group, _key) {
         this.controller.setOutput(this.group, "!view",
             this.mapLedValue(value, this.outputColorMap.libraryColor), true);
+    }
+
+    mstButtonCallback(value, _group, key) {
+        const outColor = engine.getValue(this.group, "rateRange") === 1 ?
+            this.outputColorMap.altSyncColor : this.outputColorMap.syncColor;
+
+        if (key === "rateRange") {
+            // Store the new default fader range if needed
+            if (value < 1 && value !== this.defaultRateRange) {
+                this.defaultRateRange = value;
+            }
+            if (engine.getValue(this.group, "sync_leader")) {
+                this.controller.setOutput(this.group, "sync_leader",
+                    this.mapLedValue(1, outColor), true);
+            } else {
+                this.controller.setOutput(this.group, "sync_leader",
+                    this.mapLedValue(0, outColor), true);
+            }
+            return;
+        }
+
+        this.controller.setOutput(this.group, "sync_leader",
+            this.mapLedValue(value, outColor), true);
     }
 
     outputCallback(value, group, key) {
