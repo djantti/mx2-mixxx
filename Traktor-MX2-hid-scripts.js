@@ -2020,7 +2020,7 @@ class EffectParameter {
     effectButtonHandler(field) {
         if (field.value === 1) {
             if (this.effectUnit.shiftPressed()) {
-                script.triggerControl(`${this.groupPrefix}_Effect${this.number}`, "next_effect");
+                script.triggerControl(`${this.groupPrefix}_Effect${this.number}]`, "next_effect");
                 return;
             }
 
@@ -2317,7 +2317,7 @@ class MX2 {
                 },
             ],
             fxAssignButton1: {hidReport: inputReport0x01, offset: 0x08, mask: 0x10},
-            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x08, mask: 0x20},
+            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01},
         });
 
         this.effectUnits[1].registerInputs({
@@ -2337,7 +2337,7 @@ class MX2 {
                     paramKnob: {hidReport: inputReport0x02, offset: 0x0f}
                 },
             ],
-            fxAssignButton1: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01},
+            fxAssignButton1: {hidReport: inputReport0x01, offset: 0x08, mask: 0x20},
             fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x02}
         });
 
