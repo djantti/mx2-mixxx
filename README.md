@@ -1,6 +1,6 @@
 # Traktor MX2 Mixxx mapping
 
-This repository contains an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads, user configurable settings and customizable LED color themes.
+This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads, rate fader snapping and range functions, user configurable settings and customizable LED color themes.
 
 ## Controller overview
 
@@ -95,14 +95,15 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Wheel mode buttons | Blue | Color for jog wheel mode buttons |
 | Cue button | Blue | Color for the cue button |
 | Play button | Green | Color for the play button |
-| Keylock button | Yellow | Color for the keylock button |
+| Keylock button | Magenta | Color for the keylock button |
 | Inactive pad mode buttons | Sky | Color for inactive pad mode buttons |
 | Active pad mode button | Celeste | Color for the active pad mode button |
 | Unconnected pads | White | Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads. |
 | Inactive pads | White | Color for connected, but currently inactive pads |
 | Active pads | Green | Color for currently active pads |
 | Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* **Shift**. |
-| Sync buttons | Magenta | Color for sync and sync master buttons |
+| Sync buttons | Yellow | Color for sync and sync master buttons |
+| Sync master alternate mode color | Red | Alternate mode color for the sync master button. Used when long range rate faders are active. |
 | FX buttons | White | Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting. |
 | Headphone buttons | White | Color for headphone cue buttons |
 | Talkback button | White | Color for the talkback button |

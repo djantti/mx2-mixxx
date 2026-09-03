@@ -456,7 +456,7 @@
           <value label="White" color="#ffffff">white</value>
           <value label="Yellow" color="#ffff00">yellow</value>
         <description>
-          Alternate mode color for the sync master button.
+          Alternate mode color for the sync master button. Used when long range rate faders are active.
         </description>
       </option>
       <option
