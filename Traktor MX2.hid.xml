@@ -36,7 +36,7 @@
         type="boolean"
         default="true">
         <description>
-          Use on-screen colors for pad LEDs. This only applies to hotcue and stem modes.
+          Use on-screen colors for pad LEDs while in hotcues or stems mode. Normal theme colors will be used if this option is off.
         </description>
       </option>
       <option
@@ -45,7 +45,7 @@
         type="boolean"
         default="true">
         <description>
-          Use full brightness for VU meter LED segments.
+          Use full brightness for VU meter LED segments. Dimmed LED brightness will be used if this option is off.
         </description>
       </option>
       <option
