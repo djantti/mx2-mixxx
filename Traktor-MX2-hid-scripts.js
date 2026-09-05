@@ -359,6 +359,7 @@ class Mixer {
     }
 
     talkoverCallback(value, group, key) {
+        // Choose output color based on mic input peak state
         const outColor = engine.getValue(group, "peak_indicator") ?
             this.outputColorMap.peakColor : this.outputColorMap.micColor;
 
@@ -435,7 +436,7 @@ class FxPresetButton {
 
     quickFxButtonCallback(value, _group, _key) {
         if (Settings.qfxPresets[this.number - 1] === value) {
-            // Only set the led once if changing presets for both decks
+            // Only set the LED once if changing presets for both decks
             if (!this.qfxActive) {
                 this.controller.setOutput("[ChannelX]", `!qfx_${ this.number }`,
                     Settings.qfxColors[this.number - 1], true);
@@ -461,7 +462,6 @@ class Deck {
 
         this.outputColorMap = this.mx2.outputColorMap;
 
-        // VU meter LED segment states
         this.vuMeterState = new Array(8).fill(LedOff);
 
         this.moveEncoderPressed = false;
