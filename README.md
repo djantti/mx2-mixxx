@@ -107,6 +107,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | FX buttons | White | Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting. |
 | Headphone buttons | White | Color for headphone cue buttons |
 | Talkback button | White | Color for the talkback button |
+| Peak indicators | Red | Color for main output and microphone input peak indicator LEDs |
 
 ### Bottom panel colors
 

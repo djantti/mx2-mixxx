@@ -534,6 +534,31 @@
           Color for the talkback button.
         </description>
       </option>
+      <option
+        variable="peakColor"
+        label="Peak indicators"
+        type="enum">
+          <value label="Aqua" color="#00ff49">aqua</value>
+          <value label="Azalea" color="#ff477e">azalea</value>
+          <value label="Blue" color="#0000ff">blue</value>
+          <value label="Carrot" color="#ff5e00">carrot</value>
+          <value label="Celeste" color="#00ffff">celeste</value>
+          <value label="Fuscia" color="#ff0091">fuscia</value>
+          <value label="Green" color="#00ff00">green</value>
+          <value label="Honey" color="#ffcb00">honey</value>
+          <value label="Lime" color="#81ff00">lime</value>
+          <value label="Magenta" color="#ff0079">magenta</value>
+          <value label="Orange" color="#ff9400">orange</value>
+          <value label="Purple" color="#ff00ff">purple</value>
+          <value label="Red" color="#ff0000" default="true">red</value>
+          <value label="Salmon" color="#ff4761">salmon</value>
+          <value label="Sky" color="#0091ff">sky</value>
+          <value label="White" color="#ffffff">white</value>
+          <value label="Yellow" color="#ffff00">yellow</value>
+        <description>
+          Color for main output and microphone input peak indicator LEDs.
+        </description>
+      </option>
     </group>
     <group label="Bottom panel colors">
       <row orientation="vertical">

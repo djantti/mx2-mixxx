@@ -94,7 +94,10 @@ const DefaultTheme = {
 
     // Headphone and talkback buttons
     pflColor: LedColors.white,
-    micColor: LedColors.white
+    micColor: LedColors.white,
+
+    // Main out and microphone peak indicators
+    peakColor: LedColors.red
 };
 
 const FrostbiteTheme = {
@@ -116,7 +119,8 @@ const FrostbiteTheme = {
     altSyncColor: LedColors.purple,
     fxColor: LedColors.white,
     pflColor: LedColors.celeste,
-    micColor: LedColors.white
+    micColor: LedColors.white,
+    peakColor: LedColors.red
 };
 
 const MojitoTheme = {
@@ -138,7 +142,8 @@ const MojitoTheme = {
     altSyncColor: LedColors.honey,
     fxColor: LedColors.white,
     pflColor: LedColors.lime,
-    micColor: LedColors.sky
+    micColor: LedColors.sky,
+    peakColor: LedColors.red
 };
 
 const SynthwaveTheme = {
@@ -160,7 +165,8 @@ const SynthwaveTheme = {
     altSyncColor: LedColors.orange,
     fxColor: LedColors.white,
     pflColor: LedColors.magenta,
-    micColor: LedColors.sky
+    micColor: LedColors.sky,
+    peakColor: LedColors.red
 };
 
 const ColorThemes = {
@@ -276,6 +282,7 @@ class Mixer {
         }
 
         engine.makeConnection("[Microphone]", "talkover", this.talkoverCallback.bind(this)).trigger();
+        engine.makeConnection("[Microphone]", "peak_indicator", this.talkoverCallback.bind(this));
         engine.makeConnection("[Main]", "peak_indicator", this.peakIndicatorCallback.bind(this));
     }
 
@@ -352,12 +359,17 @@ class Mixer {
     }
 
     talkoverCallback(value, group, key) {
-        const ledValue = value ? this.outputColorMap.micColor.full : this.outputColorMap.micColor.dim;
-        this.controller.setOutput(group, key, ledValue, true);
+        const outColor = engine.getValue(group, "peak_indicator") ?
+            this.outputColorMap.peakColor : this.outputColorMap.micColor;
+
+        const ledValue = engine.getValue(group, "talkover") ?
+            outColor.full : outColor.dim;
+
+        this.controller.setOutput(group, "talkover", ledValue, true);
     }
 
     peakIndicatorCallback(value, group, key) {
-        const ledValue = value ? LedColors.red : LedOff;
+        const ledValue = value ? this.outputColorMap.peakColor.full : LedOff;
         this.controller.setOutput(group, key, ledValue, true);
     }
 }
