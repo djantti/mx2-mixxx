@@ -1157,10 +1157,10 @@ class Deck {
             }
             if (engine.getValue(this.group, "sync_leader")) {
                 this.controller.setOutput(this.group, "sync_leader",
-                    this.mapLedValue(1, outColor), true);
+                    outColor.full, true);
             } else {
                 this.controller.setOutput(this.group, "sync_leader",
-                    this.mapLedValue(0, outColor), true);
+                    outColor.dim, true);
             }
             return;
         }
