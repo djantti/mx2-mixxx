@@ -27,7 +27,7 @@ const LedColors = {
     magenta: 0x3a,
     azalea: 0x3e,
     salmon: 0x42,
-    white: 0x4a,
+    white: 0x4a
 };
 
 const PadColors = {
@@ -47,7 +47,7 @@ const PadColors = {
     0xcc0079: LedColors.magenta,
     0xcc477e: LedColors.azalea,
     0xcc4761: LedColors.salmon,
-    0xcccccc: LedColors.white,
+    0xcccccc: LedColors.white
 };
 
 const DefaultTheme = {
@@ -210,7 +210,7 @@ const Settings = {
         engine.getSetting("qfxPreset2") || 2,
         engine.getSetting("qfxPreset3") || 3,
         engine.getSetting("qfxPreset4") || 4,
-        engine.getSetting("qfxPreset5") || 11,
+        engine.getSetting("qfxPreset5") || 11
     ],
 
     // Jogging and nudging sensitivity
@@ -504,7 +504,7 @@ class Deck {
 
         // Raw velocity (tick delta / time delta) to scaratch2 scaling constants
         this.ticksPerRev = 1024;
-        this.jogWheelClockHz = 100000000;
+        this.jogWheelClockHz = 1e8;
         this.targetRpm = 33 + 1 / 3;
         this.velocityToScratch = this.jogWheelClockHz / (this.ticksPerRev * this.targetRpm / 60);
         this.velocityToJog = this.velocityToScratch * Settings.jogWheelSensitivity;
@@ -1653,7 +1653,7 @@ class Equalizer {
         this.eqParams = [
             new EqualizerParameter(this, 3),
             new EqualizerParameter(this, 2),
-            new EqualizerParameter(this, 1),
+            new EqualizerParameter(this, 1)
         ];
     }
 
@@ -1718,7 +1718,7 @@ class EffectUnit {
         this.fxParams = [
             new EffectParameter(this, 1),
             new EffectParameter(this, 2),
-            new EffectParameter(this, 3),
+            new EffectParameter(this, 3)
         ];
     }
 
@@ -2164,12 +2164,12 @@ class MX2 {
 
         this.decks = [
             new Deck(this, 1),
-            new Deck(this, 2),
+            new Deck(this, 2)
         ];
 
         this.effectUnits = [
             new EffectUnit(this, 1),
-            new EffectUnit(this, 2),
+            new EffectUnit(this, 2)
         ];
     }
 
@@ -2309,7 +2309,7 @@ class MX2 {
                 },
             ],
             fxAssignButton1: {hidReport: inputReport0x01, offset: 0x08, mask: 0x10},
-            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01},
+            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01}
         });
 
         this.effectUnits[1].registerInputs({
