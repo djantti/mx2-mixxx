@@ -985,17 +985,16 @@ class Deck {
 
     moveEncoderTurnHandler(field) {
         const delta = this.moveEncoder.delta(field.value);
+        const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
 
-        if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
-            for (const padNum in this.padPressed) {
-                if (this.padPressed[padNum]) {
-                    const stem = `[Channel${ this.number }_Stem${ padNum - 3 }]`;
+        if (this.activePadMode === 1 && pressedPads.length) {
+            for (const padNum of pressedPads) {
+                const stem = `[Channel${this.number}_Stem${padNum - 3}]`;
 
-                    if (delta > 0) {
-                        script.triggerControl(stem, "volume_up");
-                    } else {
-                        script.triggerControl(stem, "volume_down");
-                    }
+                if (delta > 0) {
+                    script.triggerControl(stem, "volume_up");
+                } else {
+                    script.triggerControl(stem, "volume_down");
                 }
             }
 
@@ -1032,25 +1031,23 @@ class Deck {
 
     loopEncoderTurnHandler(field) {
         const delta = this.loopEncoder.delta(field.value);
+        const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
 
-        if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
-            for (const padNum in this.padPressed) {
-                if (this.padPressed[padNum]) {
-                    const stem = "[QuickEffectRack1_[Channel" +
-                        `${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`;
+        if (this.activePadMode === 1 && pressedPads.length) {
+            for (const padNum of pressedPads) {
+                const stem = `[QuickEffectRack1_[Channel${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`;
 
-                    if (!this.shiftPressed) {
-                        if (delta > 0) {
-                            script.triggerControl(stem, "super1_up");
-                        } else {
-                            script.triggerControl(stem, "super1_down");
-                        }
+                if (!this.shiftPressed) {
+                    if (delta > 0) {
+                        script.triggerControl(stem, "super1_up");
                     } else {
-                        if (delta > 0) {
-                            engine.setValue(stem, "next_chain_preset", 1);
-                        } else {
-                            engine.setValue(stem, "prev_chain_preset", 1);
-                        }
+                        script.triggerControl(stem, "super1_down");
+                    }
+                } else {
+                    if (delta > 0) {
+                        engine.setValue(stem, "next_chain_preset", 1);
+                    } else {
+                        engine.setValue(stem, "prev_chain_preset", 1);
                     }
                 }
             }
