@@ -1842,14 +1842,15 @@ class EffectUnit {
 
         if (this.focusSelectMode) {
             this.focusLongRelease();
-        } else {
-            if (this.effectFocusTimer !== 0) {
-                engine.stopTimer(this.effectFocusTimer);
-                this.effectFocusTimer = 0;
-            }
-
-            this.focusShortRelease();
+            return;
         }
+
+        if (this.effectFocusTimer !== 0) {
+            engine.stopTimer(this.effectFocusTimer);
+            this.effectFocusTimer = 0;
+        }
+
+        this.focusShortRelease();
     }
 
     mixKnobHandler(field) {
@@ -1857,28 +1858,29 @@ class EffectUnit {
     }
 
     focusShortRelease() {
-        const focusedEffect = engine.getValue(this.group, "focused_effect");
+        const currentFocusedEffect = engine.getValue(this.group, "focused_effect");
 
-        if (focusedEffect) {
+        if (currentFocusedEffect) {
             // Store the currently focused effect
-            this.focusedEffect = focusedEffect;
-
+            this.focusedEffect = currentFocusedEffect;
             // Hide the currently focused effect and parameter panel
-            engine.setValue(this.group, "focused_effect", 0);
-            engine.setValue(this.group, "show_focus", 0);
-            engine.setValue(this.group, "show_parameters", 0);
+            this.setFocusVisibility(0, 0, 0);
             return;
         }
 
         if (this.focusedEffect !== null) {
             // Restore a hidden focused effect
-            engine.setValue(this.group, "focused_effect", this.focusedEffect);
-            engine.setValue(this.group, "show_focus", 1);
-            engine.setValue(this.group, "show_parameters", 1);
+            this.setFocusVisibility(this.focusedEffect, 1, 1);
             return;
         }
 
         script.toggleControl(this.group, "show_parameters");
+    }
+
+    setFocusVisibility(effect, focus, parameters) {
+        engine.setValue(this.group, "focused_effect", effect);
+        engine.setValue(this.group, "show_focus", focus);
+        engine.setValue(this.group, "show_parameters", parameters);
     }
 
     focusLongPress() {
@@ -1945,7 +1947,9 @@ class EffectUnit {
         }
     }
 
-    focusedEffectCallback(value, group, _key) {
+    focusedEffectCallback(value, _group, _key) {
+        const groupPrefix = this.group.slice(0, -1);
+
         if (value > 0) {
             if (!engine.getValue(this.group, "show_focus")) {
                 // Show focus when a focused effect is restored
@@ -1965,12 +1969,12 @@ class EffectUnit {
             for (let i = 1; i <= 3; i++) {
                 // Previously focused effect is not available here, so iterate over all parameter knobs
                 for (let j = 1; j <= 3; j++) {
-                    engine.softTakeoverIgnoreNextValue(`${ group.slice(0, -1) }_Effect${ i }]`, `parameter${ j }`);
+                    engine.softTakeoverIgnoreNextValue(`${ groupPrefix }_Effect${ i }]`, `parameter${ j }`);
                 }
             }
         } else {
             for (let i = 1; i <= 3; i++) {
-                engine.softTakeoverIgnoreNextValue(`${ group.slice(0, -1) }_Effect${ i }]`, "meta");
+                engine.softTakeoverIgnoreNextValue(`${ groupPrefix }_Effect${ i }]`, "meta");
             }
         }
     }
