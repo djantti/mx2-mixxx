@@ -1208,7 +1208,7 @@ class Deck {
         const color = outputs[key];
 
         if (color === undefined) {
-            console.warn(`No output color found for '${key}'.`);
+            console.warn(`No output color found for '${ key }'.`);
         } else {
             this.controller.setOutput(group, key, this.mapLedValue(value, color), true);
         }
@@ -1235,7 +1235,7 @@ class Deck {
         const color = this.getBottomLedsColor(value, key);
 
         for (let i = 1; i <= 6; i++) {
-            this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
+            this.controller.setOutput(this.group, `!bottom_led_${ i }`, color, false);
         }
 
         this.controller.OutputPackets.outputReport0x80.send();
@@ -1258,7 +1258,7 @@ class Deck {
             const ledUpdate = i < fullIllumCount ? ledBrightness : LedOff;
 
             if (ledUpdate !== this.vuMeterState[i]) {
-                this.controller.setOutput(this.group, `!vu_meter_${i + 1}`, ledUpdate, false);
+                this.controller.setOutput(this.group, `!vu_meter_${ i + 1 }`, ledUpdate, false);
                 // Store the new segment state
                 this.vuMeterState[i] = ledUpdate;
                 sendUpdate = true;
