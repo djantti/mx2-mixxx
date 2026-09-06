@@ -441,12 +441,14 @@ class FxPresetButton {
                 this.controller.setOutput("[ChannelX]", `!qfx_${ this.number }`,
                     Settings.qfxColors[this.number - 1], true);
             }
+
             this.qfxActive = true;
         } else {
             if (this.qfxActive) {
                 this.controller.setOutput("[ChannelX]", `!qfx_${ this.number }`,
                     Settings.qfxColors[this.number - 1] - 2, true);
             }
+
             this.qfxActive = false;
         }
     }
@@ -1181,6 +1183,7 @@ class Deck {
             if (value < 1 && value !== this.defaultRateRange) {
                 this.defaultRateRange = value;
             }
+
             if (engine.getValue(this.group, "sync_leader")) {
                 this.controller.setOutput(this.group, "sync_leader",
                     outColor.full, true);
@@ -1188,6 +1191,7 @@ class Deck {
                 this.controller.setOutput(this.group, "sync_leader",
                     outColor.dim, true);
             }
+
             return;
         }
 
@@ -1863,14 +1867,18 @@ class EffectUnit {
             engine.setValue(this.group, "focused_effect", 0);
             engine.setValue(this.group, "show_focus", 0);
             engine.setValue(this.group, "show_parameters", 0);
-        } else if (this.focusedEffect !== null) {
+            return;
+        }
+
+        if (this.focusedEffect !== null) {
             // Restore a hidden focused effect
             engine.setValue(this.group, "focused_effect", this.focusedEffect);
             engine.setValue(this.group, "show_focus", 1);
             engine.setValue(this.group, "show_parameters", 1);
-        } else {
-            script.toggleControl(this.group, "show_parameters");
+            return;
         }
+
+        script.toggleControl(this.group, "show_parameters");
     }
 
     focusLongPress() {
