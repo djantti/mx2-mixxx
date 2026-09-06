@@ -358,7 +358,7 @@ class Mixer {
         engine.setParameter(field.group, field.name, field.value / 4095);
     }
 
-    talkoverCallback(value, group, key) {
+    talkoverCallback(value, group, _key) {
         // Choose output color based on mic input peak state
         const outColor = engine.getValue(group, "peak_indicator") ?
             this.outputColorMap.peakColor : this.outputColorMap.micColor;
@@ -791,12 +791,16 @@ class Deck {
             return;
         }
 
-        if (field.name === "!tt") {
+        switch (field.name) {
+        case "!tt":
             this.setJogMode(0);
-        } else if (field.name === "!jog") {
+            break;
+        case "!jog":
             this.setJogMode(1);
-        } else {
-            console.warn(`Unknown field: ${ field.name }`);
+            break;
+        default:
+            console.warn(`Unknown field: ${field.name}`);
+            break;
         }
     }
 
