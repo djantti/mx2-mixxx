@@ -938,18 +938,22 @@ class Deck {
     }
 
     jogTouchHandler(field) {
-        if (this.jogMode === 0) {
-            if (field.value > 0) {
-                // Cancel any existing stop timers
-                if ((this.jogStopTimerId !== null) && (this.jogStopTimerId !== null)) {
-                    engine.stopTimer(this.jogStopTimerId);
-                    this.jogStopTimerId = null;
-                }
-                engine.setValue(this.group, "scratch2_enable", true);
-            } else {
-                this.jogStopper();
-            }
+        if (this.jogMode !== 0) {
+            return;
         }
+
+        if (field.value <= 0) {
+            this.jogStopper();
+            return;
+        }
+
+        // Cancel any existing stop timer
+        if (this.jogStopTimerId !== null) {
+            engine.stopTimer(this.jogStopTimerId);
+            this.jogStopTimerId = null;
+        }
+
+        engine.setValue(this.group, "scratch2_enable", true);
     }
 
     browseEncoderPressHandler(field) {
@@ -1122,28 +1126,33 @@ class Deck {
 
         const velocity = this.wheelVelocity(field.value);
 
-        if (this.jogMode === 0) {
-            if (this.shiftPressed && !engine.getValue(this.group, "play")) {
-                engine.setValue(this.group, "beatjump", velocity * 10 ** 6);
-            } else {
-                if (engine.getValue(this.group, "scratch2_enable")) {
-                    engine.setValue(this.group, "scratch2", velocity * this.velocityToScratch);
+        if (this.jogMode !== 0) {
+            engine.setValue(this.group, "jog", velocity * this.velocityToJog);
+            return;
+        }
 
-                    if ((this.jogDecayTimerId !== null) && (this.jogDecayTimerId !== null)) {
-                        // Cancel any existing decay timers
-                        engine.stopTimer(this.jogDecayTimerId);
-                        this.jogDecayTimerId = null;
-                    }
+        if (this.shiftPressed && !engine.getValue(this.group, "play")) {
+            engine.setValue(this.group, "beatjump", velocity * 10 ** 6);
+            return;
+        }
 
-                    // Start timer to manually decay the velocity
-                    this.jogDecayTimerId = engine.beginTimer(this.jogWheelDecayPollTime, () => {
-                        this.jogDecayer();
-                    }, true);
+        if (engine.getValue(this.group, "scratch2_enable")) {
+            engine.setValue(this.group, "scratch2", velocity * this.velocityToScratch);
 
-                } else {
-                    engine.setValue(this.group, "jog", velocity * this.velocityToJog);
-                }
+            if (this.jogDecayTimerId !== null) {
+                // Cancel any existing decay timers
+                engine.stopTimer(this.jogDecayTimerId);
+                this.jogDecayTimerId = null;
             }
+
+            // Start timer to manually decay the velocity
+            this.jogDecayTimerId = engine.beginTimer(
+                this.jogWheelDecayPollTime,
+                () => {
+                    this.jogDecayer();
+                },
+                true
+            );
         } else {
             engine.setValue(this.group, "jog", velocity * this.velocityToJog);
         }
@@ -1301,7 +1310,11 @@ class Deck {
         if (jogMode === 0) {
             this.controller.setOutput(this.group, "!tt", this.outputColorMap.jogModeColor.full, false);
             this.controller.setOutput(this.group, "!jog", this.outputColorMap.jogModeColor.dim, true);
-        } else if (jogMode === 1) {
+            this.jogMode = jogMode;
+            return;
+        }
+
+        if (jogMode === 1) {
             engine.scratchDisable(this.number, true);
 
             if (engine.getValue(this.group, "scratch2_enable")) {
@@ -1311,12 +1324,11 @@ class Deck {
 
             this.controller.setOutput(this.group, "!jog", this.outputColorMap.jogModeColor.full, false);
             this.controller.setOutput(this.group, "!tt", this.outputColorMap.jogModeColor.dim, true);
-        } else {
-            console.warn(`Unknown mode: ${ jogMode }`);
+            this.jogMode = jogMode;
             return;
         }
 
-        this.jogMode = jogMode;
+        console.warn(`Unknown mode: ${ jogMode }`);
     }
 
     jogStopper() {
