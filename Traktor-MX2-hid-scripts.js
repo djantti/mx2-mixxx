@@ -818,18 +818,21 @@ class Deck {
         if (field.value === 1) {
             this.syncEnabledTime = now;
             engine.setValue(this.group, "sync_enabled", 1);
-        } else {
-            if (!engine.getValue(this.group, "sync_enabled")) {
-                // Keep sync lock disabled if button was released before latching
-                engine.setValue(this.group, "sync_enabled", 0);
-                return;
-            }
-            if (now - this.syncEnabledTime > 300) {
-                engine.setValue(this.group, "sync_enabled", 1);
-                return;
-            }
-            engine.setValue(this.group, "sync_enabled", 0);
+            return;
         }
+
+        if (!engine.getValue(this.group, "sync_enabled")) {
+            // Keep sync lock disabled if button was released before latching
+            engine.setValue(this.group, "sync_enabled", 0);
+            return;
+        }
+
+        if (now - this.syncEnabledTime > 300) {
+            engine.setValue(this.group, "sync_enabled", 1);
+            return;
+        }
+
+        engine.setValue(this.group, "sync_enabled", 0);
     }
 
     mstButtonHandler(field) {
@@ -1550,30 +1553,35 @@ class PadButton {
                 this.controller.setOutput(this.deck.group, this.output,
                     this.outputColorMap.inactivePadColor.full, true);
             }
-        } else if (status === 2) {
-            this.controller.setOutput(this.deck.group, this.output,
-                this.outputColorMap.activePadColor.full, true);
-        } else {
-            this.controller.setOutput(this.deck.group, this.output,
-                this.outputColorMap.unconnectedPadColor.dim, true);
+
+            return;
         }
+
+        if (status === 2) {
+            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
+            return;
+        }
+
+        this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.unconnectedPadColor.dim, true);
     }
 
     stemPadCallback() {
-        const stemColor = engine.getValue(`[Channel${ this.deck.number }_Stem${ this.number }]`, "color");
+        const stemGroup = `[Channel${ this.deck.number }_Stem${ this.number }]`;
+        const stemColor = engine.getValue(stemGroup, "color");
         const padColor = this.padColorMap.getValueForNearestColor(stemColor);
+        const modifierPad = `!pad_button_${ this.number + 4 }`;
 
         if (stemColor === -1) {
             // No color data available, so assume the file doesn't contain stems
             this.controller.setOutput(this.deck.group, this.output, LedOff, false);
-            this.controller.setOutput(this.deck.group, `!pad_button_${ this.number + 4 }`, LedOff, true);
+            this.controller.setOutput(this.deck.group, modifierPad, LedOff, true);
             return;
         }
 
-        this.controller.setOutput(this.deck.group, `!pad_button_${ this.number + 4 }`,
+        this.controller.setOutput(this.deck.group, modifierPad,
             this.outputColorMap.unconnectedPadColor.dim, false);
 
-        if (engine.getValue(`[Channel${ this.deck.number }_Stem${ this.number }]`, "mute") === 1) {
+        if (engine.getValue(stemGroup, "mute") === 1) {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, padColor - 2, false);
             } else {
@@ -1593,21 +1601,22 @@ class PadButton {
     }
 
     samplePadCallback() {
-        if (engine.getValue(this.samplerGroup, "track_loaded")) {
-            if (engine.getValue(this.samplerGroup, "play") === 1) {
-                if (engine.getValue(this.samplerGroup, "repeat") === 1) {
-                    this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
-                } else {
-                    this.controller.setOutput(this.deck.group, this.output,
-                        this.outputColorMap.activePadColor.full, true);
-                }
-            } else {
-                this.controller.setOutput(this.deck.group, this.output,
-                    this.outputColorMap.inactivePadColor.full, true);
-            }
-        } else {
+        if (!engine.getValue(this.samplerGroup, "track_loaded")) {
             this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.unconnectedPadColor.dim, true);
+            return;
         }
+
+        if (engine.getValue(this.samplerGroup, "play") !== 1) {
+            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
+            return;
+        }
+
+        if (engine.getValue(this.samplerGroup, "repeat") === 1) {
+            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
+            return;
+        }
+
+        this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
     }
 
     loopCallback(value, _group, _key) {
