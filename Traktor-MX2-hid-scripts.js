@@ -978,31 +978,37 @@ class Deck {
         if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
             for (const padNum in this.padPressed) {
                 if (this.padPressed[padNum]) {
+                    const stem = `[Channel${ this.number }_Stem${ padNum - 3 }]`;
+
                     if (delta > 0) {
-                        script.triggerControl(`[Channel${ this.number }_Stem${ padNum - 3 }]`, "volume_up");
+                        script.triggerControl(stem, "volume_up");
                     } else {
-                        script.triggerControl(`[Channel${ this.number }_Stem${ padNum - 3 }]`, "volume_down");
+                        script.triggerControl(stem, "volume_down");
                     }
-
                 }
             }
-        } else {
-            if (this.shiftPressed) {
-                const beatjumpSize = engine.getValue(field.group, "beatjump_size");
 
-                if (delta > 0) {
-                    engine.setValue(field.group, "beatjump_size", beatjumpSize * 2);
-                } else {
-                    engine.setValue(field.group, "beatjump_size", beatjumpSize / 2);
-                }
-            } else {
-                if (delta < 0) {
-                    script.triggerControl(field.group, "beatjump_backward");
-                } else {
-                    script.triggerControl(field.group, "beatjump_forward");
-                }
-            }
+            return;
         }
+
+        if (this.shiftPressed) {
+            const beatjumpSize = engine.getValue(field.group, "beatjump_size");
+
+            if (delta > 0) {
+                engine.setValue(field.group, "beatjump_size", beatjumpSize * 2);
+            } else {
+                engine.setValue(field.group, "beatjump_size", beatjumpSize / 2);
+            }
+
+            return;
+        }
+
+        if (delta < 0) {
+            script.triggerControl(field.group, "beatjump_backward");
+            return;
+        }
+
+        script.triggerControl(field.group, "beatjump_forward");
     }
 
     moveEncoderPressHandler(field) {
@@ -1019,27 +1025,29 @@ class Deck {
         if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
             for (const padNum in this.padPressed) {
                 if (this.padPressed[padNum]) {
+                    const stem = "[QuickEffectRack1_[Channel" +
+                        `${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`;
+
                     if (!this.shiftPressed) {
                         if (delta > 0) {
-                            script.triggerControl("[QuickEffectRack1_[Channel" +
-                            `${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`, "super1_up");
+                            script.triggerControl(stem, "super1_up");
                         } else {
-                            script.triggerControl("[QuickEffectRack1_[Channel" +
-                            `${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`, "super1_down");
+                            script.triggerControl(stem, "super1_down");
                         }
                     } else {
                         if (delta > 0) {
-                            engine.setValue(`[QuickEffectRack1_[Channel${ field.group[field.group.length - 2] }` +
-                                `_Stem${ padNum - 3 }]]`, "next_chain_preset", 1);
+                            engine.setValue(stem, "next_chain_preset", 1);
                         } else {
-                            engine.setValue(`[QuickEffectRack1_[Channel${ field.group[field.group.length - 2] }` +
-                                `_Stem${ padNum - 3 }]]`, "prev_chain_preset", 1);
+                            engine.setValue(stem, "prev_chain_preset", 1);
                         }
                     }
-
                 }
             }
-        } else if (this.keylockPressed) {
+
+            return;
+        }
+
+        if (this.keylockPressed) {
             this.keylockIgnore = true;
 
             if (delta > 0) {
@@ -1047,12 +1055,14 @@ class Deck {
             } else {
                 engine.setValue(this.group, "pitch_adjust_down_small", 1);
             }
+
+            return;
+        }
+
+        if (delta > 0) {
+            script.triggerControl(this.group, "loop_double");
         } else {
-            if (delta > 0) {
-                script.triggerControl(this.group, "loop_double");
-            } else {
-                script.triggerControl(this.group, "loop_halve");
-            }
+            script.triggerControl(this.group, "loop_halve");
         }
     }
 
@@ -1068,13 +1078,16 @@ class Deck {
                         `${ field.group[field.group.length - 2] }_Stem${ padNum - 4 }]]`, "enabled");
                 }
             }
-        } else {
-            if (this.shiftPressed) {
-                engine.setValue(this.group, "reloop_toggle", field.value);
-            } else {
-                engine.setValue(this.group, "beatloop_activate", field.value);
-            }
+
+            return;
         }
+
+        if (this.shiftPressed) {
+            engine.setValue(this.group, "reloop_toggle", field.value);
+            return;
+        }
+
+        engine.setValue(this.group, "beatloop_activate", field.value);
     }
 
     scalarHandler(field) {
