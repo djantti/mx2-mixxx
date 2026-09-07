@@ -495,8 +495,8 @@ class Deck {
         this.lastTimestamp = 0;
         this.lastWallClock = 0;
 
-        this.jogStopTimerId = null;
-        this.jogDecayTimerId = null;
+        this.jogStopTimer = 0;
+        this.jogDecayTimer = 0;
 
         // Jog wheel post-release velocity polling interval (min. 20 ms)
         this.jogWheelStopPollTime = 20;
@@ -957,9 +957,9 @@ class Deck {
         }
 
         // Cancel any existing stop timer
-        if (this.jogStopTimerId !== null) {
-            engine.stopTimer(this.jogStopTimerId);
-            this.jogStopTimerId = null;
+        if (this.jogStopTimer) {
+            engine.stopTimer(this.jogStopTimer);
+            this.jogStopTimer = 0;
         }
 
         engine.setValue(this.group, "scratch2_enable", true);
@@ -1145,14 +1145,14 @@ class Deck {
         if (engine.getValue(this.group, "scratch2_enable")) {
             engine.setValue(this.group, "scratch2", velocity * this.velocityToScratch);
 
-            if (this.jogDecayTimerId !== null) {
+            if (this.jogDecayTimer) {
                 // Cancel any existing decay timers
-                engine.stopTimer(this.jogDecayTimerId);
-                this.jogDecayTimerId = null;
+                engine.stopTimer(this.jogDecayTimer);
+                this.jogDecayTimer = 0;
             }
 
             // Start timer to manually decay the velocity
-            this.jogDecayTimerId = engine.beginTimer(
+            this.jogDecayTimer = engine.beginTimer(
                 this.jogWheelDecayPollTime,
                 () => {
                     this.jogDecayer();
@@ -1345,10 +1345,10 @@ class Deck {
             engine.setValue(this.group, "scratch2", 0);
             engine.setValue(this.group, "scratch2_enable", false);
             this.lastVelocity = 0;
-            this.jogStopTimerId = null;
+            this.jogStopTimer = 0;
         } else {
             // Otherwise, check again after a while
-            this.jogStopTimerId = engine.beginTimer(this.jogWheelStopPollTime, () => this.jogStopper(), true);
+            this.jogStopTimer = engine.beginTimer(this.jogWheelStopPollTime, () => this.jogStopper(), true);
         }
     }
 
@@ -1414,13 +1414,13 @@ class Deck {
             // If wheel is slow enough, immediately set scratch2 to 0
             this.lastVelocity = 0;
             engine.setValue(this.group, "scratch2", 0);
-            this.jogDecayTimerId = null;
+            this.jogDecayTimer = 0;
         } else {
             // Otherwise decay the velocity and call again after a while
             const decayedVelocity = this.lastVelocity * (1 - Settings.jogWheelAlpha);
             this.lastVelocity = decayedVelocity;
             engine.setValue(this.group, "scratch2", decayedVelocity * this.velocityToScratch);
-            this.jogDecayTimerId = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
+            this.jogDecayTimer = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
         }
     }
 }
