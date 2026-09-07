@@ -222,6 +222,9 @@ const Settings = {
     // Dead zone threshold for jog wheel input
     jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-6,
 
+    // Jog wheel seek mode speed
+    jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 1e6,
+
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
@@ -1132,13 +1135,13 @@ class Deck {
 
         const velocity = this.wheelVelocity(field.value);
 
-        if (this.jogMode !== 0) {
-            engine.setValue(this.group, "jog", velocity * this.velocityToJog);
+        if (this.shiftPressed && !engine.getValue(this.group, "play")) {
+            engine.setValue(this.group, "beatjump", velocity * Settings.jogWheelSeekSpeed);
             return;
         }
 
-        if (this.shiftPressed && !engine.getValue(this.group, "play")) {
-            engine.setValue(this.group, "beatjump", velocity * 10 ** 6);
+        if (this.jogMode !== 0) {
+            engine.setValue(this.group, "jog", velocity * this.velocityToJog);
             return;
         }
 

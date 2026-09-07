@@ -877,7 +877,7 @@
         <value label="Medium" default="true">0.5</value>
         <value label="High">0.75</value>
         <description>
-          Controls jog wheel movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement.
+          Controls jog wheel's movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement.
         </description>
       </option>
       <option
@@ -888,7 +888,18 @@
         <value label="Medium" default="true">1e-6</value>
         <value label="High">1e-7</value>
         <description>
-          Adjusts the jog-wheel input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive.
+          Adjusts the jog wheel's input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive.
+        </description>
+      </option>
+      <option
+        variable="jogWheelSeekSpeed"
+        label="Quick seek speed"
+        type="enum">
+        <value label="Low">5e4</value>
+        <value label="Medium">1e5</value>
+        <value label="High" default="true">1e6</value>
+        <description>
+          Sets the jog wheel's quick seek speed. To activate quick seek, hold 'Shift' while turning the wheel. In turntable mode, turn the wheel from the outer ring.
         </description>
       </option>
     </group>
