@@ -152,6 +152,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | --- | --- | --- |
 | Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
 | Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
+| Long press timeout | 300 | Time in milliseconds required to hold a button before a long press is registered |
 
 ### Audio
 

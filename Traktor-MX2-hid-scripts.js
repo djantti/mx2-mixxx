@@ -231,6 +231,9 @@ const Settings = {
     // Use soft takeover for knobs and faders (default: true)
     softTakeover: !!engine.getSetting("softTakeover"),
 
+    // Time (ms) required to hold a button before a long press is registered
+    longPressTimeout: Number(engine.getSetting("longPressTimeout")) || 300,
+
     // Route audio through master gain knob (default: false)
     enableMasterGain: !!engine.getSetting("masterGain")
 };
@@ -333,7 +336,7 @@ class Mixer {
 
     talkoverHandler(field) {
         if (field.value === 1) {
-            this.talkoverPressedTimer = engine.beginTimer(300, () => {
+            this.talkoverPressedTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.talkoverPressedTimer = 0;
             }, true);
 
@@ -832,7 +835,7 @@ class Deck {
             return;
         }
 
-        if (now - this.syncEnabledTime > 300) {
+        if (now - this.syncEnabledTime > Settings.longPressTimeout) {
             engine.setValue(this.group, "sync_enabled", 1);
             return;
         }
@@ -842,7 +845,7 @@ class Deck {
 
     mstButtonHandler(field) {
         if (field.value === 1) {
-            this.mstLongPressTimer = engine.beginTimer(300, () => {
+            this.mstLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.mstLongPress = true;
                 this.mstLongPressTimer = 0;
             }, true);
@@ -1835,7 +1838,7 @@ class EffectUnit {
 
     focusButtonHandler(field) {
         if (field.value === 1) {
-            this.effectFocusTimer = engine.beginTimer(300, () => {
+            this.effectFocusTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.effectFocusTimer = 0;
                 this.focusLongPress();
             }, true);
@@ -2074,7 +2077,7 @@ class EffectParameter {
             this.isLongPressed = false;
             this.toggleButton();
 
-            this.longPressTimer = engine.beginTimer(300, () => {
+            this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.isLongPressed = true;
                 this.longPressTimer = 0;
             }, true);

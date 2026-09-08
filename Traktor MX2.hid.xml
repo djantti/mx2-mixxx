@@ -924,6 +924,18 @@
             Range over which rate faders automatically snap to the midpoint.
           </description>
       </option>
+      <option
+          variable="longPressTimeout"
+          label="Long press timeout"
+          type="integer"
+          min="100"
+          max="1000"
+          step="1"
+          default="300">
+          <description>
+            Time in milliseconds required to hold a button before a long press is registered.
+          </description>
+      </option>
     </group>
     <group label="Audio">
       <option
