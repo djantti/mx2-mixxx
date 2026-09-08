@@ -1839,32 +1839,29 @@ class EffectUnit {
     focusButtonHandler(field) {
         if (field.value === 1) {
             this.effectFocusTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                // Long press
                 this.effectFocusTimer = 0;
-                this.focusLongPress();
+                this.focusSelectMode = true;
+                this.startFocusedMode();
             }, true);
 
             return;
         }
 
         if (this.focusSelectMode) {
-            this.focusLongRelease();
+            // Long release
+            this.focusSelectMode = false;
+            this.startNormalMode();
             return;
         }
+
+        // Short release
+        const currentFocusedEffect = engine.getValue(this.group, "focused_effect");
 
         if (this.effectFocusTimer !== 0) {
             engine.stopTimer(this.effectFocusTimer);
             this.effectFocusTimer = 0;
         }
-
-        this.focusShortRelease();
-    }
-
-    mixKnobHandler(field) {
-        engine.setParameter(this.group, "mix", field.value / 4095);
-    }
-
-    focusShortRelease() {
-        const currentFocusedEffect = engine.getValue(this.group, "focused_effect");
 
         if (currentFocusedEffect) {
             // Store the currently focused effect
@@ -1883,20 +1880,14 @@ class EffectUnit {
         script.toggleControl(this.group, "show_parameters");
     }
 
+    mixKnobHandler(field) {
+        engine.setParameter(this.group, "mix", field.value / 4095);
+    }
+
     setFocusVisibility(effect, focus, parameters) {
         engine.setValue(this.group, "focused_effect", effect);
         engine.setValue(this.group, "show_focus", focus);
         engine.setValue(this.group, "show_parameters", parameters);
-    }
-
-    focusLongPress() {
-        this.focusSelectMode = true;
-        this.startFocusedMode();
-    }
-
-    focusLongRelease() {
-        this.focusSelectMode = false;
-        this.startNormalMode();
     }
 
     setFocusedEffect(effectIdx) {
