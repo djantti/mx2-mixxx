@@ -21,7 +21,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 5 | FAV button | Use next color for selected track | Use previous color for selected track |
 | 6 | Star button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
 | 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter to select the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
-| 8 | Preview button | Load and play / pause track in preview deck ||
+| 8 | Preview button | Load and play / pause track in preview deck | Eject the currently loaded track |
 | 9 | VIEW button | Toggle big library mode ||
 | 10 | REV button | *Hold* to play track in reverse | *Hold* for reverse play with slip mode |
 | 11 | FLX button | Toggle slip mode on / off ||

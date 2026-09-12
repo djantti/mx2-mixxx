@@ -773,7 +773,13 @@ class Deck {
     }
 
     previewButtonHandler(field) {
-        if (field.value === 1) {
+        if (field.value === 0) {
+            return;
+        }
+
+        if (this.shiftPressed) {
+            script.triggerControl("[PreviewDeck1]", "eject");
+        } else {
             engine.setValue("[PreviewDeck1]", "LoadSelectedTrackAndPlay", field.value);
         }
     }
