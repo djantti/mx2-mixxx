@@ -103,10 +103,10 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Active pads | Green | Color for currently active pads |
 | Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* **Shift**. |
 | Sync buttons | Yellow | Color for sync and sync master buttons |
-| Sync master alternate mode color | Red | Alternate mode color for the sync master button. Used when long range rate faders are active. |
 | FX buttons | White | Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting. |
 | Headphone buttons | White | Color for headphone cue buttons |
 | Talkback button | White | Color for the talkback button |
+| Alternate mode indicators | Red | Color for buttons in alternate mode. Used by 'MST' button when long range rate faders are active. |
 | Peak indicators | Red | Color for main output and microphone input peak indicator LEDs |
 
 ### Bottom panel colors

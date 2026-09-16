@@ -87,7 +87,6 @@ const DefaultTheme = {
 
     // Sync buttons
     syncColor: LedColors.yellow,
-    altSyncColor: LedColors.red,
 
     // FX button color
     fxColor: LedColors.white,
@@ -95,6 +94,9 @@ const DefaultTheme = {
     // Headphone and talkback buttons
     pflColor: LedColors.white,
     micColor: LedColors.white,
+
+    // Color for buttons in alternate mode
+    altModeColor: LedColors.red,
 
     // Main out and microphone peak indicators
     peakColor: LedColors.red
@@ -116,10 +118,10 @@ const FrostbiteTheme = {
     activePadColor: LedColors.sky,
     altPadColor: LedColors.purple,
     syncColor: LedColors.celeste,
-    altSyncColor: LedColors.purple,
     fxColor: LedColors.white,
     pflColor: LedColors.celeste,
     micColor: LedColors.white,
+    altModeColor: LedColors.purple,
     peakColor: LedColors.red
 };
 
@@ -139,10 +141,10 @@ const MojitoTheme = {
     activePadColor: LedColors.sky,
     altPadColor: LedColors.honey,
     syncColor: LedColors.green,
-    altSyncColor: LedColors.honey,
     fxColor: LedColors.white,
     pflColor: LedColors.lime,
     micColor: LedColors.sky,
+    altModeColor: LedColors.honey,
     peakColor: LedColors.red
 };
 
@@ -162,10 +164,10 @@ const SynthwaveTheme = {
     activePadColor: LedColors.orange,
     altPadColor: LedColors.magenta,
     syncColor: LedColors.sky,
-    altSyncColor: LedColors.orange,
     fxColor: LedColors.white,
     pflColor: LedColors.magenta,
     micColor: LedColors.sky,
+    altModeColor: LedColors.orange,
     peakColor: LedColors.red
 };
 
@@ -1188,7 +1190,7 @@ class Deck {
 
     mstButtonCallback(value, _group, key) {
         const outColor = engine.getValue(this.group, "rateRange") === 1 ?
-            this.outputColorMap.altSyncColor : this.outputColorMap.syncColor;
+            this.outputColorMap.altModeColor : this.outputColorMap.syncColor;
 
         if (key === "rateRange") {
             // Store the new default fader range if needed
