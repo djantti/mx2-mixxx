@@ -1985,13 +1985,12 @@ class EffectUnit {
     }
 
     focusLedCallback(value, _group, _key) {
-        if (engine.getValue(this.group, "focused_effect") > 0) {
-            if (value === 1) {
-                this.controller.setOutput(this.group, "!effect_focus", this.outputColorMap.focusColor.full, true);
-            } else {
-                this.controller.setOutput(this.group, "!effect_focus", this.outputColorMap.focusColor.dim, true);
-            }
+        if (engine.getValue(this.group, "focused_effect") === 0) {
+            return;
         }
+
+        this.controller.setOutput(this.group, "!effect_focus",
+            value ? this.outputColorMap.focusColor.full : this.outputColorMap.focusColor.dim, true);
     }
 
     effectGroupCallback(value, group, key) {
