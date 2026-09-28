@@ -1500,11 +1500,13 @@ class PadButton {
     }
 
     stemPad(value) {
-        if (engine.getValue(this.deck.group, "stem_count") === 0) {
+        const stemCount = engine.getValue(this.deck.group, "stem_count");
+
+        if (stemCount === 0) {
             return;
         }
 
-        if (this.number <= Math.min(4, engine.getValue(this.deck.group, "stem_count"))) {
+        if (this.number <= Math.min(4, stemCount)) {
             if (value === 0) {
                 return;
             }
