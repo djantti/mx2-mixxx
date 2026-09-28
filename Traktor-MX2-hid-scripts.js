@@ -1450,6 +1450,8 @@ class PadButton {
         this.outputColorMap = this.deck.mx2.outputColorMap;
         this.padColorMap = new ColorMapper(PadColors);
 
+        this.longPressTimer = 0;
+
         const padRelations = {
             "[Channel1]": {1: 1, 2: 2, 3: 3, 4: 4, 5: 9, 6: 10, 7: 11, 8: 12},
             "[Channel2]": {1: 5, 2: 6, 3: 7, 4: 8, 5: 13, 6: 14, 7: 15, 8: 16}
@@ -1519,22 +1521,35 @@ class PadButton {
     }
 
     samplePad(value) {
-        if (value === 0) {
+        const samplerPlaying = engine.getValue(this.samplerGroup, "play");
+
+        if (value === 1) {
+            if (this.deck.shiftPressed) {
+                if (samplerPlaying) {
+                    engine.setValue(this.samplerGroup, "play", 0);
+                } else {
+                    script.triggerControl(this.samplerGroup, "eject");
+                }
+
+                return;
+            }
+
+            this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.longPressTimer = 0;
+            }, true);
+
+            script.triggerControl(this.samplerGroup,
+                engine.getValue(this.samplerGroup, "track_loaded") ? "cue_gotoandplay" : "LoadSelectedTrack");
+
             return;
         }
 
-        if (this.deck.shiftPressed) {
-            if (engine.getValue(this.samplerGroup, "play") === 1) {
-                engine.setValue(this.samplerGroup, "play", 0);
-            } else {
-                script.triggerControl(this.samplerGroup, "eject");
-            }
-        } else {
-            if (engine.getValue(this.samplerGroup, "track_loaded") === 0) {
-                script.triggerControl(this.samplerGroup, "LoadSelectedTrack");
-            } else {
-                script.triggerControl(this.samplerGroup, "cue_gotoandplay");
-            }
+        if (this.longPressTimer !== 0) {
+            engine.stopTimer(this.longPressTimer);
+            this.longPressTimer = 0;
+        } else if (samplerPlaying) {
+            // Stop the sampler on long press release
+            engine.setValue(this.samplerGroup, "play", 0);
         }
     }
 
