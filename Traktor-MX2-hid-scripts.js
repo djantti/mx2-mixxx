@@ -1532,6 +1532,9 @@ class PadButton {
                 }
 
                 return;
+            } else if (this.deck.keylockPressed) {
+                script.toggleControl(this.samplerGroup, "keylock");
+                return;
             }
 
             this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {

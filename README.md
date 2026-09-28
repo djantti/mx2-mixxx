@@ -32,7 +32,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 16 | PLAY button | Toggle track playback | Go to track start and stop |
 | 17 | CUE button | Set default cue point | Jump to cue point and stop |
 | 18 | Move encoder | <p>*Press* and *hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* to control stem track volume while pad 5–8 is held</p> | *Press* to activate and jump to current loop while stopping playback |
-| 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and turn loop encoder (**20**) to change track pitch</p> ||
+| 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and turn loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and press pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
 | 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to adjust stem track FX super knob</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to select a stem Quick FX preset</p> |
 | 21 | Hotcues button | Activate **hotcues** pad mode ||
 | 22 | Stems button | Activate **stems** pad mode ||
