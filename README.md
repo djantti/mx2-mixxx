@@ -8,7 +8,7 @@ This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https
 
 ## Mapping description
 
-Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus buttons (**3**) and for the effect toggle (**4**) buttons.
+Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus (**3**) buttons and for the effect toggle (**4**) buttons. Secondary functions are accessed holding the shift (**15**) buttons.
 
 ### Decks (1–29)
 
@@ -31,9 +31,9 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 15 | SHIFT button | Activates secondary functions when held ||
 | 16 | PLAY button | Toggle track playback | Go to track start and stop |
 | 17 | CUE button | Set default cue point | Jump to cue point and stop |
-| 18 | Move encoder | <p>*Press* and *hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* to control stem track volume while pad 5–8 is held</p> | *Press* to activate and jump to current loop while stopping playback |
-| 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and turn loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and press pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
-| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to adjust stem track FX super knob</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to select a stem Quick FX preset</p> |
+| 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* to control stem track volume while pad 5–8 is held</p> | *Press* to activate and jump to current loop while stopping playback |
+| 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and *turn* loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and *press* pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
+| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** While *holding* pad 5–8 (**26**), *turn* to adjust stem track FX super knob</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to select a stem Quick FX preset</p> |
 | 21 | Hotcues button | Activate **hotcues** pad mode ||
 | 22 | Stems button | Activate **stems** pad mode ||
 | 23 | Samples button | Activate **samples** pad mode ||
