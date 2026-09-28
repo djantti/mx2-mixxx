@@ -878,9 +878,11 @@ class Deck {
 
     keylockButtonHandler(field) {
         if (field.value === 1) {
-            this.keylockPressed = 1;
+            this.keylockPressed = true;
             return;
         }
+
+        this.keylockPressed = false;
 
         if (this.keylockIgnore) {
             this.keylockIgnore = false;
@@ -1451,6 +1453,7 @@ class PadButton {
         this.padColorMap = new ColorMapper(PadColors);
 
         this.longPressTimer = 0;
+        this.isLongPressed = false;
 
         const padRelations = {
             "[Channel1]": {1: 1, 2: 2, 3: 3, 4: 4, 5: 9, 6: 10, 7: 11, 8: 12},
@@ -1534,10 +1537,12 @@ class PadButton {
                 return;
             } else if (this.deck.keylockPressed) {
                 script.toggleControl(this.samplerGroup, "keylock");
+                this.deck.keylockIgnore = true;
                 return;
             }
 
             this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.isLongPressed = true;
                 this.longPressTimer = 0;
             }, true);
 
@@ -1550,9 +1555,14 @@ class PadButton {
         if (this.longPressTimer !== 0) {
             engine.stopTimer(this.longPressTimer);
             this.longPressTimer = 0;
-        } else if (samplerPlaying) {
+        }
+
+        if (this.isLongPressed) {
+            this.isLongPressed = false;
             // Stop the sampler on long press release
-            engine.setValue(this.samplerGroup, "play", 0);
+            if (samplerPlaying) {
+                engine.setValue(this.samplerGroup, "play", 0);
+            }
         }
     }
 
