@@ -1858,6 +1858,7 @@ class EffectUnit {
 
     enableSoftTakeover() {
         engine.softTakeover(this.group, "mix", true);
+        engine.softTakeover(this.group, "super1", true);
 
         for (let i = 0; i < 3; i++) {
             this.fxParams[i].enableSoftTakeover();
@@ -1941,7 +1942,15 @@ class EffectUnit {
     }
 
     mixKnobHandler(field) {
-        engine.setParameter(this.group, "mix", field.value / 4095);
+        const value = field.value / 4095;
+
+        if (this.shiftPressed()) {
+            engine.softTakeoverIgnoreNextValue(this.group, "mix");
+            engine.setParameter(this.group, "super1", value);
+        } else {
+            engine.softTakeoverIgnoreNextValue(this.group, "super1");
+            engine.setParameter(this.group, "mix", value);
+        }
     }
 
     setFocusVisibility(effect, focus, parameters) {
