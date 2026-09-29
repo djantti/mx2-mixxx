@@ -890,13 +890,12 @@ class Deck {
         }
 
         if (this.mstLongPress) {
-            const rateRange = engine.getValue(this.group, "rateRange");
-            engine.setValue(this.group, "rateRange", rateRange < 1 ? 1 : this.defaultRateRange);
+            this.mstLongPress = false;
+            engine.setValue(this.group, "rateRange",
+                engine.getValue(this.group, "rateRange") < 1 ? 1 : this.defaultRateRange);
         } else {
             script.toggleControl(this.group, "sync_leader");
         }
-
-        this.mstLongPress = false;
     }
 
     keylockButtonHandler(field) {
