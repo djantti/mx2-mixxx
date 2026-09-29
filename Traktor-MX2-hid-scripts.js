@@ -485,7 +485,7 @@ class Deck {
         // 0 = hotcues, 1 = stems, 2 = samples, 3 = loops
         this.activePadMode = 0;
 
-        this.syncEnabledTime = NaN;
+        this.syncLongPressTimer = 0;
         this.syncLongPress = false;
 
         this.mstLongPressTimer = 0;
@@ -828,7 +828,7 @@ class Deck {
         }
     }
 
-    sncButtonHandler(field) {
+    /*sncButtonHandler(field) {
         const now = Date.now();
 
         if (field.value === 1) {
@@ -849,6 +849,29 @@ class Deck {
         }
 
         engine.setValue(this.group, "sync_enabled", 0);
+    }*/
+
+    sncButtonHandler(field) {
+        if (field.value === 1) {
+            this.syncLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.syncLongPress = true;
+                this.syncLongPressTimer = 0;
+            }, true);
+
+            engine.setValue(this.group, "sync_enabled", 1);
+            return;
+        }
+
+        if (this.syncLongPressTimer !== 0) {
+            engine.stopTimer(this.syncLongPressTimer);
+            this.syncLongPressTimer = 0;
+        }
+
+        if (this.syncLongPress) {
+            this.syncLongPress = false;
+        } else {
+            engine.setValue(this.group, "sync_enabled", 0);
+        }
     }
 
     mstButtonHandler(field) {
