@@ -14,7 +14,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 
 | No. | Element | Primary function | Secondary function |
 | --- | --- | --- | --- |
-| 1 | FX main knob | Control FX chain dry / wet balance ||
+| 1 | FX main knob | Control FX chain dry / wet balance | Adjust FX chain super parameter |
 | 2 | FX param knob | <p>**Normal mode:** Control FX meta parameter</p><p>**Focus mode:** Adjust focused effect parameter</p> ||
 | 3 | FX focus button | <p>*Press* to toggle FX parameter panel</p><p>*Hold* to enter effect focus select mode ||
 | 4 | FX toggle button | <p>**Normal mode:** Toggle effect on / off</p><p>**Focus select mode:** Choose focused effect</p><p>**Focus mode:** Toggle focused effect parameter on / off</p> | Cycle through effects |
