@@ -942,8 +942,7 @@ class Deck {
 
         if (qfxPressed > 0) {
             this.mx2.mixer.qfxIgnore = true;
-            engine.setValue(field.group, "loaded_chain_preset",
-                Settings.qfxPresets[qfxPressed - 1]);
+            engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
         } else {
             script.toggleControl(field.group, "enabled");
         }
@@ -1167,13 +1166,7 @@ class Deck {
             }
 
             // Start timer to manually decay the velocity
-            this.jogDecayTimer = engine.beginTimer(
-                this.jogWheelDecayPollTime,
-                () => {
-                    this.jogDecayer();
-                },
-                true
-            );
+            this.jogDecayTimer = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
         } else {
             engine.setValue(this.group, "jog", velocity * this.velocityToJog);
         }
