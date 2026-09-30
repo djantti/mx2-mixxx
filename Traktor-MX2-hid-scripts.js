@@ -390,7 +390,7 @@ class FxPresetButton {
 
         this.number = number;
         this.group = "[ChannelX]";
-        this.output = `!qfx_${ this.number }`;
+        this.output = `!qfx_${this.number}`;
 
         this.qfxActive = false;
 
@@ -437,7 +437,7 @@ class FxPresetButton {
 
             // Change Quick FX preset for both decks on normal button release
             [1, 2].forEach(channel => {
-                engine.setValue(`[QuickEffectRack1_[Channel${ channel }]]`, "loaded_chain_preset", preset);
+                engine.setValue(`[QuickEffectRack1_[Channel${channel}]]`, "loaded_chain_preset", preset);
             });
         }
     }
@@ -446,14 +446,14 @@ class FxPresetButton {
         if (Settings.qfxPresets[this.number - 1] === value) {
             // Only set the LED once if changing presets for both decks
             if (!this.qfxActive) {
-                this.controller.setOutput("[ChannelX]", `!qfx_${ this.number }`,
+                this.controller.setOutput("[ChannelX]", `!qfx_${this.number}`,
                     Settings.qfxColors[this.number - 1], true);
             }
 
             this.qfxActive = true;
         } else {
             if (this.qfxActive) {
-                this.controller.setOutput("[ChannelX]", `!qfx_${ this.number }`,
+                this.controller.setOutput("[ChannelX]", `!qfx_${this.number}`,
                     Settings.qfxColors[this.number - 1] - 2, true);
             }
 
@@ -468,7 +468,7 @@ class Deck {
         this.controller = this.mx2.controller;
 
         this.number = number;
-        this.group = `[Channel${ this.number }]`;
+        this.group = `[Channel${this.number}]`;
 
         this.outputColorMap = this.mx2.outputColorMap;
 
@@ -540,9 +540,9 @@ class Deck {
     registerInputs(config) {
         this.registerButton("!favorite", config.favButton, this.favButtonHandler);
         this.registerButton("!prepare", config.prepButton, this.prepButtonHandler);
-        this.registerGroupButton("[PreviewDeck1]", `!preview_${ this.number }`, config.previewButton,
+        this.registerGroupButton("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton,
             this.previewButtonHandler);
-        this.registerGroupButton("[Skin]", `!view_${ this.number }`, config.viewButton, this.viewButtonHandler);
+        this.registerGroupButton("[Skin]", `!view_${this.number}`, config.viewButton, this.viewButtonHandler);
         this.registerButton("slip_enabled", config.flxButton);
         this.registerButton("reverse", config.revButton, this.revButtonHandler);
         this.registerButton("!tt", config.ttButton, this.jogModeButtonHandler);
@@ -557,7 +557,7 @@ class Deck {
         this.registerButton("!loops", config.loopButton, this.padModeButtonHandler);
         this.registerButton("!cue_default", config.cueButton, this.cueButtonHandler);
         this.registerButton("!play", config.playButton, this.playButtonHandler);
-        this.registerGroupButton(`[QuickEffectRack1_${ this.group }]`, "enabled", config.fxButton,
+        this.registerGroupButton(`[QuickEffectRack1_${this.group}]`, "enabled", config.fxButton,
             this.fxButtonHandler);
         this.registerButton("pfl", config.pflButton, this.pflButtonHandler);
         this.registerButton("!jog_touch", config.jogTouch, this.jogTouchHandler);
@@ -573,7 +573,7 @@ class Deck {
         }
 
         this.registerScalar("pregain", config.gainKnob, this.scalarHandler);
-        this.registerGroupScalar(`[QuickEffectRack1_${ this.group }]`, "super1", config.fxKnob, this.scalarHandler);
+        this.registerGroupScalar(`[QuickEffectRack1_${this.group}]`, "super1", config.fxKnob, this.scalarHandler);
         this.registerScalar("volume", config.volumeFader, this.scalarHandler);
         this.registerScalar("rate", config.rateFader, this.rateFaderHandler);
 
@@ -589,19 +589,19 @@ class Deck {
         }
 
         for (let i = 0; i < 8; i++) {
-            this.registerLed(`!vu_meter_${ i + 1 }`,
+            this.registerLed(`!vu_meter_${i + 1}`,
                 {hidReport: config.vuMeters[i].hidReport, offset: config.vuMeters[i].offset});
         }
 
         for (let i = 0; i < 6; i++) {
-            this.registerLed(`!bottom_led_${ i + 1 }`,
+            this.registerLed(`!bottom_led_${i + 1}`,
                 {hidReport: config.bottomLeds[i].hidReport, offset: config.bottomLeds[i].offset});
         }
 
         this.registerLed("!favorite", config.favButton);
         this.registerLed("!prepare", config.prepButton);
-        this.registerGroupLed("[PreviewDeck1]", `!preview_${ this.number }`, config.previewButton);
-        this.registerGroupLed("[Skin]", `!view_${ this.number }`, config.viewButton);
+        this.registerGroupLed("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton);
+        this.registerGroupLed("[Skin]", `!view_${this.number}`, config.viewButton);
         this.registerLed("slip_enabled", config.flxButton);
         this.registerLed("reverse", config.revButton);
         this.registerLed("!tt", config.ttButton);
@@ -615,7 +615,7 @@ class Deck {
         this.registerLed("!loops", config.loopButton);
         this.registerLed("cue_indicator", config.cueButton);
         this.registerLed("play_indicator", config.playButton);
-        this.registerGroupLed(`[QuickEffectRack1_${ this.group }]`, "enabled", config.fxButton);
+        this.registerGroupLed(`[QuickEffectRack1_${this.group}]`, "enabled", config.fxButton);
         this.registerLed("pfl", config.pflButton);
         this.registerLed("peak_indicator", config.peakIndicator);
     }
@@ -631,8 +631,8 @@ class Deck {
         this.linkLed(this.group, "keylock", this.outputCallback);
         this.linkLed(this.group, "cue_indicator", this.outputCallback);
         this.linkLed(this.group, "play_indicator", this.outputCallback);
-        this.linkLed(`[QuickEffectRack1_${ this.group }]`, "loaded_chain_preset", this.fxButtonCallback);
-        this.linkLed(`[QuickEffectRack1_${ this.group }]`, "enabled", this.fxButtonCallback);
+        this.linkLed(`[QuickEffectRack1_${this.group}]`, "loaded_chain_preset", this.fxButtonCallback);
+        this.linkLed(`[QuickEffectRack1_${this.group}]`, "enabled", this.fxButtonCallback);
         this.linkLed(this.group, "pfl", this.outputCallback);
 
         // Link bottom panel LED callbacks if light effects are enabled in settings
@@ -650,7 +650,7 @@ class Deck {
 
     enableSoftTakeover() {
         engine.softTakeover(this.group, "pregain", true);
-        engine.softTakeover(`[QuickEffectRack1_${ this.group }]`, "super1", true);
+        engine.softTakeover(`[QuickEffectRack1_${this.group}]`, "super1", true);
         engine.softTakeover(this.group, "rate", true);
         engine.softTakeover(this.group, "volume", true);
         this.eq.enableSoftTakeover();
@@ -671,16 +671,16 @@ class Deck {
 
     disableOutputs() {
         for (let i = 1; i <= 8; i++) {
-            this.controller.setOutput(this.group, `!pad_button_${ i }`, LedOff, false);
+            this.controller.setOutput(this.group, `!pad_button_${i}`, LedOff, false);
         }
 
         for (let i = 1; i <= 6; i++) {
-            this.controller.setOutput(this.group, `!bottom_led_${ i }`, LedOff, false);
+            this.controller.setOutput(this.group, `!bottom_led_${i}`, LedOff, false);
         }
 
-        this.controller.setOutput("[PreviewDeck1]", `!preview_${ this.number }`, LedOff, false);
-        this.controller.setOutput("[Skin]", `!view_${ this.number }`, LedOff, false);
-        this.controller.setOutput(`[QuickEffectRack1_${ this.group }]`, "enabled", LedOff, false);
+        this.controller.setOutput("[PreviewDeck1]", `!preview_${this.number}`, LedOff, false);
+        this.controller.setOutput("[Skin]", `!view_${this.number}`, LedOff, false);
+        this.controller.setOutput(`[QuickEffectRack1_${this.group}]`, "enabled", LedOff, false);
 
         const outputs = [
             "!favorite",
@@ -923,7 +923,7 @@ class Deck {
         const padIndex = padModes.indexOf(field.name);
 
         if (padIndex === -1) {
-            console.warn(`Unknown pad mode: ${ field.name }`);
+            console.warn(`Unknown pad mode: ${field.name}`);
             return;
         }
 
@@ -1075,7 +1075,7 @@ class Deck {
 
         if (this.activePadMode === 1 && pressedPads.length) {
             for (const padNum of pressedPads) {
-                const stem = `[QuickEffectRack1_[Channel${ field.group[field.group.length - 2] }_Stem${ padNum - 3 }]]`;
+                const stem = `[QuickEffectRack1_[Channel${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`;
 
                 if (!this.shiftPressed) {
                     if (delta > 0) {
@@ -1123,7 +1123,7 @@ class Deck {
             for (const padNum in this.padPressed) {
                 if (this.padPressed[padNum]) {
                     script.toggleControl("[QuickEffectRack1_[Channel" +
-                        `${ field.group[field.group.length - 2] }_Stem${ padNum - 4 }]]`, "enabled");
+                        `${field.group[field.group.length - 2]}_Stem${padNum - 4}]]`, "enabled");
                 }
             }
 
@@ -1203,12 +1203,12 @@ class Deck {
     }
 
     previewButtonCallback(value, group, _key) {
-        this.controller.setOutput(group, `!preview_${ this.number }`,
+        this.controller.setOutput(group, `!preview_${this.number}`,
             this.mapLedValue(value, this.outputColorMap.libraryColor), true);
     }
 
     viewButtonCallback(value, group, _key) {
-        this.controller.setOutput(group, `!view_${ this.number }`,
+        this.controller.setOutput(group, `!view_${this.number}`,
             this.mapLedValue(value, this.outputColorMap.libraryColor), true);
     }
 
@@ -1254,7 +1254,7 @@ class Deck {
         const color = outputs[key];
 
         if (color === undefined) {
-            console.warn(`No output color found for '${ key }'.`);
+            console.warn(`No output color found for '${key}'.`);
         } else {
             this.controller.setOutput(group, key, this.mapLedValue(value, color), true);
         }
@@ -1281,7 +1281,7 @@ class Deck {
         const color = this.getBottomLedsColor(value, key);
 
         for (let i = 1; i <= 6; i++) {
-            this.controller.setOutput(this.group, `!bottom_led_${ i }`, color, false);
+            this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
         }
 
         this.controller.OutputPackets.outputReport0x80.send();
@@ -1304,7 +1304,7 @@ class Deck {
             const ledUpdate = i < fullIllumCount ? ledBrightness : LedOff;
 
             if (ledUpdate !== this.vuMeterState[i]) {
-                this.controller.setOutput(this.group, `!vu_meter_${ i + 1 }`, ledUpdate, false);
+                this.controller.setOutput(this.group, `!vu_meter_${i + 1}`, ledUpdate, false);
                 // Store the new segment state
                 this.vuMeterState[i] = ledUpdate;
                 sendUpdate = true;
@@ -1374,7 +1374,7 @@ class Deck {
             return;
         }
 
-        console.warn(`Unknown mode: ${ jogMode }`);
+        console.warn(`Unknown mode: ${jogMode}`);
     }
 
     jogStopper() {
@@ -1469,7 +1469,7 @@ class PadButton {
         this.controller = this.deck.controller;
 
         this.number = number;
-        this.output = `!pad_button_${ this.number }`;
+        this.output = `!pad_button_${this.number}`;
 
         this.outputColorMap = this.deck.mx2.outputColorMap;
         this.padColorMap = new ColorMapper(PadColors);
@@ -1482,7 +1482,7 @@ class PadButton {
             "[Channel2]": {1: 5, 2: 6, 3: 7, 4: 8, 5: 13, 6: 14, 7: 15, 8: 16}
         };
 
-        this.samplerGroup = `[Sampler${ padRelations[this.deck.group][this.number] }]`;
+        this.samplerGroup = `[Sampler${padRelations[this.deck.group][this.number]}]`;
 
         this.padConnections = [];
     }
@@ -1513,16 +1513,16 @@ class PadButton {
             this.loopPad(field.value);
             break;
         default:
-            console.warn(`Unknown mode: ${ padMode }`);
+            console.warn(`Unknown mode: ${padMode}`);
             break;
         }
     }
 
     hotcuePad(value) {
         if (this.deck.shiftPressed) {
-            engine.setValue(this.deck.group, `hotcue_${ this.number }_clear`, value);
+            engine.setValue(this.deck.group, `hotcue_${this.number}_clear`, value);
         } else {
-            engine.setValue(this.deck.group, `hotcue_${ this.number }_activate`, value);
+            engine.setValue(this.deck.group, `hotcue_${this.number}_activate`, value);
         }
     }
 
@@ -1538,7 +1538,7 @@ class PadButton {
                 return;
             }
 
-            script.toggleControl(`[Channel${ this.deck.number }_Stem${ this.number }]`, "mute");
+            script.toggleControl(`[Channel${this.deck.number}_Stem${this.number}]`, "mute");
         } else if (this.number >= 5) {
             // Lower four pads are used as stem control modifiers
             this.deck.padPressed[this.number - 1] = (value === 1);
@@ -1597,10 +1597,10 @@ class PadButton {
         if (value === 1) {
             if (this.deck.shiftPressed) {
                 this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
-                engine.setValue(this.deck.group, `beatloop_${ 2 ** ((this.number - 5)) }_activate`, 1);
+                engine.setValue(this.deck.group, `beatloop_${2 ** ((this.number - 5))}_activate`, 1);
             } else {
                 this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
-                engine.setValue(this.deck.group, `beatlooproll_${ 2 ** (this.number - 5) }_activate`, 1);
+                engine.setValue(this.deck.group, `beatlooproll_${2 ** (this.number - 5)}_activate`, 1);
             }
         } else {
             this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
@@ -1609,8 +1609,8 @@ class PadButton {
     }
 
     hotcuePadCallback() {
-        const status = engine.getValue(this.deck.group, `hotcue_${ this.number }_status`);
-        const color = engine.getValue(this.deck.group, `hotcue_${ this.number }_color`);
+        const status = engine.getValue(this.deck.group, `hotcue_${this.number}_status`);
+        const color = engine.getValue(this.deck.group, `hotcue_${this.number}_color`);
 
         if (status === 1) {
             if (Settings.matchPadColors) {
@@ -1633,10 +1633,10 @@ class PadButton {
     }
 
     stemPadCallback() {
-        const stemGroup = `[Channel${ this.deck.number }_Stem${ this.number }]`;
+        const stemGroup = `[Channel${this.deck.number }_Stem${this.number}]`;
         const stemColor = engine.getValue(stemGroup, "color");
         const padColor = this.padColorMap.getValueForNearestColor(stemColor);
-        const modifierPad = `!pad_button_${ this.number + 4 }`;
+        const modifierPad = `!pad_button_${this.number + 4}`;
 
         if (stemColor === -1) {
             // No color data available, so assume the file doesn't contain stems
@@ -1706,17 +1706,17 @@ class PadButton {
         switch (padMode) {
         case 0:
             this.padConnections.push(engine.makeConnection(
-                this.deck.group, `hotcue_${ this.number }_status`, this.hotcuePadCallback.bind(this)));
+                this.deck.group, `hotcue_${this.number}_status`, this.hotcuePadCallback.bind(this)));
             this.padConnections.push(engine.makeConnection(
-                this.deck.group, `hotcue_${ this.number }_color`, this.hotcuePadCallback.bind(this)));
+                this.deck.group, `hotcue_${this.number}_color`, this.hotcuePadCallback.bind(this)));
             break;
         case 1:
             if (this.number <= 4) {
                 // Using `track_loaded` for callback doesn't work here, since stem info is not yet available
                 this.padConnections.push(engine.makeConnection(
-                    `[Channel${ this.deck.number }_Stem${ this.number }]`, "mute", this.stemPadCallback.bind(this)));
+                    `[Channel${this.deck.number}_Stem${this.number}]`, "mute", this.stemPadCallback.bind(this)));
                 this.padConnections.push(engine.makeConnection(
-                    `[Channel${ this.deck.number }_Stem${ this.number }]`, "color", this.stemPadCallback.bind(this)));
+                    `[Channel${this.deck.number}_Stem${this.number}]`, "color", this.stemPadCallback.bind(this)));
             }
 
             break;
@@ -1738,7 +1738,7 @@ class PadButton {
 
             break;
         default:
-            console.warn(`Unknown mode: ${ padMode }`);
+            console.warn(`Unknown mode: ${padMode}`);
             break;
         }
 
@@ -1753,7 +1753,7 @@ class Equalizer {
         this.deck = parent;
         this.controller = this.deck.controller;
 
-        this.group = `[EqualizerRack1_${ this.deck.group }_Effect1]`;
+        this.group = `[EqualizerRack1_${this.deck.group}_Effect1]`;
 
         this.eqParams = [
             new EqualizerParameter(this, 3),
@@ -1783,11 +1783,11 @@ class EqualizerParameter {
     }
 
     registerInputs(config) {
-        this.registerScalar(`parameter${ this.number }`, config, this.eqKnobHandler);
+        this.registerScalar(`parameter${this.number}`, config, this.eqKnobHandler);
     }
 
     enableSoftTakeover() {
-        engine.softTakeover(this.group, `parameter${ this.number }`, true);
+        engine.softTakeover(this.group, `parameter${this.number}`, true);
     }
 
     registerScalar(name, config, callback) {
@@ -1799,7 +1799,7 @@ class EqualizerParameter {
     }
 
     eqKnobHandler(field) {
-        engine.setParameter(this.group, `parameter${ this.number }`, field.value / 4095);
+        engine.setParameter(this.group, `parameter${this.number}`, field.value / 4095);
     }
 }
 
@@ -1810,7 +1810,7 @@ class EffectUnit {
 
         this.number = number;
         this.deck = this.mx2.decks[this.number - 1];
-        this.group = `[EffectRack1_EffectUnit${ this.number }]`;
+        this.group = `[EffectRack1_EffectUnit${this.number}]`;
 
         this.outputColorMap = this.mx2.outputColorMap;
 
@@ -1869,7 +1869,7 @@ class EffectUnit {
         this.controller.setOutput(this.group, "!effect_focus", LedOff, false);
 
         [1, 2].forEach(channel => {
-            this.controller.setOutput(this.group, `group_[Channel${ channel }]_enable`, LedOff, false);
+            this.controller.setOutput(this.group, `group_[Channel${channel}]_enable`, LedOff, false);
         });
 
         this.fxParams.forEach(function(effectParam) {
@@ -1996,7 +1996,7 @@ class EffectUnit {
     }
 
     effectGroupForNumber(number) {
-        return `[EffectRack1_EffectUnit${ this.unitNumber }_Effect${ number + 1 }]`;
+        return `[EffectRack1_EffectUnit${this.unitNumber}_Effect${number + 1}]`;
     }
 
     showParametersCallback(value, group, _key) {
@@ -2035,12 +2035,12 @@ class EffectUnit {
             for (let i = 1; i <= 3; i++) {
                 // Previously focused effect is not available here, so iterate over all parameter knobs
                 for (let j = 1; j <= 3; j++) {
-                    engine.softTakeoverIgnoreNextValue(`${ groupPrefix }_Effect${ i }]`, `parameter${ j }`);
+                    engine.softTakeoverIgnoreNextValue(`${groupPrefix}_Effect${i}]`, `parameter${j}`);
                 }
             }
         } else {
             for (let i = 1; i <= 3; i++) {
-                engine.softTakeoverIgnoreNextValue(`${ groupPrefix }_Effect${ i }]`, "meta");
+                engine.softTakeoverIgnoreNextValue(`${groupPrefix}_Effect${i}]`, "meta");
             }
         }
     }
@@ -2072,7 +2072,7 @@ class EffectParameter {
         this.number = number;
         this.groupPrefix = this.effectUnit.group.slice(0, -1);
         this.group = this.effectUnit.group;
-        this.output = `!effect_button_${ this.number }`;
+        this.output = `!effect_button_${this.number}`;
 
         this.outputColorMap = this.effectUnit.mx2.outputColorMap;
 
@@ -2082,26 +2082,26 @@ class EffectParameter {
     }
 
     registerInputs(config) {
-        this.registerButton(`!effect_button_${ this.number }`, config.paramButton, this.effectButtonHandler);
-        this.registerScalar(`!effect_knob_${ this.number }`, config.paramKnob, this.effectKnobHandler);
+        this.registerButton(`!effect_button_${this.number}`, config.paramButton, this.effectButtonHandler);
+        this.registerScalar(`!effect_knob_${this.number}`, config.paramKnob, this.effectKnobHandler);
     }
 
     registerOutputs(config) {
-        config.hidReport.addOutput(this.group, `!effect_button_${ this.number }`, config.offset, "B");
+        config.hidReport.addOutput(this.group, `!effect_button_${this.number}`, config.offset, "B");
     }
 
     enableSoftTakeover() {
-        const group = `${ this.groupPrefix }_Effect${ this.number }]`;
+        const group = `${this.groupPrefix }_Effect${this.number }]`;
         engine.softTakeover(group, "meta", true);
 
         for (let i = 1; i <= 3; i++) {
-            engine.softTakeover(group, `parameter${ i }`, true);
+            engine.softTakeover(group, `parameter${i}`, true);
         }
     }
 
     disableOutputs() {
         for (let i = 1; i <= 3; i++) {
-            this.controller.setOutput(this.group, `!effect_button_${ i }`, LedOff, false);
+            this.controller.setOutput(this.group, `!effect_button_${i}`, LedOff, false);
         }
     }
 
@@ -2196,13 +2196,13 @@ class EffectParameter {
 
         if (focusedEffect === 0) {
             return {
-                group: `${ this.groupPrefix }_Effect${ this.number }]`,
+                group: `${this.groupPrefix}_Effect${this.number}]`,
                 key: "enabled",
             };
         } else {
             return {
-                group: `${ this.groupPrefix }_Effect${ focusedEffect }]`,
-                key: `button_parameter${ this.number }`,
+                group: `${this.groupPrefix}_Effect${focusedEffect}]`,
+                key: `button_parameter${this.number}`,
             };
         }
     }
@@ -2212,13 +2212,13 @@ class EffectParameter {
 
         if (focusedEffect === 0) {
             return {
-                group: `${ this.groupPrefix }_Effect${ this.number}]`,
+                group: `${this.groupPrefix}_Effect${this.number}]`,
                 key: "meta",
             };
         } else {
             return {
-                group: `${ this.groupPrefix }_Effect${ focusedEffect }]`,
-                key: `parameter${ this.number }`,
+                group: `${this.groupPrefix}_Effect${focusedEffect}]`,
+                key: `parameter${this.number}`,
             };
         }
     }
@@ -2703,7 +2703,7 @@ class MX2 {
 
         this.registerOutputPackets();
 
-        console.log(`${ this.id } initialized`);
+        console.log(`${this.id} initialized`);
     }
 
     shutdown() {
@@ -2718,7 +2718,7 @@ class MX2 {
         this.mixer.disableOutputs();
         this.controller.OutputPackets.outputReport0x80.send();
 
-        console.log(`${ this.id } shut down`);
+        console.log(`${this.id} shut down`);
     }
 }
 
