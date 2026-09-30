@@ -873,9 +873,11 @@
         variable="jogWheelAlpha"
         label="Movement smoothing"
         type="enum">
-        <value label="Low">0.25</value>
+        <value label="Off">1</value>
+        <value label="Low">0.8</value>
         <value label="Medium" default="true">0.5</value>
-        <value label="High">0.75</value>
+        <value label="High">0.2</value>
+        <value label="Maximum">0.05</value>
         <description>
           Controls jog wheel's movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement.
         </description>
@@ -884,9 +886,11 @@
         variable="jogWheelEpsilon"
         label="Input dead zone"
         type="enum">
-        <value label="Low">1e-5</value>
-        <value label="Medium" default="true">1e-6</value>
-        <value label="High">1e-7</value>
+        <value label="Minimal">1e-7</value>
+        <value label="Low">1e-6</value>
+        <value label="Medium" default="true">1e-5</value>
+        <value label="High">1e-4</value>
+        <value label="Maximum">1e-3</value>
         <description>
           Adjusts the jog wheel's input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive.
         </description>
