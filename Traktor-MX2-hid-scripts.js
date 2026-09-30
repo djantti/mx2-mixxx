@@ -1016,11 +1016,11 @@ class Deck {
 
         if (this.shiftPressed) {
             engine.setValue("[Library]", "focused_widget", 2);
-            engine.setValue("[Library]", "MoveVertical", delta);
         } else {
             engine.setValue("[Library]", "focused_widget", 3);
-            engine.setValue("[Library]", "MoveVertical", delta);
         }
+
+        engine.setValue("[Library]", "MoveVertical", delta);
     }
 
     moveEncoderTurnHandler(field) {
