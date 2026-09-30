@@ -222,7 +222,7 @@ const Settings = {
     jogWheelAlpha: Number(engine.getSetting("jogWheelAlpha")) || 0.5,
 
     // Dead zone threshold for jog wheel input
-    jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-6,
+    jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-5,
 
     // Jog wheel seek mode speed
     jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 1e6,
