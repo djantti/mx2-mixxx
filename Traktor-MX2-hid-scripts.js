@@ -828,29 +828,6 @@ class Deck {
         }
     }
 
-    /*sncButtonHandler(field) {
-        const now = Date.now();
-
-        if (field.value === 1) {
-            this.syncEnabledTime = now;
-            engine.setValue(this.group, "sync_enabled", 1);
-            return;
-        }
-
-        if (!engine.getValue(this.group, "sync_enabled")) {
-            // Keep sync lock disabled if button was released before latching
-            engine.setValue(this.group, "sync_enabled", 0);
-            return;
-        }
-
-        if (now - this.syncEnabledTime > Settings.longPressTimeout) {
-            engine.setValue(this.group, "sync_enabled", 1);
-            return;
-        }
-
-        engine.setValue(this.group, "sync_enabled", 0);
-    }*/
-
     sncButtonHandler(field) {
         if (field.value === 1) {
             this.syncLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
