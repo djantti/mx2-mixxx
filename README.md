@@ -1,6 +1,6 @@
 # Traktor MX2 Mixxx mapping
 
-This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads, rate fader snapping and range functions, user configurable settings and customizable LED color themes.
+This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads (8 per deck), rate fader midpoint snapping and range functions, user configurable settings and customizable LED color themes.
 
 ## Controller overview
 
@@ -8,7 +8,7 @@ This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https
 
 ## Mapping description
 
-Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus (**3**) buttons and for the effect toggle (**4**) buttons. Secondary functions are accessed holding the shift (**15**) buttons.
+Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus (**3**) buttons and for the effect toggle (**4**) buttons. Secondary functions are accessed holding the shift (**15**) button.
 
 ### Decks (1–29)
 
@@ -20,20 +20,20 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 4 | FX toggle button | <p>**Normal mode:** Toggle effect on / off</p><p>**Focus select mode:** Choose focused effect</p><p>**Focus mode:** Toggle focused effect parameter on / off</p> | Cycle through effects |
 | 5 | FAV button | Use next color for selected track | Use previous color for selected track |
 | 6 | Star button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
-| 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter to select the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
-| 8 | Preview button | Load and play / pause track in preview deck | Eject the currently loaded track |
+| 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
+| 8 | Preview button | Load and play / pause track in preview deck | Eject the currently loaded preview track |
 | 9 | VIEW button | Toggle big library mode ||
 | 10 | REV button | *Hold* to play track in reverse | *Hold* for reverse play with slip mode |
 | 11 | FLX button | Toggle slip mode on / off ||
-| 12 | TT button | Set jogwheel to turntable mode ||
-| 13 | JOG button | Set jogwheel to jog mode ||
+| 12 | TT button | Set jog wheel to turntable mode ||
+| 13 | JOG button | Set jog wheel to jog mode ||
 | 14 | Jog wheel | <p>*Touch* the top of the jog wheel and *turn* it to scratch</p><p>*Turn* the jog wheel from the outer ring to nudge the track</p> | *Turn* the jog wheel to seek quickly while stopped. In turntable mode, *turn* the wheel from the outer ring. |
-| 15 | SHIFT button | Activates secondary functions when held ||
+| 15 | SHIFT button | *Hold* to activate secondary functions ||
 | 16 | PLAY button | Toggle track playback | Go to track start and stop |
 | 17 | CUE button | Set default cue point | Jump to cue point and stop |
-| 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* to control stem track volume while pad 5–8 is held</p> | *Press* to activate and jump to current loop while stopping playback |
+| 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to control stem track volume</p> | *Press* to activate and jump to current loop while stopping playback |
 | 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and *turn* loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and *press* pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
-| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** While *holding* pad 5–8 (**26**), *turn* to adjust stem track FX super knob</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** While *holding* pad 5–8 (**26**) *turn* to select a stem Quick FX preset</p> |
+| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to adjust stem track FX super parameter</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to select a stem Quick FX preset</p> |
 | 21 | Hotcues button | Activate **hotcues** pad mode ||
 | 22 | Stems button | Activate **stems** pad mode ||
 | 23 | Samples button | Activate **samples** pad mode ||
