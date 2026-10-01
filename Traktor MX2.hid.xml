@@ -879,7 +879,7 @@
         <value label="High">0.2</value>
         <value label="Maximum">0.05</value>
         <description>
-          Controls jog wheel's movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement.
+          Controls jog wheel's movement smoothing. Higher settings produce smooth but less responsive movement, while lower settings produce snappy but noisier movement.
         </description>
       </option>
       <option
@@ -892,7 +892,7 @@
         <value label="High">1e-4</value>
         <value label="Maximum">1e-3</value>
         <description>
-          Adjusts the jog wheel's input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive.
+          Adjusts the jog wheel's input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive.
         </description>
       </option>
       <option

@@ -143,8 +143,8 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Setting | Default | Description |
 | --- | --- | --- |
 | Jogging and nudging sensitivity | Medium | Sensitivity for turning the wheel by touching only the outer ring. Higher settings will allow for faster jogging and nudging movement. |
-| Movement smoothing | Medium | Controls jog wheel movement smoothing. Low setting produces smooth but less responsive movement, while high setting produces snappy but noisier movement. |
-| Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher values ignore more subtle movements, but can make the wheel feel less responsive. |
+| Movement smoothing | Medium | Controls jog wheel movement smoothing. Higher settings produce smooth but less responsive movement, while lower settings produce snappy but noisier movement. |
+| Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive. |
 
 ### Controls
 
