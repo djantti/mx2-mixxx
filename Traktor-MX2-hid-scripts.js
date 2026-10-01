@@ -227,6 +227,9 @@ const Settings = {
     // Jog wheel seek mode speed
     jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 1e6,
 
+    // Fine scratch mode speed multiplier
+    fineScratchMultiplier: Number(engine.getSetting("fineScratchMultiplier")) || 0.5,
+
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
@@ -499,6 +502,7 @@ class Deck {
         this.jogTimecode = 0;
 
         this.lastVelocity = 0;
+        this.lastScratchVelocity = 0
         this.lastTickValue = 0;
         this.lastTimestamp = 0;
         this.lastWallClock = 0;
@@ -1157,7 +1161,11 @@ class Deck {
         }
 
         if (engine.getValue(this.group, "scratch2_enable")) {
-            engine.setValue(this.group, "scratch2", velocity * this.velocityToScratch);
+            const scratchVelocity = velocity * this.velocityToScratch *
+                (this.shiftPressed ? Settings.fineScratchMultiplier : 1);
+
+            this.lastScratchVelocity = scratchVelocity;
+            engine.setValue(this.group, "scratch2", scratchVelocity);
 
             if (this.jogDecayTimer) {
                 // Cancel any existing decay timers
@@ -1352,7 +1360,9 @@ class Deck {
             // Exit scratching mode if the wheel is stopped
             engine.setValue(this.group, "scratch2", 0);
             engine.setValue(this.group, "scratch2_enable", false);
+
             this.lastVelocity = 0;
+            this.lastScratchVelocity = 0;
             this.jogStopTimer = 0;
         } else {
             // Otherwise, check again after a while
@@ -1420,13 +1430,15 @@ class Deck {
     jogDecayer() {
         if (Math.abs(engine.getValue(this.group, "scratch2")) <= Settings.jogWheelEpsilon * this.velocityToScratch) {
             // If wheel is slow enough, immediately set scratch2 to 0
-            this.lastVelocity = 0;
             engine.setValue(this.group, "scratch2", 0);
+
+            this.lastVelocity = 0;
+            this.lastScratchVelocity = 0;
             this.jogDecayTimer = 0;
         } else {
             // Otherwise decay the velocity and call again after a while
-            const decayedVelocity = this.lastVelocity * (1 - Settings.jogWheelAlpha);
-            this.lastVelocity = decayedVelocity;
+            const decayedVelocity = this.lastScratchVelocity * (1 - Settings.jogWheelAlpha);
+            this.lastScratchVelocity = decayedVelocity;
             engine.setValue(this.group, "scratch2", decayedVelocity * this.velocityToScratch);
             this.jogDecayTimer = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
         }

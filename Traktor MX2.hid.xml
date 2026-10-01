@@ -906,6 +906,17 @@
           Sets the jog wheel's quick seek speed. To activate quick seek, hold 'Shift' while turning the wheel. In turntable mode, turn the wheel from the outer ring.
         </description>
       </option>
+      <option
+        variable="fineScratchMultiplier"
+        label="Fine scratch speed multiplier"
+        type="enum">
+        <value label="25%">0.25</value>
+        <value label="50%" default="true">0.5</value>
+        <value label="75%">0.75</value>
+        <description>
+          Controls the scratching speed when 'Shift' button is held.
+        </description>
+      </option>
     </group>
     <group label="Controls">
       <option
