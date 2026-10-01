@@ -27,7 +27,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 11 | FLX button | Toggle slip mode on / off ||
 | 12 | TT button | Set jog wheel to turntable mode ||
 | 13 | JOG button | Set jog wheel to jog mode ||
-| 14 | Jog wheel | <p>*Touch* the top of the jog wheel and *turn* it to scratch</p><p>*Turn* the jog wheel from the outer ring to nudge the track</p> | <p>**Turntable mode:** *Turn* the wheel to scratch in fine scratching speed</p><p>**Jog mode:** *Turn* the wheel to seek quickly while stopped</p> |
+| 14 | Jog wheel | <p>*Touch* the top of the jog wheel and *turn* it to scratch</p><p>*Turn* the jog wheel from the outer ring to nudge the track</p> | If a track is playing, *turn* the wheel to scratch in fine scratching speed. Otherwise *turn* the wheel to seek quickly through the track. An active loop will also move while seeking.</p> |
 | 15 | SHIFT button | *Hold* to activate secondary functions ||
 | 16 | PLAY button | Toggle track playback | Go to track start and stop |
 | 17 | CUE button | Set default cue point | Jump to cue point and stop |
