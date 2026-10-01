@@ -224,7 +224,7 @@ const Settings = {
     // Dead zone threshold for jog wheel input
     jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-5,
 
-    // Jog wheel seek mode speed
+    // Jog wheel quick seek mode speed
     jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 1e6,
 
     // Fine scratch mode speed multiplier
@@ -1151,6 +1151,8 @@ class Deck {
         const velocity = this.wheelVelocity(field.value);
 
         if (this.shiftPressed && !engine.getValue(this.group, "play")) {
+            // Disable scratching in quick seek mode
+            engine.setValue(this.group, "scratch2_enable", false);
             engine.setValue(this.group, "beatjump", velocity * Settings.jogWheelSeekSpeed);
             return;
         }

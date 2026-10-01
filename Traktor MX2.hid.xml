@@ -903,7 +903,7 @@
         <value label="Medium">1e5</value>
         <value label="High" default="true">1e6</value>
         <description>
-          Sets the jog wheel's quick seek speed. To activate quick seek, hold 'Shift' while turning the wheel. In turntable mode, turn the wheel from the outer ring.
+          Controls the jog wheel's quick seek speed when 'Shift' button is held.
         </description>
       </option>
       <option
