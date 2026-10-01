@@ -1157,12 +1157,7 @@ class Deck {
             return;
         }
 
-        if (this.jogMode !== 0) {
-            engine.setValue(this.group, "jog", velocity * this.velocityToJog);
-            return;
-        }
-
-        if (engine.getValue(this.group, "scratch2_enable")) {
+        if (this.jogMode === 0 && engine.getValue(this.group, "scratch2_enable")) {
             const scratchVelocity = velocity * this.velocityToScratch *
                 (this.shiftPressed ? Settings.fineScratchMultiplier : 1);
 
@@ -1177,9 +1172,11 @@ class Deck {
 
             // Start timer to manually decay the velocity
             this.jogDecayTimer = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
-        } else {
-            engine.setValue(this.group, "jog", velocity * this.velocityToJog);
+
+            return;
         }
+
+        engine.setValue(this.group, "jog", velocity * this.velocityToJog);
     }
 
     previewButtonCallback(value, group, _key) {
@@ -1360,7 +1357,6 @@ class Deck {
     jogStopper() {
         if (Math.abs(engine.getValue(this.group, "scratch2")) <= Settings.jogWheelEpsilon * this.velocityToScratch) {
             // Exit scratching mode if the wheel is stopped
-            engine.setValue(this.group, "scratch2", 0);
             engine.setValue(this.group, "scratch2_enable", false);
 
             this.lastVelocity = 0;
