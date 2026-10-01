@@ -901,7 +901,7 @@
         type="enum">
         <value label="Low">5e4</value>
         <value label="Medium">1e5</value>
-        <value label="High" default="true">1e6</value>
+        <value label="High" default="true">5e5</value>
         <description>
           Controls the jog wheel's quick seek speed when 'Shift' button is held.
         </description>

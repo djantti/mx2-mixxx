@@ -225,7 +225,7 @@ const Settings = {
     jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-5,
 
     // Jog wheel quick seek mode speed
-    jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 1e6,
+    jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 5e5,
 
     // Fine scratch mode speed multiplier
     fineScratchMultiplier: Number(engine.getSetting("fineScratchMultiplier")) || 0.5,
