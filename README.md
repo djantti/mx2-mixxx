@@ -145,8 +145,9 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Jogging and nudging sensitivity | Medium | Sensitivity for turning the wheel by touching only the outer ring. Higher settings will allow for faster jogging and nudging movement. |
 | Movement smoothing | Medium | Controls jog wheel movement smoothing. Higher settings produce smooth but less responsive movement, while lower settings produce snappy but noisier movement. |
 | Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive. |
-| Quick seek speed | High | Controls the jog wheel's quick seek speed when **Shift** button is held |
-| Fine scratch speed multiplier | 50% | Controls the scratching speed when **Shift** button is held |
+| Fine scratching speed | 50% | Controls the scratching speed when **Shift** button is held |
+| Quick seek speed | 200% | Controls the jog wheel's quick seek speed when **Shift** button is held |
+| Align quick seek to beatgrid | False | Align quick seek wheel movements to beatgrid. If the track doesn't have a beatgrid, seconds will be used instead. |
 
 ### Controls
 

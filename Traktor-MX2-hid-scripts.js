@@ -224,11 +224,14 @@ const Settings = {
     // Dead zone threshold for jog wheel input
     jogWheelEpsilon: Number(engine.getSetting("jogWheelEpsilon")) || 1e-5,
 
-    // Jog wheel quick seek mode speed
-    jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 5e5,
-
     // Fine scratch mode speed multiplier
     fineScratchMultiplier: Number(engine.getSetting("fineScratchMultiplier")) || 0.5,
+
+    // Jog wheel quick seek mode speed multiplier
+    jogWheelSeekSpeed: Number(engine.getSetting("jogWheelSeekSpeed")) || 2,
+
+    // Align quick seek to beatgrid (default: false)
+    jogWheelSeekGrid: !!(engine.getSetting("jogWheelSeekGrid")),
 
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
@@ -1153,7 +1156,22 @@ class Deck {
         if (this.shiftPressed && !engine.getValue(this.group, "play")) {
             // Disable scratching in quick seek mode
             engine.setValue(this.group, "scratch2_enable", false);
-            engine.setValue(this.group, "beatjump", velocity * Settings.jogWheelSeekSpeed);
+
+            const scaledVelocity = velocity * this.velocityToScratch;
+            let seekVelocity = scaledVelocity;
+
+            if (Settings.jogWheelSeekGrid) {
+                // Filter tiny wheel movements with a simple deadband
+                if (Math.abs(scaledVelocity) <= 0.01) {
+                    seekVelocity = 0;
+                } else if (Math.abs(scaledVelocity) < 1) {
+                    seekVelocity = Math.sign(scaledVelocity);
+                } else {
+                    seekVelocity = Math.trunc(scaledVelocity);
+                }
+            }
+
+            engine.setValue(this.group, "beatjump", seekVelocity * Settings.jogWheelSeekSpeed);
             return;
         }
 
