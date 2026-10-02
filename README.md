@@ -8,7 +8,7 @@ This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https
 
 ## Mapping description
 
-Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus (**3**) buttons and for the effect toggle (**4**) buttons. Secondary functions are accessed holding the shift (**15**) button.
+Most knobs and buttons function as they are labeled and follow the manufacturer's original mapping where applicable. Mixxx's [standard controls](https://manual.mixxx.org/2.6/en/chapters/effects#controller-effects-mapping) are used for the top row effect knobs (**2**), the effect focus (**3**) buttons and for the effect toggle (**4**) buttons. Secondary functions are accessed holding the SHIFT (**15**) button.
 
 ### Decks (1–29)
 
@@ -101,12 +101,12 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Unconnected pads | White | Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads. |
 | Inactive pads | White | Color for connected, but currently inactive pads |
 | Active pads | Green | Color for currently active pads |
-| Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* **Shift**. |
+| Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* SHIFT (**15**). |
 | Sync buttons | Yellow | Color for sync and sync master buttons |
 | FX buttons | White | Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting. |
 | Headphone buttons | White | Color for headphone cue buttons |
 | Talkback button | White | Color for the talkback button |
-| Alternate mode indicators | Red | Color for buttons in alternate mode. Used by 'MST' button when long range rate faders are active. |
+| Alternate mode indicators | Red | Color for buttons in alternate mode. Used by MST (**28**) button when long range rate faders are active. |
 | Peak indicators | Red | Color for main output and microphone input peak indicator LEDs |
 
 ### Bottom panel colors
@@ -145,8 +145,8 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Jogging and nudging sensitivity | Medium | Sensitivity for turning the wheel by touching only the outer ring. Higher settings will allow for faster jogging and nudging movement. |
 | Movement smoothing | Medium | Controls jog wheel movement smoothing. Higher settings produce smooth but less responsive movement, while lower settings produce snappy but noisier movement. |
 | Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive. |
-| Fine scratching speed | 50% | Controls the scratching speed when **Shift** button is held |
-| Quick seek speed | 200% | Controls the jog wheel's quick seek speed when **Shift** button is held |
+| Fine scratching speed | 50% | Controls the scratching speed when SHIFT (**15**) button is held |
+| Quick seek speed | 200% | Controls the jog wheel's quick seek speed when SHIFT (**15**) button is held |
 | Align quick seek to beatgrid | False | Align quick seek wheel movements to beatgrid. If the track doesn't have a beatgrid, seconds will be used instead. |
 
 ### Controls
