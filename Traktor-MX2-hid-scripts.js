@@ -505,7 +505,7 @@ class Deck {
         this.jogTimecode = 0;
 
         this.lastVelocity = 0;
-        this.lastScratchVelocity = 0
+        this.lastScratchVelocity = 0;
         this.lastTickValue = 0;
         this.lastTimestamp = 0;
         this.lastWallClock = 0;
