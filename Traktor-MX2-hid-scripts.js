@@ -494,6 +494,9 @@ class Deck {
         this.syncLongPressTimer = 0;
         this.syncLongPress = false;
 
+        this.fxLongPressTimer = 0;
+        this.fxLongPress = false;
+
         this.mstLongPressTimer = 0;
         this.mstLongPress = false;
 
@@ -941,16 +944,31 @@ class Deck {
     }
 
     fxButtonHandler(field) {
-        if (field.value === 0) {
+        if (field.value === 1) {
+            const qfxPressed = this.mx2.mixer.qfxPressed;
+
+            if (qfxPressed > 0) {
+                this.mx2.mixer.qfxIgnore = true;
+                engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
+            } else {
+                this.fxLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                    this.fxLongPress = true;
+                    this.fxLongPressTimer = 0;
+                }, true);
+
+                script.toggleControl(field.group, "enabled");
+            }
+
             return;
         }
 
-        const qfxPressed = this.mx2.mixer.qfxPressed;
+        if (this.fxLongPressTimer !== 0) {
+            engine.stopTimer(this.fxLongPressTimer);
+            this.fxLongPressTimer = 0;
+        }
 
-        if (qfxPressed > 0) {
-            this.mx2.mixer.qfxIgnore = true;
-            engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
-        } else {
+        if (this.fxLongPress) {
+            this.fxLongPress = false;
             script.toggleControl(field.group, "enabled");
         }
     }
