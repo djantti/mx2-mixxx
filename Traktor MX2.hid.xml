@@ -929,8 +929,31 @@
     </group>
     <group label="Controls">
       <option
+        variable="longPressTimeout"
+        label="Long press timeout"
+        type="integer"
+        min="100"
+        max="1000"
+        step="1"
+        default="300">
+        <description>
+          Time in milliseconds required to hold a button before a long press is registered.
+        </description>
+      </option>
+      <option
+        variable="rateFaderSnap"
+        label="Rate fader midpoint snapping"
+        type="enum">
+        <value label="Off" default="true">0</value>
+        <value label="Low">100</value>
+        <value label="High">300</value>
+        <description>
+          Range over which rate faders automatically snap to the midpoint.
+        </description>
+      </option>
+      <option
         variable="softTakeover"
-        label="Use soft takeover for knobs and faders"
+        label="Enable soft takeover for knobs and faders"
         type="boolean"
         default="true">
         <description>
@@ -938,27 +961,13 @@
         </description>
       </option>
       <option
-          variable="rateFaderSnap"
-          label="Rate fader midpoint snapping"
-          type="enum">
-          <value label="Off" default="true">0</value>
-          <value label="Low">100</value>
-          <value label="High">300</value>
-          <description>
-            Range over which rate faders automatically snap to the midpoint.
-          </description>
-      </option>
-      <option
-          variable="longPressTimeout"
-          label="Long press timeout"
-          type="integer"
-          min="100"
-          max="1000"
-          step="1"
-          default="300">
-          <description>
-            Time in milliseconds required to hold a button before a long press is registered.
-          </description>
+        variable="rollingLoopPads"
+        label="Use rolling loop pads by default"
+        type="boolean"
+        default="true">
+        <description>
+          Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the 'Shift' button.
+        </description>
       </option>
     </group>
     <group label="Audio">

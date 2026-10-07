@@ -233,14 +233,17 @@ const Settings = {
     // Align quick seek to beatgrid (default: false)
     jogWheelSeekGrid: !!(engine.getSetting("jogWheelSeekGrid")),
 
+    // Time (ms) required to hold a button before a long press is registered
+    longPressTimeout: Number(engine.getSetting("longPressTimeout")) || 300,
+
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
-    // Use soft takeover for knobs and faders (default: true)
+    // Enable soft takeover for knobs and faders (default: true)
     softTakeover: !!engine.getSetting("softTakeover"),
 
-    // Time (ms) required to hold a button before a long press is registered
-    longPressTimeout: Number(engine.getSetting("longPressTimeout")) || 300,
+    // Use rolling loops as the default loop pad mode (default: true)
+    rollingLoopPads: !!engine.getSetting("rollingLoopPads"),
 
     // Route audio through master gain knob (default: false)
     enableMasterGain: !!engine.getSetting("masterGain")
@@ -1612,13 +1615,16 @@ class PadButton {
             return;
         }
 
+        const [defaultLoop, shiftedLoop] = Settings.rollingLoopPads
+            ? ["beatlooproll", "beatloop"] : ["beatloop", "beatlooproll"];
+
         if (value === 1) {
             if (this.deck.shiftPressed) {
                 this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
-                engine.setValue(this.deck.group, `beatloop_${2 ** ((this.number - 5))}_activate`, 1);
+                engine.setValue(this.deck.group, `${shiftedLoop}_${2 ** ((this.number - 5))}_activate`, 1);
             } else {
                 this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
-                engine.setValue(this.deck.group, `beatlooproll_${2 ** (this.number - 5)}_activate`, 1);
+                engine.setValue(this.deck.group, `${defaultLoop}_${2 ** (this.number - 5)}_activate`, 1);
             }
         } else {
             this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
