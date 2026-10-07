@@ -947,7 +947,9 @@ class Deck {
         if (field.value === 1) {
             const qfxPressed = this.mx2.mixer.qfxPressed;
 
-            if (qfxPressed > 0) {
+            if (this.shiftPressed) {
+                engine.setValue(field.group, "next_chain_preset", 1);
+            } else if (qfxPressed > 0) {
                 this.mx2.mixer.qfxIgnore = true;
                 engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
             } else {
