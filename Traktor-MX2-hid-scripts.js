@@ -239,6 +239,9 @@ const Settings = {
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
+    // Use global shift buttons (default: true)
+    globalShiftButtons: !!engine.getSetting("globalShiftButtons"),
+
     // Enable soft takeover for knobs and faders (default: true)
     softTakeover: !!engine.getSetting("softTakeover"),
 
@@ -765,7 +768,7 @@ class Deck {
 
     favButtonHandler(field) {
         if (field.value === 1) {
-            if (this.shiftPressed) {
+            if (this.isShiftPressed()) {
                 engine.setValue("[Library]", "track_color_prev", 1);
             } else {
                 engine.setValue("[Library]", "track_color_next", 1);
@@ -777,7 +780,7 @@ class Deck {
 
     prepButtonHandler(field) {
         if (field.value === 1) {
-            if (this.shiftPressed) {
+            if (this.isShiftPressed()) {
                 engine.setValue("[Library]", "AutoDjAddTop", field.value);
             } else {
                 engine.setValue("[Library]", "AutoDjAddBottom", field.value);
@@ -792,7 +795,7 @@ class Deck {
             return;
         }
 
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             script.triggerControl("[PreviewDeck1]", "eject");
         } else {
             engine.setValue("[PreviewDeck1]", "LoadSelectedTrackAndPlay", field.value);
@@ -806,7 +809,7 @@ class Deck {
     }
 
     revButtonHandler(field) {
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(field.group, "reverseroll", field.value);
         } else {
             engine.setValue(field.group, "reverse", field.value);
@@ -926,7 +929,7 @@ class Deck {
     }
 
     cueButtonHandler(field) {
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(this.group, "cue_gotoandstop", field.value);
         } else {
             engine.setValue(this.group, "cue_default", field.value);
@@ -934,7 +937,7 @@ class Deck {
     }
 
     playButtonHandler(field) {
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(this.group, "start_stop", field.value);
         } else if (field.value === 1) {
             // Failsafe to disable scratching if the timer has not yet executed after a backspin
@@ -950,7 +953,7 @@ class Deck {
         if (field.value === 1) {
             const qfxPressed = this.mx2.mixer.qfxPressed;
 
-            if (this.shiftPressed) {
+            if (this.isShiftPressed()) {
                 engine.setValue(field.group, "next_chain_preset", 1);
             } else if (qfxPressed > 0) {
                 this.mx2.mixer.qfxIgnore = true;
@@ -983,7 +986,7 @@ class Deck {
             return;
         }
 
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             script.toggleControl(this.group, "quantize");
         } else {
             script.toggleControl(this.group, "pfl");
@@ -1010,7 +1013,7 @@ class Deck {
     }
 
     browseEncoderPressHandler(field) {
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue("[Library]", "GoToItem", field.value);
         } else {
             engine.setValue(field.group, "LoadSelectedTrack", field.value);
@@ -1020,7 +1023,7 @@ class Deck {
     browseEncoderTurnHandler(field) {
         const delta = this.browseEncoder.delta(field.value);
 
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue("[Library]", "focused_widget", 2);
         } else {
             engine.setValue("[Library]", "focused_widget", 3);
@@ -1047,7 +1050,7 @@ class Deck {
             return;
         }
 
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             const beatjumpSize = engine.getValue(field.group, "beatjump_size");
 
             if (delta > 0) {
@@ -1068,7 +1071,7 @@ class Deck {
     }
 
     moveEncoderPressHandler(field) {
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(this.group, "reloop_andstop", field.value);
         } else {
             engine.setValue(this.group, "beatlooproll_activate", field.value);
@@ -1083,17 +1086,17 @@ class Deck {
             for (const padNum of pressedPads) {
                 const stem = `[QuickEffectRack1_[Channel${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`;
 
-                if (!this.shiftPressed) {
-                    if (delta > 0) {
-                        script.triggerControl(stem, "super1_up");
-                    } else {
-                        script.triggerControl(stem, "super1_down");
-                    }
-                } else {
+                if (this.isShiftPressed()) {
                     if (delta > 0) {
                         engine.setValue(stem, "next_chain_preset", 1);
                     } else {
                         engine.setValue(stem, "prev_chain_preset", 1);
+                    }
+                } else {
+                    if (delta > 0) {
+                        script.triggerControl(stem, "super1_up");
+                    } else {
+                        script.triggerControl(stem, "super1_down");
                     }
                 }
             }
@@ -1136,7 +1139,7 @@ class Deck {
             return;
         }
 
-        if (this.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(this.group, "reloop_toggle", field.value);
             return;
         }
@@ -1176,7 +1179,7 @@ class Deck {
 
         const velocity = this.wheelVelocity(field.value);
 
-        if (this.shiftPressed && !engine.getValue(this.group, "play")) {
+        if (this.isShiftPressed() && !engine.getValue(this.group, "play")) {
             // Disable scratching in quick seek mode
             engine.setValue(this.group, "scratch2_enable", false);
 
@@ -1200,7 +1203,7 @@ class Deck {
 
         if (this.jogMode === 0 && engine.getValue(this.group, "scratch2_enable")) {
             const scratchVelocity = velocity * this.velocityToScratch *
-                (this.shiftPressed ? Settings.fineScratchMultiplier : 1);
+                (this.isShiftPressed() ? Settings.fineScratchMultiplier : 1);
 
             this.lastScratchVelocity = scratchVelocity;
             engine.setValue(this.group, "scratch2", scratchVelocity);
@@ -1482,6 +1485,10 @@ class Deck {
             this.jogDecayTimer = engine.beginTimer(this.jogWheelDecayPollTime, () => this.jogDecayer(), true);
         }
     }
+
+    isShiftPressed() {
+        return this.mx2.isShiftPressed(this.number);
+    }
 }
 
 class PadButton {
@@ -1540,7 +1547,7 @@ class PadButton {
     }
 
     hotcuePad(value) {
-        if (this.deck.shiftPressed) {
+        if (this.isShiftPressed()) {
             engine.setValue(this.deck.group, `hotcue_${this.number}_clear`, value);
         } else {
             engine.setValue(this.deck.group, `hotcue_${this.number}_activate`, value);
@@ -1570,7 +1577,7 @@ class PadButton {
         const samplerPlaying = engine.getValue(this.samplerGroup, "play");
 
         if (value === 1) {
-            if (this.deck.shiftPressed) {
+            if (this.isShiftPressed()) {
                 if (samplerPlaying) {
                     engine.setValue(this.samplerGroup, "play", 0);
                 } else {
@@ -1619,7 +1626,7 @@ class PadButton {
             ? ["beatlooproll", "beatloop"] : ["beatloop", "beatlooproll"];
 
         if (value === 1) {
-            if (this.deck.shiftPressed) {
+            if (this.isShiftPressed()) {
                 this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
                 engine.setValue(this.deck.group, `${shiftedLoop}_${2 ** ((this.number - 5))}_activate`, 1);
             } else {
@@ -1770,6 +1777,10 @@ class PadButton {
             connection.trigger();
         });
     }
+
+    isShiftPressed() {
+        return this.deck.isShiftPressed();
+    }
 }
 
 class Equalizer {
@@ -1833,7 +1844,6 @@ class EffectUnit {
         this.controller = parent.controller;
 
         this.number = number;
-        this.deck = this.mx2.decks[this.number - 1];
         this.group = `[EffectRack1_EffectUnit${this.number}]`;
 
         this.outputColorMap = this.mx2.outputColorMap;
@@ -1968,7 +1978,7 @@ class EffectUnit {
     mixKnobHandler(field) {
         const value = field.value / 4095;
 
-        if (this.shiftPressed()) {
+        if (this.isShiftPressed()) {
             engine.softTakeoverIgnoreNextValue(this.group, "mix");
             engine.setParameter(this.group, "super1", value);
         } else {
@@ -2083,8 +2093,8 @@ class EffectUnit {
         this.controller.setOutput(group, key, ledValue, true);
     }
 
-    shiftPressed() {
-        return this.mx2.decks[this.number - 1].shiftPressed;
+    isShiftPressed() {
+        return this.mx2.isShiftPressed(this.number);
     }
 }
 
@@ -2147,7 +2157,7 @@ class EffectParameter {
 
     effectButtonHandler(field) {
         if (field.value === 1) {
-            if (this.effectUnit.shiftPressed()) {
+            if (this.isShiftPressed()) {
                 script.triggerControl(`${this.groupPrefix}_Effect${this.number}]`, "next_effect");
                 return;
             }
@@ -2258,6 +2268,10 @@ class EffectParameter {
     ledCallback(value) {
         this.controller.setOutput(this.group, this.output,
             value ? this.outputColorMap.effectColor.full : this.outputColorMap.effectColor.dim, true);
+    }
+
+    isShiftPressed() {
+        return this.effectUnit.isShiftPressed();
     }
 }
 
@@ -2714,6 +2728,18 @@ class MX2 {
         return this.createColorMap(
             theme === "Custom" ? this.createCustomTheme() : ColorThemes[theme] || DefaultTheme
         );
+    }
+
+    isShiftPressed(deck) {
+        if (deck === undefined) {
+            console.warn("No deck provided, using global shift check.");
+        }
+
+        if (deck === undefined || Settings.globalShiftButtons) {
+            return this.decks[0].shiftPressed || this.decks[1].shiftPressed;
+        }
+
+        return this.decks[deck - 1].shiftPressed;
     }
 
     init(_id) {

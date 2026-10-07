@@ -952,6 +952,15 @@
         </description>
       </option>
       <option
+        variable="globalShiftButtons"
+        label="Make shift button presses global"
+        type="boolean"
+        default="true">
+        <description>
+          Use either 'Shift' button to control shifted functions on both decks.
+        </description>
+      </option>
+      <option
         variable="softTakeover"
         label="Enable soft takeover for knobs and faders"
         type="boolean"
