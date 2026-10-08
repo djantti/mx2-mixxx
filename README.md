@@ -164,4 +164,4 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Enable master gain | Off | Use Mixxx's master gain knob instead of sending audio directly to the output. |
+| Enable master gain knob control | Off | Use Mixxx's master gain knob instead of sending audio directly to the output. Enabling this is not recommended as it can lead to audio clipping issues. |

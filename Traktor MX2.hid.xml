@@ -982,11 +982,11 @@
     <group label="Audio">
       <option
         variable="masterGain"
-        label="Enable master gain"
+        label="Enable master gain knob control"
         type="boolean"
         default="false">
         <description>
-          Use Mixxx's master gain knob instead of sending audio directly to the output.
+          Use Mixxx's master gain knob instead of sending audio directly to the output. Enabling this is not recommended as it can lead to audio clipping issues.
         </description>
       </option>
     </group>

@@ -363,7 +363,7 @@ class Mixer {
             engine.stopTimer(this.talkoverPressedTimer);
             this.talkoverPressedTimer = 0;
         } else {
-            // Disable talkover on long press release
+            // Disable talkover on long button release
             engine.setValue("[Microphone]", "talkover", 0);
         }
     }
@@ -863,6 +863,7 @@ class Deck {
         if (this.syncLongPress) {
             this.syncLongPress = false;
         } else {
+            // Do not enable sync lock if the button was not held down long enough
             engine.setValue(this.group, "sync_enabled", 0);
         }
     }
@@ -884,6 +885,7 @@ class Deck {
 
         if (this.mstLongPress) {
             this.mstLongPress = false;
+            // Toggle fader range on long button release
             engine.setValue(this.group, "rateRange",
                 engine.getValue(this.group, "rateRange") < 1 ? 1 : this.defaultRateRange);
         } else {
@@ -977,6 +979,7 @@ class Deck {
 
         if (this.fxLongPress) {
             this.fxLongPress = false;
+            // Toggle Quick FX again on long button release
             script.toggleControl(field.group, "enabled");
         }
     }
@@ -1003,7 +1006,7 @@ class Deck {
             return;
         }
 
-        // Cancel any existing stop timer
+        // Cancel existing stop timers
         if (this.jogStopTimer) {
             engine.stopTimer(this.jogStopTimer);
             this.jogStopTimer = 0;
@@ -1209,7 +1212,7 @@ class Deck {
             engine.setValue(this.group, "scratch2", scratchVelocity);
 
             if (this.jogDecayTimer) {
-                // Cancel any existing decay timers
+                // Cancel existing decay timers
                 engine.stopTimer(this.jogDecayTimer);
                 this.jogDecayTimer = 0;
             }
@@ -1407,7 +1410,7 @@ class Deck {
             this.lastScratchVelocity = 0;
             this.jogStopTimer = 0;
         } else {
-            // Otherwise, check again after a while
+            // The wheel is still moving, so check again after a while
             this.jogStopTimer = engine.beginTimer(this.jogWheelStopPollTime, () => this.jogStopper(), true);
         }
     }
@@ -1416,7 +1419,7 @@ class Deck {
         // Get current 32-bit timecode value
         const timeValue = this.jogTimecode;
 
-        // Current 32-bit tick value (wheel position) masked to low 10 bits
+        // Current 32-bit tick value (wheel position) masked to significant low 10 bits
         const tickValue = value & 0x3ff;
 
         const prevTick = this.lastTickValue;
@@ -1471,14 +1474,14 @@ class Deck {
 
     jogDecayer() {
         if (Math.abs(engine.getValue(this.group, "scratch2")) <= Settings.jogWheelEpsilon * this.velocityToScratch) {
-            // If wheel is slow enough, immediately set scratch2 to 0
+            // Set scratch2 to 0 if the wheel is moving slow enough
             engine.setValue(this.group, "scratch2", 0);
 
             this.lastVelocity = 0;
             this.lastScratchVelocity = 0;
             this.jogDecayTimer = 0;
         } else {
-            // Otherwise decay the velocity and call again after a while
+            // Otherwise decay the velocity and check again after a while
             const decayedVelocity = this.lastScratchVelocity * (1 - Settings.jogWheelAlpha);
             this.lastScratchVelocity = decayedVelocity;
             engine.setValue(this.group, "scratch2", decayedVelocity * this.velocityToScratch);
@@ -1609,7 +1612,7 @@ class PadButton {
 
         if (this.isLongPressed) {
             this.isLongPressed = false;
-            // Stop the sampler on long press release
+            // Stop the sampler on long button release
             if (samplerPlaying) {
                 engine.setValue(this.samplerGroup, "play", 0);
             }
@@ -1934,7 +1937,7 @@ class EffectUnit {
     focusButtonHandler(field) {
         if (field.value === 1) {
             this.effectFocusTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                // Long press
+                // Long button press
                 this.effectFocusTimer = 0;
                 this.focusSelectMode = true;
                 this.startFocusedMode();
@@ -1944,13 +1947,13 @@ class EffectUnit {
         }
 
         if (this.focusSelectMode) {
-            // Long release
+            // Long button release
             this.focusSelectMode = false;
             this.startNormalMode();
             return;
         }
 
-        // Short release
+        // Short button release
         const currentFocusedEffect = engine.getValue(this.group, "focused_effect");
 
         if (this.effectFocusTimer !== 0) {
@@ -2094,6 +2097,7 @@ class EffectUnit {
     }
 
     isShiftPressed() {
+        // Effect unit number can be used here since there are also two decks
         return this.mx2.isShiftPressed(this.number);
     }
 }
@@ -2185,6 +2189,7 @@ class EffectParameter {
 
         if (this.isLongPressed) {
             this.isLongPressed = false;
+            // Toggle effect again on long button release
             this.toggleButton();
         }
     }
@@ -2516,7 +2521,7 @@ class MX2 {
             revButton: {hidReport: outputReport0x80, offset: 0x0a},
             ttButton: {hidReport: outputReport0x80, offset: 0x0b},
             jogButton: {hidReport: outputReport0x80, offset: 0x0c},
-            // Left deck shift should be here (0x0d), but the MX2 firmwave doesn't allow changes
+            // Left shift should at 0x2d, but the firmware doesn't allow changes
             sncButton: {hidReport: outputReport0x80, offset: 0x0e},
             mstButton: {hidReport: outputReport0x80, offset: 0x0f},
             keylockButton: {hidReport: outputReport0x80, offset: 0x10},
@@ -2568,7 +2573,7 @@ class MX2 {
             revButton: {hidReport: outputReport0x80, offset: 0x28},
             ttButton: {hidReport: outputReport0x80, offset: 0x29},
             jogButton: {hidReport: outputReport0x80, offset: 0x2a},
-            // Right deck shift should be here (0x2b), but the MX2 firmwave doesn't allow changes
+            // Right shift should at 0x2b, but the firmware doesn't allow changes
             sncButton: {hidReport: outputReport0x80, offset: 0x2c},
             mstButton: {hidReport: outputReport0x80, offset: 0x2d},
             keylockButton: {hidReport: outputReport0x80, offset: 0x2e},
