@@ -17,7 +17,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 1 | FX main knob | Control FX chain dry / wet balance | Adjust FX chain super parameter |
 | 2 | FX param knob | <p>**Normal mode:** Control FX meta parameter</p><p>**Focus mode:** Adjust focused effect parameter</p> ||
 | 3 | FX focus button | <p>*Press* to toggle FX parameter panel</p><p>*Hold* to enter effect focus select mode ||
-| 4 | FX toggle button | <p>**Normal mode:** Toggle effect on / off</p><p>**Focus select mode:** Choose focused effect</p><p>**Focus mode:** Toggle focused effect parameter on / off</p> | Cycle through effects |
+| 4 | FX toggle button | <p>**Normal mode:** *Press* to toggle effect on / off or *hold* for momentary toggle</p><p>**Focus select mode:** Choose focused effect</p><p>**Focus mode:** *Press* to toggle focused effect parameter on / off or *hold* for momentary toggle</p> | Cycle through effects |
 | 5 | FAV button | Use next color for selected track | Use previous color for selected track |
 | 6 | Star button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
 | 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
@@ -46,18 +46,18 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 
 ### Mixer deck columns (30–39)
 
-| No. | Element | Function |
-| --- | --- | --- |
-| 30 | GAIN knob | Adjust deck pre-fader gain |
-| 31 | Left FX button | Send deck output to FX unit 1 |
-| 32 | Right FX button | Send deck output to FX unit 2 |
-| 33 | HI knob | Adjust high frequency filter |
-| 34 | MID knob | Adjust middle frequency filter |
-| 35 | LOW knob | Adjust low frequency filter |
-| 36 | Quick FX knob | Control Quick FX meta parameter |
-| 37 | Quick FX button | Toggle Quick FX on / off |
-| 38 | Headphone button | Toggle headphone cueing |
-| 39 | Volume fader | Adjust deck volume |
+| No. | Element | Function | Secondary function |
+| --- | --- | --- | --- |
+| 30 | GAIN knob | Adjust deck pre-fader gain ||
+| 31 | Left FX button | Send deck output to FX unit 1 ||
+| 32 | Right FX button | Send deck output to FX unit 2 ||
+| 33 | HI knob | Adjust high frequency filter ||
+| 34 | MID knob | Adjust middle frequency filter ||
+| 35 | LOW knob | Adjust low frequency filter ||
+| 36 | Quick FX knob | Control Quick FX meta parameter ||
+| 37 | Quick FX button | <p>*Press* to toggle Quick FX on / off</p><p>*Hold* for momentary toggle</p> | Cycle through Quick FX effect chain presets |
+| 38 | Headphone button | Toggle headphone cueing ||
+| 39 | Volume fader | Adjust deck volume ||
 
 ### Center mixer column (40–46)
 
@@ -153,9 +153,12 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
-| Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
 | Long press timeout | 300 | Time in milliseconds required to hold a button before a long press is registered |
+| Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
+| Make shift button presses global | On | Use either SHIFT (**15**) button to control shifted functions on both decks |
+| Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
+| Use rolling loop pads by default | On | Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the SHIFT (**15**) button. |
+
 
 ### Audio
 
