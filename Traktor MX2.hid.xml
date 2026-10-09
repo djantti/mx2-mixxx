@@ -955,7 +955,7 @@
         variable="globalShiftButtons"
         label="Make shift button presses global"
         type="boolean"
-        default="true">
+        default="false">
         <description>
           Use either 'Shift' button to control shifted functions on both decks.
         </description>

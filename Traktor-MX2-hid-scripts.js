@@ -239,7 +239,7 @@ const Settings = {
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
-    // Use global shift buttons (default: true)
+    // Use global shift buttons (default: false)
     globalShiftButtons: !!engine.getSetting("globalShiftButtons"),
 
     // Enable soft takeover for knobs and faders (default: true)

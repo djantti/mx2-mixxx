@@ -155,7 +155,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | --- | --- | --- |
 | Long press timeout | 300 | Time in milliseconds required to hold a button before a long press is registered |
 | Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
-| Make shift button presses global | On | Use either SHIFT (**15**) button to control shifted functions on both decks |
+| Make shift button presses global | Off | Use either SHIFT (**15**) button to control shifted functions on both decks |
 | Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
 | Use rolling loop pads by default | On | Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the SHIFT (**15**) button. |
 
