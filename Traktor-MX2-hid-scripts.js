@@ -1023,7 +1023,7 @@ class Deck {
     }
 
     browseEncoderTurnHandler(field) {
-        const delta = this.browseEncoder.delta(field.value);
+        const direction = this.browseEncoder.readTurnDirection(field.value);
 
         if (this.isShiftPressed()) {
             engine.setValue("[Library]", "focused_widget", 2);
@@ -1031,18 +1031,18 @@ class Deck {
             engine.setValue("[Library]", "focused_widget", 3);
         }
 
-        engine.setValue("[Library]", "MoveVertical", delta);
+        engine.setValue("[Library]", "MoveVertical", direction);
     }
 
     moveEncoderTurnHandler(field) {
-        const delta = this.moveEncoder.delta(field.value);
+        const direction = this.moveEncoder.readTurnDirection(field.value);
         const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
 
         if (this.activePadMode === 1 && pressedPads.length) {
             for (const padNum of pressedPads) {
                 const stem = `[Channel${this.number}_Stem${padNum - 3}]`;
 
-                if (delta > 0) {
+                if (direction > 0) {
                     script.triggerControl(stem, "volume_up");
                 } else {
                     script.triggerControl(stem, "volume_down");
@@ -1055,7 +1055,7 @@ class Deck {
         if (this.isShiftPressed()) {
             const beatjumpSize = engine.getValue(field.group, "beatjump_size");
 
-            if (delta > 0) {
+            if (direction > 0) {
                 engine.setValue(field.group, "beatjump_size", beatjumpSize * 2);
             } else {
                 engine.setValue(field.group, "beatjump_size", beatjumpSize / 2);
@@ -1064,7 +1064,7 @@ class Deck {
             return;
         }
 
-        if (delta < 0) {
+        if (direction < 0) {
             script.triggerControl(field.group, "beatjump_backward");
             return;
         }
@@ -1081,7 +1081,7 @@ class Deck {
     }
 
     loopEncoderTurnHandler(field) {
-        const delta = this.loopEncoder.delta(field.value);
+        const direction = this.loopEncoder.readTurnDirection(field.value);
         const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
 
         if (this.activePadMode === 1 && pressedPads.length) {
@@ -1089,13 +1089,13 @@ class Deck {
                 const stem = `[QuickEffectRack1_[Channel${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`;
 
                 if (this.isShiftPressed()) {
-                    if (delta > 0) {
+                    if (direction > 0) {
                         engine.setValue(stem, "next_chain_preset", 1);
                     } else {
                         engine.setValue(stem, "prev_chain_preset", 1);
                     }
                 } else {
-                    if (delta > 0) {
+                    if (direction > 0) {
                         script.triggerControl(stem, "super1_up");
                     } else {
                         script.triggerControl(stem, "super1_down");
@@ -1109,7 +1109,7 @@ class Deck {
         if (this.keylockPressed) {
             this.keylockIgnore = true;
 
-            if (delta > 0) {
+            if (direction > 0) {
                 engine.setValue(this.group, "pitch_adjust_up_small", 1);
             } else {
                 engine.setValue(this.group, "pitch_adjust_down_small", 1);
@@ -1118,7 +1118,7 @@ class Deck {
             return;
         }
 
-        if (delta > 0) {
+        if (direction > 0) {
             script.triggerControl(this.group, "loop_double");
         } else {
             script.triggerControl(this.group, "loop_halve");
@@ -2281,12 +2281,12 @@ class EffectParameter {
 
 class Encoder {
     constructor() {
-        this.previousValue = -1;
+        this.previousValue = null;
     }
 
-    // 1 = right turn, -1 = left turn, 0 = something weird happens / first delta
-    delta(value) {
-        if (this.previousValue === -1) {
+    // 1 = right turn, -1 = left turn, 0 = first value or unexpected change
+    readTurnDirection(value) {
+        if (this.previousValue === null) {
             this.previousValue = value;
             return 0;
         }
