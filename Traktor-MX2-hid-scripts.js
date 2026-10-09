@@ -252,6 +252,9 @@ const Settings = {
     enableMasterGain: !!engine.getSetting("masterGain")
 };
 
+const normalizeScalar = (value) => value / 4095;
+const dimColor = (color) => Math.max(LedOff, color - 2);
+
 class Mixer {
     constructor(parent) {
         this.mx2 = parent;
@@ -370,12 +373,12 @@ class Mixer {
 
     gainHandler(field) {
         if (Settings.enableMasterGain) {
-            engine.setParameter(field.group, field.name, field.value / 4095);
+            this.scalarHandler(field);
         }
     }
 
     scalarHandler(field) {
-        engine.setParameter(field.group, field.name, field.value / 4095);
+        engine.setParameter(field.group, field.name, normalizeScalar(field.value));
     }
 
     talkoverCallback(value, group, _key) {
@@ -411,7 +414,7 @@ class QfxPresetButton {
 
     registerInputs(config) {
         config.hidReport.addControl(this.group, this.output, config.offset, "B", config.mask, false,
-            this.qfxButtonHandler.bind(this));
+            this.qfxPresetButtonHandler.bind(this));
     }
 
     registerOutputs(config) {
@@ -420,21 +423,21 @@ class QfxPresetButton {
 
     enableOutputs() {
         this.controller.setOutput(this.group, this.output,
-            Settings.qfxColors[this.number - 1] - 2, false);
+            dimColor(Settings.qfxColors[this.number - 1]), false);
     }
 
     linkOutputs() {
         engine.makeConnection("[QuickEffectRack1_[Channel1]]", "loaded_chain_preset",
-            this.qfxButtonCallback.bind(this)).trigger();
+            this.qfxPresetButtonCallback.bind(this)).trigger();
         engine.makeConnection("[QuickEffectRack1_[Channel2]]", "loaded_chain_preset",
-            this.qfxButtonCallback.bind(this)).trigger();
+            this.qfxPresetButtonCallback.bind(this)).trigger();
     }
 
     disableOutputs() {
         this.controller.setOutput(this.group, this.output, LedOff, false);
     }
 
-    qfxButtonHandler(field) {
+    qfxPresetButtonHandler(field) {
         if (field.value === 1) {
             this.mixer.qfxPressed = this.number;
             return;
@@ -454,7 +457,7 @@ class QfxPresetButton {
         }
     }
 
-    qfxButtonCallback(value, _group, _key) {
+    qfxPresetButtonCallback(value, _group, _key) {
         if (Settings.qfxPresets[this.number - 1] === value) {
             // Only set the LED once if changing presets for both decks
             if (!this.qfxActive) {
@@ -466,7 +469,7 @@ class QfxPresetButton {
         } else {
             if (this.qfxActive) {
                 this.controller.setOutput("[ChannelX]", `!qfx_${this.number}`,
-                    Settings.qfxColors[this.number - 1] - 2, true);
+                    dimColor(Settings.qfxColors[this.number - 1]), true);
             }
 
             this.qfxActive = false;
@@ -1150,7 +1153,7 @@ class Deck {
     }
 
     scalarHandler(field) {
-        engine.setParameter(field.group, field.name, field.value / 4095);
+        engine.setParameter(field.group, field.name, normalizeScalar(field.value));
     }
 
     rateFaderHandler(field) {
@@ -1291,7 +1294,7 @@ class Deck {
         if (engine.getValue(group, "enabled")) {
             this.controller.setOutput(group, "enabled", color, true);
         } else {
-            this.controller.setOutput(group, "enabled", color - 2, true);
+            this.controller.setOutput(group, "enabled", dimColor(color), true);
         }
     }
 
@@ -1359,20 +1362,23 @@ class Deck {
     getBottomLedsColor(value, key) {
         if (key === "indicator_500ms") {
             // Use callback value as blinking LED brightness
-            return Settings.bottomLedsEndColor + (value ? 0 : -2);
+            const baseColor = Settings.bottomLedsEndColor;
+            return value ? baseColor : dimColor(baseColor);
         }
 
         if (engine.getValue(this.group, "loop_enabled")) {
             // Switch loop color brightness based on playback state
-            return Settings.bottomLedsLoopColor + (engine.getValue(this.group, "play") ? 0 : -2);
+            const baseColor = Settings.bottomLedsLoopColor;
+            return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
         }
 
         if (engine.getValue(this.group, "track_loaded")) {
-            return Settings.bottomLedsPlayColor + (engine.getValue(this.group, "play") ? 0 : -2);
+            const baseColor = Settings.bottomLedsPlayColor;
+            return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
         }
 
         // Return standby color by default
-        return Settings.bottomLedsStandbyColor - 2;
+        return dimColor(Settings.bottomLedsStandbyColor);
     }
 
     setJogMode(jogMode) {
@@ -1683,7 +1689,7 @@ class PadButton {
 
         if (engine.getValue(stemGroup, "mute") === 1) {
             if (Settings.matchPadColors) {
-                this.controller.setOutput(this.deck.group, this.output, padColor - 2, false);
+                this.controller.setOutput(this.deck.group, this.output, dimColor(padColor), false);
             } else {
                 this.controller.setOutput(this.deck.group, this.output,
                     this.outputColorMap.inactivePadColor.dim, false);
@@ -1836,7 +1842,7 @@ class EqualizerParameter {
     }
 
     eqKnobHandler(field) {
-        engine.setParameter(this.group, `parameter${this.number}`, field.value / 4095);
+        engine.setParameter(this.group, `parameter${this.number}`, normalizeScalar(field.value));
     }
 }
 
@@ -1978,7 +1984,7 @@ class EffectUnit {
     }
 
     mixKnobHandler(field) {
-        const value = field.value / 4095;
+        const value = normalizeScalar(field.value);
 
         if (this.isShiftPressed()) {
             engine.softTakeoverIgnoreNextValue(this.group, "mix");
@@ -2195,7 +2201,7 @@ class EffectParameter {
 
     effectKnobHandler(field) {
         const knob = this.getKnobGroupAndKey();
-        engine.setParameter(knob.group, knob.key, field.value / 4095);
+        engine.setParameter(knob.group, knob.key, normalizeScalar(field.value));
     }
 
     connectFocusedLed() {
@@ -2723,7 +2729,7 @@ class MX2 {
         for (const [name, color] of Object.entries(theme)) {
             colorMap[name] = {
                 full: color,
-                dim: Math.max(0x00, color - 2)
+                dim: dimColor(color)
             };
         }
 
