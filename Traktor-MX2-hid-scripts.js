@@ -488,7 +488,6 @@ class Deck {
 
         this.moveEncoderPressed = false;
         this.loopEncoderPressed = false;
-        this.shiftPressed = false;
         this.keylockPressed = false;
         this.keylockIgnore = false;
 
@@ -838,9 +837,9 @@ class Deck {
 
     shiftButtonHandler(field) {
         if (field.value === 1) {
-            this.shiftPressed = 1;
+            this.mx2.shiftPressed[this.number - 1] = 1;
         } else {
-            this.shiftPressed = 0;
+            this.mx2.shiftPressed[this.number - 1] = 0;
         }
     }
 
@@ -2311,6 +2310,8 @@ class MX2 {
 
         this.outputColorMap = this.getOutputColorMap(Settings.colorTheme);
 
+        this.shiftPressed = [false, false];
+
         if (engine.getValue("[App]", "num_samplers") < 8) {
             engine.setValue("[App]", "num_samplers", 8);
         }
@@ -2741,10 +2742,10 @@ class MX2 {
         }
 
         if (deck === undefined || Settings.globalShiftButtons) {
-            return this.decks[0].shiftPressed || this.decks[1].shiftPressed;
+            return this.shiftPressed[0] || this.shiftPressed[1];
         }
 
-        return this.decks[deck - 1].shiftPressed;
+        return this.shiftPressed[deck - 1];
     }
 
     init(_id) {
