@@ -284,7 +284,10 @@ class Mixer {
 
         this.registerGroupButton("[Microphone]", "talkover", config.micButton, this.talkoverHandler);
 
-        this.registerGroupScalar("[Master]", "gain", config.gainKnob, this.gainHandler);
+        if (Settings.enableMasterGain) {
+            this.registerGroupScalar("[Master]", "gain", config.gainKnob, this.scalarHandler);
+        }
+
         this.registerGroupScalar("[Master]", "headMix", config.mixKnob, this.scalarHandler);
         this.registerGroupScalar("[Master]", "headGain", config.volKnob, this.scalarHandler);
         this.registerGroupScalar("[Master]", "crossfader", config.crossfader, this.scalarHandler);
@@ -368,12 +371,6 @@ class Mixer {
         } else {
             // Disable talkover on long button release
             engine.setValue("[Microphone]", "talkover", 0);
-        }
-    }
-
-    gainHandler(field) {
-        if (Settings.enableMasterGain) {
-            this.scalarHandler(field);
         }
     }
 
