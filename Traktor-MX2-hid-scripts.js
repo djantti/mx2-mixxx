@@ -259,24 +259,24 @@ class Mixer {
 
         this.outputColorMap = this.mx2.outputColorMap;
 
-        this.talkoverPressedTimer = 0;
+        this.talkoverPressTimer = 0;
 
         this.qfxPressed = 0;
         this.qfxActive = 0;
         this.qfxIgnore = false;
 
-        this.fxPresetButtons = [
-            new FxPresetButton(this, 1),
-            new FxPresetButton(this, 2),
-            new FxPresetButton(this, 3),
-            new FxPresetButton(this, 4),
-            new FxPresetButton(this, 5)
+        this.qfxPresetButtons = [
+            new QfxPresetButton(this, 1),
+            new QfxPresetButton(this, 2),
+            new QfxPresetButton(this, 3),
+            new QfxPresetButton(this, 4),
+            new QfxPresetButton(this, 5)
         ];
     }
 
     registerInputs(config) {
         for (let i = 0; i < 5; i++) {
-            this.fxPresetButtons[i].registerInputs(config.fxPresetButtons[i]);
+            this.qfxPresetButtons[i].registerInputs(config.qfxPresetButtons[i]);
         }
 
         this.registerGroupButton("[Microphone]", "talkover", config.micButton, this.talkoverHandler);
@@ -289,7 +289,7 @@ class Mixer {
 
     registerOutputs(config) {
         for (let i = 0; i < 5; i++) {
-            this.fxPresetButtons[i].registerOutputs(config.fxPresetButtons[i]);
+            this.qfxPresetButtons[i].registerOutputs(config.qfxPresetButtons[i]);
         }
 
         this.registerGroupLed("[Microphone]", "talkover", config.micButton);
@@ -298,7 +298,7 @@ class Mixer {
 
     linkOutputs() {
         for (let i = 0; i < 5; i++) {
-            this.fxPresetButtons[i].linkOutputs();
+            this.qfxPresetButtons[i].linkOutputs();
         }
 
         engine.makeConnection("[Microphone]", "talkover", this.talkoverCallback.bind(this)).trigger();
@@ -315,13 +315,13 @@ class Mixer {
 
     enableOutputs() {
         for (let i = 0; i < 5; i++) {
-            this.fxPresetButtons[i].enableOutputs();
+            this.qfxPresetButtons[i].enableOutputs();
         }
     }
 
     disableOutputs() {
         for (let i = 0; i < 5; i++) {
-            this.fxPresetButtons[i].disableOutputs();
+            this.qfxPresetButtons[i].disableOutputs();
         }
 
         this.controller.setOutput("[Microphone]", "talkover", LedOff, false);
@@ -350,18 +350,18 @@ class Mixer {
 
     talkoverHandler(field) {
         if (field.value === 1) {
-            this.talkoverPressedTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                this.talkoverPressedTimer = 0;
+            this.talkoverPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.talkoverPressTimer = 0;
             }, true);
 
             script.toggleControl("[Microphone]", "talkover");
             return;
         }
 
-        if (this.talkoverPressedTimer !== 0) {
+        if (this.talkoverPressTimer !== 0) {
             // Activate permanently on short press release
-            engine.stopTimer(this.talkoverPressedTimer);
-            this.talkoverPressedTimer = 0;
+            engine.stopTimer(this.talkoverPressTimer);
+            this.talkoverPressTimer = 0;
         } else {
             // Disable talkover on long button release
             engine.setValue("[Microphone]", "talkover", 0);
@@ -395,7 +395,7 @@ class Mixer {
     }
 }
 
-class FxPresetButton {
+class QfxPresetButton {
     constructor(parent, number) {
         this.mixer = parent;
         this.controller = this.mixer.controller;
@@ -411,7 +411,7 @@ class FxPresetButton {
 
     registerInputs(config) {
         config.hidReport.addControl(this.group, this.output, config.offset, "B", config.mask, false,
-            this.quickFxButtonHandler.bind(this));
+            this.qfxButtonHandler.bind(this));
     }
 
     registerOutputs(config) {
@@ -425,16 +425,16 @@ class FxPresetButton {
 
     linkOutputs() {
         engine.makeConnection("[QuickEffectRack1_[Channel1]]", "loaded_chain_preset",
-            this.quickFxButtonCallback.bind(this)).trigger();
+            this.qfxButtonCallback.bind(this)).trigger();
         engine.makeConnection("[QuickEffectRack1_[Channel2]]", "loaded_chain_preset",
-            this.quickFxButtonCallback.bind(this)).trigger();
+            this.qfxButtonCallback.bind(this)).trigger();
     }
 
     disableOutputs() {
         this.controller.setOutput(this.group, this.output, LedOff, false);
     }
 
-    quickFxButtonHandler(field) {
+    qfxButtonHandler(field) {
         if (field.value === 1) {
             this.mixer.qfxPressed = this.number;
             return;
@@ -454,7 +454,7 @@ class FxPresetButton {
         }
     }
 
-    quickFxButtonCallback(value, _group, _key) {
+    qfxButtonCallback(value, _group, _key) {
         if (Settings.qfxPresets[this.number - 1] === value) {
             // Only set the LED once if changing presets for both decks
             if (!this.qfxActive) {
@@ -496,13 +496,13 @@ class Deck {
         // 0 = hotcues, 1 = stems, 2 = samples, 3 = loops
         this.activePadMode = 0;
 
-        this.syncLongPressTimer = 0;
+        this.syncPressTimer = 0;
         this.syncLongPress = false;
 
-        this.fxLongPressTimer = 0;
-        this.fxLongPress = false;
+        this.qfxPressTimer = 0;
+        this.qfxLongPress = false;
 
-        this.mstLongPressTimer = 0;
+        this.mstPressTimer = 0;
         this.mstLongPress = false;
 
         this.defaultRateRange = 0.08;
@@ -572,8 +572,8 @@ class Deck {
         this.registerButton("!loops", config.loopButton, this.padModeButtonHandler);
         this.registerButton("!cue_default", config.cueButton, this.cueButtonHandler);
         this.registerButton("!play", config.playButton, this.playButtonHandler);
-        this.registerGroupButton(`[QuickEffectRack1_${this.group}]`, "enabled", config.fxButton,
-            this.fxButtonHandler);
+        this.registerGroupButton(`[QuickEffectRack1_${this.group}]`, "enabled", config.qfxButton,
+            this.qfxButtonHandler);
         this.registerButton("pfl", config.pflButton, this.pflButtonHandler);
         this.registerButton("!jog_touch", config.jogTouch, this.jogTouchHandler);
         this.registerButton("!browse_encoder_press", config.browseEncoderPress, this.browseEncoderPressHandler);
@@ -630,7 +630,7 @@ class Deck {
         this.registerLed("!loops", config.loopButton);
         this.registerLed("cue_indicator", config.cueButton);
         this.registerLed("play_indicator", config.playButton);
-        this.registerGroupLed(`[QuickEffectRack1_${this.group}]`, "enabled", config.fxButton);
+        this.registerGroupLed(`[QuickEffectRack1_${this.group}]`, "enabled", config.qfxButton);
         this.registerLed("pfl", config.pflButton);
         this.registerLed("peak_indicator", config.peakIndicator);
     }
@@ -646,8 +646,8 @@ class Deck {
         this.linkLed(this.group, "keylock", this.outputCallback);
         this.linkLed(this.group, "cue_indicator", this.outputCallback);
         this.linkLed(this.group, "play_indicator", this.outputCallback);
-        this.linkLed(`[QuickEffectRack1_${this.group}]`, "loaded_chain_preset", this.fxButtonCallback);
-        this.linkLed(`[QuickEffectRack1_${this.group}]`, "enabled", this.fxButtonCallback);
+        this.linkLed(`[QuickEffectRack1_${this.group}]`, "loaded_chain_preset", this.qfxButtonCallback);
+        this.linkLed(`[QuickEffectRack1_${this.group}]`, "enabled", this.qfxButtonCallback);
         this.linkLed(this.group, "pfl", this.outputCallback);
 
         // Link bottom panel LED callbacks if light effects are enabled in settings
@@ -845,18 +845,18 @@ class Deck {
 
     sncButtonHandler(field) {
         if (field.value === 1) {
-            this.syncLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+            this.syncPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.syncLongPress = true;
-                this.syncLongPressTimer = 0;
+                this.syncPressTimer = 0;
             }, true);
 
             engine.setValue(this.group, "sync_enabled", 1);
             return;
         }
 
-        if (this.syncLongPressTimer !== 0) {
-            engine.stopTimer(this.syncLongPressTimer);
-            this.syncLongPressTimer = 0;
+        if (this.syncPressTimer !== 0) {
+            engine.stopTimer(this.syncPressTimer);
+            this.syncPressTimer = 0;
         }
 
         if (this.syncLongPress) {
@@ -869,17 +869,17 @@ class Deck {
 
     mstButtonHandler(field) {
         if (field.value === 1) {
-            this.mstLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+            this.mstPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
                 this.mstLongPress = true;
-                this.mstLongPressTimer = 0;
+                this.mstPressTimer = 0;
             }, true);
 
             return;
         }
 
-        if (this.mstLongPressTimer !== 0) {
-            engine.stopTimer(this.mstLongPressTimer);
-            this.mstLongPressTimer = 0;
+        if (this.mstPressTimer !== 0) {
+            engine.stopTimer(this.mstPressTimer);
+            this.mstPressTimer = 0;
         }
 
         if (this.mstLongPress) {
@@ -950,7 +950,7 @@ class Deck {
         }
     }
 
-    fxButtonHandler(field) {
+    qfxButtonHandler(field) {
         if (field.value === 1) {
             const qfxPressed = this.mx2.mixer.qfxPressed;
 
@@ -960,9 +960,9 @@ class Deck {
                 this.mx2.mixer.qfxIgnore = true;
                 engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
             } else {
-                this.fxLongPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                    this.fxLongPress = true;
-                    this.fxLongPressTimer = 0;
+                this.qfxPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                    this.qfxLongPress = true;
+                    this.qfxPressTimer = 0;
                 }, true);
 
                 script.toggleControl(field.group, "enabled");
@@ -971,13 +971,13 @@ class Deck {
             return;
         }
 
-        if (this.fxLongPressTimer !== 0) {
-            engine.stopTimer(this.fxLongPressTimer);
-            this.fxLongPressTimer = 0;
+        if (this.qfxPressTimer !== 0) {
+            engine.stopTimer(this.qfxPressTimer);
+            this.qfxPressTimer = 0;
         }
 
-        if (this.fxLongPress) {
-            this.fxLongPress = false;
+        if (this.qfxLongPress) {
+            this.qfxLongPress = false;
             // Toggle Quick FX again on long button release
             script.toggleControl(field.group, "enabled");
         }
@@ -1283,7 +1283,7 @@ class Deck {
         }
     }
 
-    fxButtonCallback(_value, group, _key) {
+    qfxButtonCallback(_value, group, _key) {
         const loadedPreset = engine.getValue(group, "loaded_chain_preset");
         const qfxIndex = Settings.qfxPresets.indexOf(loadedPreset);
         const color = qfxIndex === -1 ? this.outputColorMap.fxColor.full : Settings.qfxColors[qfxIndex];
@@ -1504,8 +1504,8 @@ class PadButton {
         this.outputColorMap = this.deck.mx2.outputColorMap;
         this.padColorMap = new ColorMapper(PadColors);
 
-        this.longPressTimer = 0;
-        this.isLongPressed = false;
+        this.pressTimer = 0;
+        this.longPress = false;
 
         const padRelations = {
             "[Channel1]": {1: 1, 2: 2, 3: 3, 4: 4, 5: 9, 6: 10, 7: 11, 8: 12},
@@ -1531,16 +1531,16 @@ class PadButton {
 
         switch (padMode) {
         case 0:
-            this.hotcuePad(field.value);
+            this.hotcuePadHandler(field.value);
             break;
         case 1:
-            this.stemPad(field.value);
+            this.stemPadHandler(field.value);
             break;
         case 2:
-            this.samplePad(field.value);
+            this.samplePadHandler(field.value);
             break;
         case 3:
-            this.loopPad(field.value);
+            this.loopPadHandler(field.value);
             break;
         default:
             console.warn(`Unknown mode: ${padMode}`);
@@ -1548,7 +1548,7 @@ class PadButton {
         }
     }
 
-    hotcuePad(value) {
+    hotcuePadHandler(value) {
         if (this.isShiftPressed()) {
             engine.setValue(this.deck.group, `hotcue_${this.number}_clear`, value);
         } else {
@@ -1556,7 +1556,7 @@ class PadButton {
         }
     }
 
-    stemPad(value) {
+    stemPadHandler(value) {
         const stemCount = engine.getValue(this.deck.group, "stem_count");
 
         if (stemCount === 0) {
@@ -1575,7 +1575,7 @@ class PadButton {
         }
     }
 
-    samplePad(value) {
+    samplePadHandler(value) {
         const samplerPlaying = engine.getValue(this.samplerGroup, "play");
 
         if (value === 1) {
@@ -1593,9 +1593,9 @@ class PadButton {
                 return;
             }
 
-            this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                this.isLongPressed = true;
-                this.longPressTimer = 0;
+            this.pressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.longPress = true;
+                this.pressTimer = 0;
             }, true);
 
             script.triggerControl(this.samplerGroup,
@@ -1604,13 +1604,13 @@ class PadButton {
             return;
         }
 
-        if (this.longPressTimer !== 0) {
-            engine.stopTimer(this.longPressTimer);
-            this.longPressTimer = 0;
+        if (this.pressTimer !== 0) {
+            engine.stopTimer(this.pressTimer);
+            this.pressTimer = 0;
         }
 
-        if (this.isLongPressed) {
-            this.isLongPressed = false;
+        if (this.longPress) {
+            this.longPress = false;
             // Stop the sampler on long button release
             if (samplerPlaying) {
                 engine.setValue(this.samplerGroup, "play", 0);
@@ -1618,7 +1618,7 @@ class PadButton {
         }
     }
 
-    loopPad(value) {
+    loopPadHandler(value) {
         // Disable pads if no track is loaded
         if (!engine.getValue(this.deck.group, "track_loaded")) {
             return;
@@ -2113,8 +2113,8 @@ class EffectParameter {
 
         this.outputColorMap = this.effectUnit.mx2.outputColorMap;
 
-        this.longPressTimer = 0;
-        this.isLongPressed = false;
+        this.pressTimer = 0;
+        this.longPress = false;
         this.ledConnection = null;
     }
 
@@ -2170,24 +2170,24 @@ class EffectParameter {
                 return;
             }
 
-            this.isLongPressed = false;
+            this.longPress = false;
             this.toggleButton();
 
-            this.longPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                this.isLongPressed = true;
-                this.longPressTimer = 0;
+            this.pressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.longPress = true;
+                this.pressTimer = 0;
             }, true);
 
             return;
         }
 
-        if (this.longPressTimer !== 0) {
-            engine.stopTimer(this.longPressTimer);
-            this.longPressTimer = 0;
+        if (this.pressTimer !== 0) {
+            engine.stopTimer(this.pressTimer);
+            this.pressTimer = 0;
         }
 
-        if (this.isLongPressed) {
-            this.isLongPressed = false;
+        if (this.longPress) {
+            this.longPress = false;
             // Toggle effect again on long button release
             this.toggleButton();
         }
@@ -2374,7 +2374,7 @@ class MX2 {
             ],
             cueButton: {hidReport: inputReport0x01, offset: 0x04, mask: 0x10},
             playButton: {hidReport: inputReport0x01, offset: 0x04, mask: 0x20},
-            fxButton: {hidReport: inputReport0x01, offset: 0x08, mask: 0x40},
+            qfxButton: {hidReport: inputReport0x01, offset: 0x08, mask: 0x40},
             pflButton: {hidReport: inputReport0x01, offset: 0x08, mask: 0x80},
             browseEncoderPress: {hidReport: inputReport0x01, offset: 0x0a, mask: 0x04},
             moveEncoderPress: {hidReport: inputReport0x01, offset: 0x0a, mask: 0x08},
@@ -2425,7 +2425,7 @@ class MX2 {
             ],
             cueButton: {hidReport: inputReport0x01, offset: 0x08, mask: 0x04},
             playButton: {hidReport: inputReport0x01, offset: 0x08, mask: 0x08},
-            fxButton: {hidReport: inputReport0x01, offset: 0x09, mask: 0x04},
+            qfxButton: {hidReport: inputReport0x01, offset: 0x09, mask: 0x04},
             pflButton: {hidReport: inputReport0x01, offset: 0x09, mask: 0x08},
             browseEncoderPress: {hidReport: inputReport0x01, offset: 0x0a, mask: 0x20},
             moveEncoderPress: {hidReport: inputReport0x01, offset: 0x0a, mask: 0x40},
@@ -2490,7 +2490,7 @@ class MX2 {
         });
 
         this.mixer.registerInputs({
-            fxPresetButtons: [
+            qfxPresetButtons: [
                 {hidReport: inputReport0x01, offset: 0x09, mask: 0x10},
                 {hidReport: inputReport0x01, offset: 0x09, mask: 0x20},
                 {hidReport: inputReport0x01, offset: 0x09, mask: 0x40},
@@ -2542,7 +2542,7 @@ class MX2 {
             ],
             cueButton: {hidReport: outputReport0x80, offset: 0x1d},
             playButton: {hidReport: outputReport0x80, offset: 0x1e},
-            fxButton: {hidReport: outputReport0x80, offset: 0x3f},
+            qfxButton: {hidReport: outputReport0x80, offset: 0x3f},
             pflButton: {hidReport: outputReport0x80, offset: 0x40},
             bottomLeds: [
                 {hidReport: outputReport0x80, offset: 0x4b},
@@ -2594,7 +2594,7 @@ class MX2 {
             ],
             cueButton: {hidReport: outputReport0x80, offset: 0x3b},
             playButton: {hidReport: outputReport0x80, offset: 0x3c},
-            fxButton: {hidReport: outputReport0x80, offset: 0x43},
+            qfxButton: {hidReport: outputReport0x80, offset: 0x43},
             pflButton: {hidReport: outputReport0x80, offset: 0x44},
             bottomLeds: [
                 {hidReport: outputReport0x80, offset: 0x51},
@@ -2640,7 +2640,7 @@ class MX2 {
         });
 
         this.mixer.registerOutputs({
-            fxPresetButtons: [
+            qfxPresetButtons: [
                 {hidReport: outputReport0x80, offset: 0x45},
                 {hidReport: outputReport0x80, offset: 0x46},
                 {hidReport: outputReport0x80, offset: 0x47},
