@@ -1134,7 +1134,7 @@ class Deck {
             for (const padNum in this.padPressed) {
                 if (this.padPressed[padNum]) {
                     script.toggleControl("[QuickEffectRack1_[Channel" +
-                        `${field.group[field.group.length - 2]}_Stem${padNum - 4}]]`, "enabled");
+                        `${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`, "enabled");
                 }
             }
 
