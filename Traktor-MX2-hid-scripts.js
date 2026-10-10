@@ -1504,7 +1504,7 @@ class PadButton {
         this.number = number;
         this.output = `!pad_button_${this.number}`;
 
-        this.outputColorMap = this.deck.mx2.outputColorMap;
+        this.outputColorMap = this.deck.outputColorMap;
         this.padColorMap = new ColorMapper(PadColors);
 
         this.pressTimer = 0;
@@ -2114,7 +2114,7 @@ class EffectParameter {
         this.group = this.effectUnit.group;
         this.output = `!effect_button_${this.number}`;
 
-        this.outputColorMap = this.effectUnit.mx2.outputColorMap;
+        this.outputColorMap = this.effectUnit.outputColorMap;
 
         this.pressTimer = 0;
         this.longPress = false;
