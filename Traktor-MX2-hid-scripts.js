@@ -255,6 +255,18 @@ const Settings = {
 const normalizeScalar = (value) => value / 4095;
 const dimColor = (color) => Math.max(LedOff, color - 2);
 
+const qfxGroup = (channel) => {
+    return `[QuickEffectRack1_[Channel${channel}]]`;
+};
+
+const stemGroup = (channel, stem) => {
+    return `[Channel${channel}_Stem${stem}]`;
+};
+
+const stemQfxGroup = (channel, stem) => {
+    return `[QuickEffectRack1_[Channel${channel}_Stem${stem}]]`;
+};
+
 class Mixer {
     constructor(parent) {
         this.mx2 = parent;
@@ -424,10 +436,8 @@ class QfxPresetButton {
     }
 
     linkOutputs() {
-        engine.makeConnection("[QuickEffectRack1_[Channel1]]", "loaded_chain_preset",
-            this.qfxPresetButtonCallback.bind(this)).trigger();
-        engine.makeConnection("[QuickEffectRack1_[Channel2]]", "loaded_chain_preset",
-            this.qfxPresetButtonCallback.bind(this)).trigger();
+        engine.makeConnection(qfxGroup(1), "loaded_chain_preset", this.qfxPresetButtonCallback.bind(this)).trigger();
+        engine.makeConnection(qfxGroup(2), "loaded_chain_preset", this.qfxPresetButtonCallback.bind(this)).trigger();
     }
 
     disableOutputs() {
@@ -449,7 +459,7 @@ class QfxPresetButton {
 
             // Change Quick FX preset for both decks on normal button release
             [1, 2].forEach(channel => {
-                engine.setValue(`[QuickEffectRack1_[Channel${channel}]]`, "loaded_chain_preset", preset);
+                engine.setValue(qfxGroup(channel), "loaded_chain_preset", preset);
             });
         }
     }
@@ -572,8 +582,7 @@ class Deck {
         this.registerButton("!loops", config.loopButton, this.padModeButtonHandler);
         this.registerButton("!cue_default", config.cueButton, this.cueButtonHandler);
         this.registerButton("!play", config.playButton, this.playButtonHandler);
-        this.registerGroupButton(`[QuickEffectRack1_${this.group}]`, "enabled", config.qfxButton,
-            this.qfxButtonHandler);
+        this.registerGroupButton(qfxGroup(this.number), "enabled", config.qfxButton, this.qfxButtonHandler);
         this.registerButton("pfl", config.pflButton, this.pflButtonHandler);
         this.registerButton("!jog_touch", config.jogTouch, this.jogTouchHandler);
         this.registerButton("!browse_encoder_press", config.browseEncoderPress, this.browseEncoderPressHandler);
@@ -588,7 +597,7 @@ class Deck {
         }
 
         this.registerScalar("pregain", config.gainKnob, this.scalarHandler);
-        this.registerGroupScalar(`[QuickEffectRack1_${this.group}]`, "super1", config.fxKnob, this.scalarHandler);
+        this.registerGroupScalar(qfxGroup(this.number), "super1", config.fxKnob, this.scalarHandler);
         this.registerScalar("volume", config.volumeFader, this.scalarHandler);
         this.registerScalar("rate", config.rateFader, this.rateFaderHandler);
 
@@ -630,7 +639,7 @@ class Deck {
         this.registerLed("!loops", config.loopButton);
         this.registerLed("cue_indicator", config.cueButton);
         this.registerLed("play_indicator", config.playButton);
-        this.registerGroupLed(`[QuickEffectRack1_${this.group}]`, "enabled", config.qfxButton);
+        this.registerGroupLed(qfxGroup(this.number), "enabled", config.qfxButton);
         this.registerLed("pfl", config.pflButton);
         this.registerLed("peak_indicator", config.peakIndicator);
     }
@@ -646,8 +655,8 @@ class Deck {
         this.linkLed(this.group, "keylock", this.outputCallback);
         this.linkLed(this.group, "cue_indicator", this.outputCallback);
         this.linkLed(this.group, "play_indicator", this.outputCallback);
-        this.linkLed(`[QuickEffectRack1_${this.group}]`, "loaded_chain_preset", this.qfxButtonCallback);
-        this.linkLed(`[QuickEffectRack1_${this.group}]`, "enabled", this.qfxButtonCallback);
+        this.linkLed(qfxGroup(this.number), "loaded_chain_preset", this.qfxButtonCallback);
+        this.linkLed(qfxGroup(this.number), "enabled", this.qfxButtonCallback);
         this.linkLed(this.group, "pfl", this.outputCallback);
 
         // Link bottom panel LED callbacks if light effects are enabled in settings
@@ -665,7 +674,7 @@ class Deck {
 
     enableSoftTakeover() {
         engine.softTakeover(this.group, "pregain", true);
-        engine.softTakeover(`[QuickEffectRack1_${this.group}]`, "super1", true);
+        engine.softTakeover(qfxGroup(this.number), "super1", true);
         engine.softTakeover(this.group, "rate", true);
         engine.softTakeover(this.group, "volume", true);
         this.eq.enableSoftTakeover();
@@ -695,7 +704,7 @@ class Deck {
 
         this.controller.setOutput("[PreviewDeck1]", `!preview_${this.number}`, LedOff, false);
         this.controller.setOutput("[Skin]", `!view_${this.number}`, LedOff, false);
-        this.controller.setOutput(`[QuickEffectRack1_${this.group}]`, "enabled", LedOff, false);
+        this.controller.setOutput(qfxGroup(this.number), "enabled", LedOff, false);
 
         const outputs = [
             "!favorite",
@@ -1040,7 +1049,7 @@ class Deck {
 
         if (this.activePadMode === 1 && pressedPads.length) {
             for (const padNum of pressedPads) {
-                const stem = `[Channel${this.number}_Stem${padNum - 3}]`;
+                const stem = stemGroup(this.number, padNum - 3);
 
                 if (direction > 0) {
                     script.triggerControl(stem, "volume_up");
@@ -1086,7 +1095,7 @@ class Deck {
 
         if (this.activePadMode === 1 && pressedPads.length) {
             for (const padNum of pressedPads) {
-                const stem = `[QuickEffectRack1_[Channel${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`;
+                const stem = stemQfxGroup(this.number, padNum - 3);
 
                 if (this.isShiftPressed()) {
                     if (direction > 0) {
@@ -1133,8 +1142,7 @@ class Deck {
         if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
             for (const padNum in this.padPressed) {
                 if (this.padPressed[padNum]) {
-                    script.toggleControl("[QuickEffectRack1_[Channel" +
-                        `${field.group[field.group.length - 2]}_Stem${padNum - 3}]]`, "enabled");
+                    script.toggleControl(stemQfxGroup(this.number, padNum - 3), "enabled");
                 }
             }
 
@@ -1571,7 +1579,7 @@ class PadButton {
                 return;
             }
 
-            script.toggleControl(`[Channel${this.deck.number}_Stem${this.number}]`, "mute");
+            script.toggleControl(stemGroup(this.deck.number, this.number), "mute");
         } else if (this.number >= 5) {
             // Lower four pads are used as stem control modifiers
             this.deck.padPressed[this.number - 1] = (value === 1);
@@ -1669,22 +1677,22 @@ class PadButton {
     }
 
     stemPadCallback() {
-        const stemGroup = `[Channel${this.deck.number }_Stem${this.number}]`;
-        const stemColor = engine.getValue(stemGroup, "color");
+        const stem = stemGroup(this.deck.number, this.number);
+        const stemColor = engine.getValue(stem, "color");
         const padColor = this.padColorMap.getValueForNearestColor(stemColor);
-        const modifierPad = `!pad_button_${this.number + 4}`;
+        const modifier = `!pad_button_${this.number + 4}`;
 
         if (stemColor === -1) {
             // No color data available, so assume the file doesn't contain stems
             this.controller.setOutput(this.deck.group, this.output, LedOff, false);
-            this.controller.setOutput(this.deck.group, modifierPad, LedOff, true);
+            this.controller.setOutput(this.deck.group, modifier, LedOff, true);
             return;
         }
 
-        this.controller.setOutput(this.deck.group, modifierPad,
+        this.controller.setOutput(this.deck.group, modifier,
             this.outputColorMap.unconnectedPadColor.dim, false);
 
-        if (engine.getValue(stemGroup, "mute") === 1) {
+        if (engine.getValue(stem, "mute") === 1) {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, dimColor(padColor), false);
             } else {
@@ -1750,9 +1758,9 @@ class PadButton {
             if (this.number <= 4) {
                 // Using `track_loaded` for callback doesn't work here, since stem info is not yet available
                 this.padConnections.push(engine.makeConnection(
-                    `[Channel${this.deck.number}_Stem${this.number}]`, "mute", this.stemPadCallback.bind(this)));
+                    stemGroup(this.deck.number, this.number), "mute", this.stemPadCallback.bind(this)));
                 this.padConnections.push(engine.makeConnection(
-                    `[Channel${this.deck.number}_Stem${this.number}]`, "color", this.stemPadCallback.bind(this)));
+                    stemGroup(this.deck.number, this.number), "color", this.stemPadCallback.bind(this)));
             }
 
             break;
