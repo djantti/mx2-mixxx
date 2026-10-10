@@ -2315,8 +2315,8 @@ class MX2 {
 
         this.shiftPressed = [false, false];
 
-        if (engine.getValue("[App]", "num_samplers") < 8) {
-            engine.setValue("[App]", "num_samplers", 8);
+        if (engine.getValue("[App]", "num_samplers") < 16) {
+            engine.setValue("[App]", "num_samplers", 16);
         }
 
         this.mixer = new Mixer(this);
