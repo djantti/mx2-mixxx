@@ -1034,6 +1034,10 @@ class Deck {
     browseEncoderTurnHandler(field) {
         const direction = this.browseEncoder.readTurnDirection(field.value);
 
+        if (!direction) {
+            return;
+        }
+
         if (this.isShiftPressed()) {
             engine.setValue("[Library]", "focused_widget", 2);
         } else {
@@ -1051,9 +1055,9 @@ class Deck {
             for (const padNum of pressedPads) {
                 const stem = stemGroup(this.number, padNum - 3);
 
-                if (direction > 0) {
+                if (direction === 1) {
                     script.triggerControl(stem, "volume_up");
-                } else {
+                } else if (direction === -1) {
                     script.triggerControl(stem, "volume_down");
                 }
             }
@@ -1064,21 +1068,20 @@ class Deck {
         if (this.isShiftPressed()) {
             const beatjumpSize = engine.getValue(field.group, "beatjump_size");
 
-            if (direction > 0) {
+            if (direction === 1) {
                 engine.setValue(field.group, "beatjump_size", beatjumpSize * 2);
-            } else {
+            } else if (direction === -1) {
                 engine.setValue(field.group, "beatjump_size", beatjumpSize / 2);
             }
 
             return;
         }
 
-        if (direction < 0) {
+        if (direction === 1) {
             script.triggerControl(field.group, "beatjump_backward");
-            return;
+        } else if (direction === -1) {
+            script.triggerControl(field.group, "beatjump_forward");
         }
-
-        script.triggerControl(field.group, "beatjump_forward");
     }
 
     moveEncoderPressHandler(field) {
@@ -1098,15 +1101,15 @@ class Deck {
                 const stem = stemQfxGroup(this.number, padNum - 3);
 
                 if (this.isShiftPressed()) {
-                    if (direction > 0) {
+                    if (direction === 1) {
                         engine.setValue(stem, "next_chain_preset", 1);
-                    } else {
+                    } else if (direction === -1) {
                         engine.setValue(stem, "prev_chain_preset", 1);
                     }
                 } else {
-                    if (direction > 0) {
+                    if (direction === 1) {
                         script.triggerControl(stem, "super1_up");
-                    } else {
+                    } else if (direction === -1) {
                         script.triggerControl(stem, "super1_down");
                     }
                 }
@@ -1118,18 +1121,18 @@ class Deck {
         if (this.keylockPressed) {
             this.keylockIgnore = true;
 
-            if (direction > 0) {
+            if (direction === 1) {
                 engine.setValue(this.group, "pitch_adjust_up_small", 1);
-            } else {
+            } else if (direction === -1) {
                 engine.setValue(this.group, "pitch_adjust_down_small", 1);
             }
 
             return;
         }
 
-        if (direction > 0) {
+        if (direction === 1) {
             script.triggerControl(this.group, "loop_double");
-        } else {
+        } else if (direction === -1) {
             script.triggerControl(this.group, "loop_halve");
         }
     }
@@ -2295,23 +2298,24 @@ class Encoder {
         this.previousValue = null;
     }
 
-    // 1 = right turn, -1 = left turn, 0 = first value or unexpected change
     readTurnDirection(value) {
+        // Establish turn baseline on first reading
         if (this.previousValue === null) {
             this.previousValue = value;
             return 0;
         }
 
-        let dir = 0;
+        let direction = 0;
 
+        // Input values are 0 - 15 and wrap around
         if ((value + 1) % 16 === this.previousValue) {
-            dir = -1;
+            direction = -1;
         } else if ((this.previousValue + 1) % 16 === value) {
-            dir = 1;
+            direction = 1;
         }
 
         this.previousValue = value;
-        return dir;
+        return direction;
     }
 }
 
