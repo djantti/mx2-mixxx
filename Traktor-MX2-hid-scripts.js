@@ -2726,7 +2726,14 @@ class MX2 {
 
         // Populate the custom theme and use default theme values as fallback
         for (const [key, defaultValue] of Object.entries(DefaultTheme)) {
-            customTheme[key] = LedColors[engine.getSetting(key)] || defaultValue;
+            const setting = engine.getSetting(key);
+
+            if (Object.prototype.hasOwnProperty.call(LedColors, setting)) {
+                customTheme[key] = LedColors[setting];
+            } else {
+                console.warn(`No setting found for '${key}', using value from default theme.`);
+                customTheme[key] = defaultValue;
+            }
         }
 
         return customTheme;
