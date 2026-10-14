@@ -2746,9 +2746,19 @@ class MX2 {
     }
 
     getOutputColorMap(theme) {
-        return this.createColorMap(
-            theme === "Custom" ? this.createCustomTheme() : ColorThemes[theme] || DefaultTheme
-        );
+        let selectedTheme;
+
+        if (theme === "Custom") {
+            selectedTheme = this.createCustomTheme();
+        } else if (Object.prototype.hasOwnProperty.call(ColorThemes, theme)) {
+            selectedTheme = ColorThemes[theme];
+        } else {
+            // Use default theme as fallback
+            console.warn(`Unknown theme '${theme}', using default theme.`);
+            selectedTheme = DefaultTheme;
+        }
+
+        return this.createColorMap(selectedTheme);
     }
 
     isShiftPressed(deck) {
