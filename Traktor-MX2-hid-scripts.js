@@ -1288,7 +1288,7 @@ class Deck {
         const color = outputs[key];
 
         if (color === undefined) {
-            console.warn(`No output color found for '${key}'.`);
+            console.warn(`No output color found for '${key}'`);
         } else {
             this.controller.setOutput(group, key, this.mapLedValue(value, color), true);
         }
@@ -2767,7 +2767,7 @@ class MX2 {
             selectedTheme = ColorThemes[theme];
         } else {
             // Use default theme as fallback
-            console.warn(`Unknown theme '${theme}', using default theme.`);
+            console.warn(`Unknown theme '${theme}', using default theme`);
             selectedTheme = DefaultTheme;
         }
 
@@ -2776,7 +2776,7 @@ class MX2 {
 
     isShiftPressed(deck) {
         if (deck === undefined) {
-            console.warn("No deck provided, using global shift check.");
+            console.warn("No deck provided, using global shift check");
         }
 
         if (deck === undefined || Settings.globalShiftButtons) {
