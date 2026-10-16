@@ -2724,15 +2724,14 @@ class MX2 {
     createCustomTheme() {
         const customTheme = {};
 
-        // Populate the custom theme and use default theme values as fallback
         for (const [key, defaultValue] of Object.entries(DefaultTheme)) {
             const setting = engine.getSetting(key);
 
             if (Object.prototype.hasOwnProperty.call(LedColors, setting)) {
                 customTheme[key] = LedColors[setting];
             } else {
-                console.warn(`No setting found for '${key}', using value from default theme.`);
-                customTheme[key] = defaultValue;
+                // Missing values are checked later, so log a warning for now
+                console.warn(`No custom color setting found for '${key}'`);
             }
         }
 
@@ -2742,8 +2741,15 @@ class MX2 {
     createColorMap(theme) {
         const colorMap = {};
 
-        for (const [name, color] of Object.entries(theme)) {
-            colorMap[name] = {
+        // Use default theme values as fallback
+        for (const [key, defaultColor] of Object.entries(DefaultTheme)) {
+            const color = theme[key] === undefined ? defaultColor : theme[key];
+
+            if (theme[key] === undefined) {
+                console.warn(`No definition for '${key}', using value from default theme`);
+            }
+
+            colorMap[key] = {
                 full: color,
                 dim: dimColor(color)
             };
