@@ -2743,10 +2743,17 @@ class MX2 {
 
         // Use default theme values as fallback
         for (const [key, defaultColor] of Object.entries(DefaultTheme)) {
-            const color = theme[key] === undefined ? defaultColor : theme[key];
+            let color = theme[key];
 
-            if (theme[key] === undefined) {
+            if (color === undefined) {
                 console.warn(`No definition for '${key}', using value from default theme`);
+                color = defaultColor;
+            }
+
+            // Check for value range accepted by the controller
+            if (!Number.isInteger(color) || (color !== LedOff && (color < 0x06 || color > 0x4a))) {
+                console.warn(`Invalid color value '${color}', using '${LedOff}' for '${key}'`);
+                color = LedOff;
             }
 
             colorMap[key] = {
