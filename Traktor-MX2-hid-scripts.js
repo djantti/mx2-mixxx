@@ -272,7 +272,7 @@ class Mixer {
         this.mx2 = parent;
         this.controller = this.mx2.controller;
 
-        this.outputColorMap = this.mx2.outputColorMap;
+        this.colorMap = this.mx2.colorMap;
 
         this.talkoverPressTimer = 0;
 
@@ -393,7 +393,7 @@ class Mixer {
     talkoverCallback(value, group, _key) {
         // Choose output color based on mic input peak state
         const outColor = engine.getValue(group, "peak_indicator") ?
-            this.outputColorMap.peakColor : this.outputColorMap.micColor;
+            this.colorMap.peakColor : this.colorMap.micColor;
 
         const ledValue = engine.getValue(group, "talkover") ?
             outColor.full : outColor.dim;
@@ -402,7 +402,7 @@ class Mixer {
     }
 
     peakIndicatorCallback(value, group, key) {
-        const ledValue = value ? this.outputColorMap.peakColor.full : LedOff;
+        const ledValue = value ? this.colorMap.peakColor.full : LedOff;
         this.controller.setOutput(group, key, ledValue, true);
     }
 }
@@ -418,7 +418,7 @@ class QfxPresetButton {
 
         this.qfxActive = false;
 
-        this.outputColorMap = this.mixer.outputColorMap;
+        this.colorMap = this.mixer.colorMap;
     }
 
     registerInputs(config) {
@@ -492,7 +492,7 @@ class Deck {
         this.number = number;
         this.group = `[Channel${this.number}]`;
 
-        this.outputColorMap = this.mx2.outputColorMap;
+        this.colorMap = this.mx2.colorMap;
 
         this.vuMeterState = new Array(8).fill(LedOff);
 
@@ -681,16 +681,16 @@ class Deck {
     }
 
     enableOutputs() {
-        this.controller.setOutput(this.group, "!favorite", this.outputColorMap.libraryColor.dim, false);
-        this.controller.setOutput(this.group, "!prepare", this.outputColorMap.libraryColor.dim, false);
+        this.controller.setOutput(this.group, "!favorite", this.colorMap.libraryColor.dim, false);
+        this.controller.setOutput(this.group, "!prepare", this.colorMap.libraryColor.dim, false);
         // Turntable mode is on by default
-        this.controller.setOutput(this.group, "!tt", this.outputColorMap.jogModeColor.full, false);
-        this.controller.setOutput(this.group, "!jog", this.outputColorMap.jogModeColor.dim, false);
+        this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.full, false);
+        this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.dim, false);
         // Hotcue mode is on by default
-        this.controller.setOutput(this.group, "!hotcues", this.outputColorMap.activePadModeColor.full, false);
-        this.controller.setOutput(this.group, "!stems", this.outputColorMap.inactivePadModeColor.dim, false);
-        this.controller.setOutput(this.group, "!samples", this.outputColorMap.inactivePadModeColor.dim, false);
-        this.controller.setOutput(this.group, "!loops", this.outputColorMap.inactivePadModeColor.dim, false);
+        this.controller.setOutput(this.group, "!hotcues", this.colorMap.activePadModeColor.full, false);
+        this.controller.setOutput(this.group, "!stems", this.colorMap.inactivePadModeColor.dim, false);
+        this.controller.setOutput(this.group, "!samples", this.colorMap.inactivePadModeColor.dim, false);
+        this.controller.setOutput(this.group, "!loops", this.colorMap.inactivePadModeColor.dim, false);
     }
 
     disableOutputs() {
@@ -931,10 +931,10 @@ class Deck {
         }
 
         for (const item of padModes) {
-            this.controller.setOutput(this.group, item, this.outputColorMap.inactivePadModeColor.dim, false);
+            this.controller.setOutput(this.group, item, this.colorMap.inactivePadModeColor.dim, false);
         }
 
-        this.controller.setOutput(this.group, field.name, this.outputColorMap.activePadModeColor.full, true);
+        this.controller.setOutput(this.group, field.name, this.colorMap.activePadModeColor.full, true);
         this.setPadMode(padIndex);
     }
 
@@ -1238,17 +1238,17 @@ class Deck {
 
     previewButtonCallback(value, group, _key) {
         this.controller.setOutput(group, `!preview_${this.number}`,
-            this.mapLedValue(value, this.outputColorMap.libraryColor), true);
+            this.mapLedValue(value, this.colorMap.libraryColor), true);
     }
 
     viewButtonCallback(value, group, _key) {
         this.controller.setOutput(group, `!view_${this.number}`,
-            this.mapLedValue(value, this.outputColorMap.libraryColor), true);
+            this.mapLedValue(value, this.colorMap.libraryColor), true);
     }
 
     mstButtonCallback(value, _group, key) {
         const outColor = engine.getValue(this.group, "rateRange") === 1 ?
-            this.outputColorMap.altModeColor : this.outputColorMap.syncColor;
+            this.colorMap.altModeColor : this.colorMap.syncColor;
 
         if (key === "rateRange") {
             // Store the new default fader range if needed
@@ -1273,16 +1273,16 @@ class Deck {
 
     outputCallback(value, group, key) {
         const outputs = {
-            "!favorite": this.outputColorMap.libraryColor,
-            "!prepare": this.outputColorMap.libraryColor,
-            "slip_enabled": this.outputColorMap.transportColor,
-            "reverse": this.outputColorMap.transportColor,
-            "sync_enabled": this.outputColorMap.syncColor,
-            "sync_leader": this.outputColorMap.syncColor,
-            "keylock": this.outputColorMap.keylockColor,
-            "cue_indicator": this.outputColorMap.cueColor,
-            "play_indicator": this.outputColorMap.playColor,
-            "pfl": this.outputColorMap.pflColor
+            "!favorite": this.colorMap.libraryColor,
+            "!prepare": this.colorMap.libraryColor,
+            "slip_enabled": this.colorMap.transportColor,
+            "reverse": this.colorMap.transportColor,
+            "sync_enabled": this.colorMap.syncColor,
+            "sync_leader": this.colorMap.syncColor,
+            "keylock": this.colorMap.keylockColor,
+            "cue_indicator": this.colorMap.cueColor,
+            "play_indicator": this.colorMap.playColor,
+            "pfl": this.colorMap.pflColor
         };
 
         const color = outputs[key];
@@ -1297,7 +1297,7 @@ class Deck {
     qfxButtonCallback(_value, group, _key) {
         const loadedPreset = engine.getValue(group, "loaded_chain_preset");
         const qfxIndex = Settings.qfxPresets.indexOf(loadedPreset);
-        const color = qfxIndex === -1 ? this.outputColorMap.fxColor.full : Settings.qfxColors[qfxIndex];
+        const color = qfxIndex === -1 ? this.colorMap.fxColor.full : Settings.qfxColors[qfxIndex];
 
         if (engine.getValue(group, "enabled")) {
             this.controller.setOutput(group, "enabled", color, true);
@@ -1391,8 +1391,8 @@ class Deck {
 
     setJogMode(jogMode) {
         if (jogMode === 0) {
-            this.controller.setOutput(this.group, "!tt", this.outputColorMap.jogModeColor.full, false);
-            this.controller.setOutput(this.group, "!jog", this.outputColorMap.jogModeColor.dim, true);
+            this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.full, false);
+            this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.dim, true);
             this.jogMode = jogMode;
             return;
         }
@@ -1405,8 +1405,8 @@ class Deck {
                 engine.setValue(this.group, "scratch2_enable", false);
             }
 
-            this.controller.setOutput(this.group, "!jog", this.outputColorMap.jogModeColor.full, false);
-            this.controller.setOutput(this.group, "!tt", this.outputColorMap.jogModeColor.dim, true);
+            this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.full, false);
+            this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.dim, true);
             this.jogMode = jogMode;
             return;
         }
@@ -1515,7 +1515,7 @@ class PadButton {
         this.number = number;
         this.output = `!pad_button_${this.number}`;
 
-        this.outputColorMap = this.deck.outputColorMap;
+        this.colorMap = this.deck.colorMap;
         this.padColorMap = new ColorMapper(PadColors);
 
         this.pressTimer = 0;
@@ -1643,14 +1643,14 @@ class PadButton {
 
         if (value === 1) {
             if (this.isShiftPressed()) {
-                this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
+                this.controller.setOutput(this.deck.group, this.output, this.colorMap.altPadColor.full, true);
                 engine.setValue(this.deck.group, `${shiftedLoop}_${2 ** ((this.number - 5))}_activate`, 1);
             } else {
-                this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
+                this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
                 engine.setValue(this.deck.group, `${defaultLoop}_${2 ** (this.number - 5)}_activate`, 1);
             }
         } else {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, true);
             engine.setValue(this.deck.group, "loop_enabled", 0);
         }
     }
@@ -1665,18 +1665,18 @@ class PadButton {
                     this.padColorMap.getValueForNearestColor(color), true);
             } else {
                 this.controller.setOutput(this.deck.group, this.output,
-                    this.outputColorMap.inactivePadColor.full, true);
+                    this.colorMap.inactivePadColor.full, true);
             }
 
             return;
         }
 
         if (status === 2) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
             return;
         }
 
-        this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.unconnectedPadColor.dim, true);
+        this.controller.setOutput(this.deck.group, this.output, this.colorMap.unconnectedPadColor.dim, true);
     }
 
     stemPadCallback() {
@@ -1693,21 +1693,21 @@ class PadButton {
         }
 
         this.controller.setOutput(this.deck.group, modifier,
-            this.outputColorMap.unconnectedPadColor.dim, false);
+            this.colorMap.unconnectedPadColor.dim, false);
 
         if (engine.getValue(stem, "mute") === 1) {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, dimColor(padColor), false);
             } else {
                 this.controller.setOutput(this.deck.group, this.output,
-                    this.outputColorMap.inactivePadColor.dim, false);
+                    this.colorMap.inactivePadColor.dim, false);
             }
         } else {
             if (Settings.matchPadColors) {
                 this.controller.setOutput(this.deck.group, this.output, padColor, false);
             } else {
                 this.controller.setOutput(this.deck.group, this.output,
-                    this.outputColorMap.inactivePadColor.full, false);
+                    this.colorMap.inactivePadColor.full, false);
             }
         }
 
@@ -1716,28 +1716,28 @@ class PadButton {
 
     samplePadCallback() {
         if (!engine.getValue(this.samplerGroup, "track_loaded")) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.unconnectedPadColor.dim, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.unconnectedPadColor.dim, true);
             return;
         }
 
         if (engine.getValue(this.samplerGroup, "play") !== 1) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, true);
             return;
         }
 
         if (engine.getValue(this.samplerGroup, "repeat") === 1) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.altPadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.altPadColor.full, true);
             return;
         }
 
-        this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
+        this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
     }
 
     loopCallback(value, _group, _key) {
         if (value === 0) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, true);
         } else if (engine.getValue(this.deck.group, "loop_enabled") === 1) {
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.activePadColor.full, true);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
         }
     }
 
@@ -1776,7 +1776,7 @@ class PadButton {
                 this.samplerGroup, "repeat", this.samplePadCallback.bind(this)));
             break;
         case 3:
-            this.controller.setOutput(this.deck.group, this.output, this.outputColorMap.inactivePadColor.full, false);
+            this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, false);
 
             // Send output report on the last LED update
             if (this.number === 8) {
@@ -1862,7 +1862,7 @@ class EffectUnit {
         this.number = number;
         this.group = `[EffectRack1_EffectUnit${this.number}]`;
 
-        this.outputColorMap = this.mx2.outputColorMap;
+        this.colorMap = this.mx2.colorMap;
 
         this.effectFocusTimer = 0;
         this.effectIndices = [0, 1, 2];
@@ -2072,7 +2072,7 @@ class EffectUnit {
                 engine.setValue(this.group, "show_focus", 1);
             }
         } else {
-            this.controller.setOutput(this.group, "!effect_focus", this.outputColorMap.focusColor.dim, true);
+            this.controller.setOutput(this.group, "!effect_focus", this.colorMap.focusColor.dim, true);
             engine.setValue(this.group, "show_focus", 0);
         }
 
@@ -2101,11 +2101,11 @@ class EffectUnit {
         }
 
         this.controller.setOutput(this.group, "!effect_focus",
-            value ? this.outputColorMap.focusColor.full : this.outputColorMap.focusColor.dim, true);
+            value ? this.colorMap.focusColor.full : this.colorMap.focusColor.dim, true);
     }
 
     effectGroupCallback(value, group, key) {
-        const ledValue = value ? this.outputColorMap.effectColor.full : this.outputColorMap.effectColor.dim;
+        const ledValue = value ? this.colorMap.effectColor.full : this.colorMap.effectColor.dim;
         this.controller.setOutput(group, key, ledValue, true);
     }
 
@@ -2125,7 +2125,7 @@ class EffectParameter {
         this.group = this.effectUnit.group;
         this.output = `!effect_button_${this.number}`;
 
-        this.outputColorMap = this.effectUnit.outputColorMap;
+        this.colorMap = this.effectUnit.colorMap;
 
         this.pressTimer = 0;
         this.longPress = false;
@@ -2285,7 +2285,7 @@ class EffectParameter {
 
     ledCallback(value) {
         this.controller.setOutput(this.group, this.output,
-            value ? this.outputColorMap.effectColor.full : this.outputColorMap.effectColor.dim, true);
+            value ? this.colorMap.effectColor.full : this.colorMap.effectColor.dim, true);
     }
 
     isShiftPressed() {
@@ -2323,7 +2323,7 @@ class MX2 {
     constructor() {
         this.controller = new HIDController();
 
-        this.outputColorMap = this.getOutputColorMap(Settings.colorTheme);
+        this.colorMap = this.getColorMap(Settings.colorTheme);
 
         this.shiftPressed = [false, false];
 
@@ -2765,7 +2765,7 @@ class MX2 {
         return colorMap;
     }
 
-    getOutputColorMap(theme) {
+    getColorMap(theme) {
         let selectedTheme;
 
         if (theme === "Custom") {
