@@ -468,14 +468,14 @@ class QfxPresetButton {
         if (Settings.qfxPresets[this.number - 1] === value) {
             // Only set the LED once if changing presets for both decks
             if (!this.qfxActive) {
-                this.controller.setOutput("[ChannelX]", `!qfx_${this.number}`,
+                this.controller.setOutput(this.group, `!qfx_${this.number}`,
                     Settings.qfxColors[this.number - 1], true);
             }
 
             this.qfxActive = true;
         } else {
             if (this.qfxActive) {
-                this.controller.setOutput("[ChannelX]", `!qfx_${this.number}`,
+                this.controller.setOutput(this.group, `!qfx_${this.number}`,
                     dimColor(Settings.qfxColors[this.number - 1]), true);
             }
 
