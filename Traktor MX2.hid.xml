@@ -59,506 +59,695 @@
       </option>
     </group>
     <group label="Custom theme colors">
-      <option
-        variable="focusColor"
-        label="Effect focus button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for the effect focus button.
-        </description>
-      </option>
-      <option
-        variable="effectColor"
-        label="Effect toggle buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000" default="true">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for effect on / off toggle buttons.
-        </description>
-      </option>
-      <option
-        variable="libraryColor"
-        label="Library buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for library action buttons.
-        </description>
-      </option>
-      <option
-        variable="transportColor"
-        label="Transport buttons"
-        type="enum">
-          <value label="Red" color="#ff0000" default="true">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for transport mode buttons.
-        </description>
-      </option>
-      <option
-        variable="jogModeColor"
-        label="Wheel mode buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff" default="true">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for jog wheel mode buttons.
-        </description>
-      </option>
-      <option
-        variable="cueColor"
-        label="Cue button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff" default="true">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for the cue button.
-        </description>
-      </option>
-      <option
-        variable="playColor"
-        label="Play button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00" default="true">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for the play button.
-        </description>
-      </option>
-      <option
-        variable="keylockColor"
-        label="Keylock button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00bf" default="true">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for the keylock button.
-        </description>
-      </option>
-      <option
-        variable="inactivePadModeColor"
-        label="Inactive pad mode buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff" default="true">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for inactive pad mode buttons.
-        </description>
-      </option>
-      <option
-        variable="activePadModeColor"
-        label="Active pad mode button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff" default="true">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for the active pad mode button.
-        </description>
-      </option>
-      <option
-        variable="unconnectedPadColor"
-        label="Unconnected pads"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads.
-        </description>
-      </option>
-      <option
-        variable="inactivePadColor"
-        label="Inactive pads"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for connected, but currently inactive pads.
-        </description>
-      </option>
-      <option
-        variable="activePadColor"
-        label="Active pads"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00" default="true">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for currently active pads.
-        </description>
-      </option>
-      <option
-        variable="altPadColor"
-        label="Alternate mode pads"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000" default="true">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for currently active pads in alternate mode. This includes looping samplers and pads activated while holding 'Shift'.
-        </description>
-      </option>
-      <option
-        variable="syncColor"
-        label="Sync buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00" default="true">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for sync and sync master buttons.
-        </description>
-      </option>
-      <option
-        variable="fxColor"
-        label="FX buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting.
-        </description>
-      </option>
-      <option
-        variable="pflColor"
-        label="Headphone buttons"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for headphone cue buttons.
-        </description>
-      </option>
-      <option
-        variable="micColor"
-        label="Talkback button"
-        type="enum">
-          <value label="Red" color="#ff0000">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff" default="true">white</value>
-        <description>
-          Color for the talkback button.
-        </description>
-      </option>
-      <option
-        variable="altModeColor"
-        label="Alternate mode indicators"
-        type="enum">
-          <value label="Red" color="#ff0000" default="true">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for buttons in alternate mode. Used by 'MST' button when long range rate faders are active.
-        </description>
-      </option>
-      <option
-        variable="peakColor"
-        label="Peak indicators"
-        type="enum">
-          <value label="Red" color="#ff0000" default="true">red</value>
-          <value label="Carrot" color="#ff4000">carrot</value>
-          <value label="Orange" color="#ff8000">orange</value>
-          <value label="Honey" color="#ffbf00">honey</value>
-          <value label="Yellow" color="#ffff00">yellow</value>
-          <value label="Lime" color="#80ff00">lime</value>
-          <value label="Green" color="#00ff00">green</value>
-          <value label="Aqua" color="#00ff80">aqua</value>
-          <value label="Celeste" color="#00ffff">celeste</value>
-          <value label="Sky" color="#0080ff">sky</value>
-          <value label="Blue" color="#0000ff">blue</value>
-          <value label="Purple" color="#8000ff">purple</value>
-          <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-          <value label="Magenta" color="#ff00ff">magenta</value>
-          <value label="Cerise" color="#ff0080">cerise</value>
-          <value label="Crimson" color="#ff0040">crimson</value>
-          <value label="White" color="#ffffff">white</value>
-        <description>
-          Color for main output and microphone input peak indicator LEDs.
-        </description>
-      </option>
+      <group label="Effect buttons">
+        <option
+          variable="focusColor"
+          label="FX focus"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for the effect focus button.
+          </description>
+        </option>
+        <option
+          variable="effectColor"
+          label="FX toggle"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000" default="true">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for effect on / off toggle buttons.
+          </description>
+        </option>
+        <option
+          variable="assignColor"
+          label="Deck FX assign"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000" default="true">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for effect unit deck asign buttons.
+          </description>
+        </option>
+      </group>
+      <group label="Library buttons">
+        <option
+          variable="favoriteColor"
+          label="Favorite"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for favorite (FAV) button.
+          </description>
+        </option>
+        <option
+          variable="prepareColor"
+          label="Prepare"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for prepare (star) button.
+          </description>
+        </option>
+        <option
+          variable="previewColor"
+          label="Preview"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for preview (right arrow) button.
+          </description>
+        </option>
+        <option
+          variable="viewColor"
+          label="View"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for view button.
+          </description>
+        </option>
+      </group>
+      <group label="Deck buttons">
+        <option
+          variable="ttColor"
+          label="Turntable mode"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff" default="true">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for wheel turntable mode (TT) button.
+          </description>
+        </option>
+        <option
+          variable="jogColor"
+          label="Jog mode"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff" default="true">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for wheel jog mode button.
+          </description>
+        </option>
+        <option
+          variable="slipColor"
+          label="Slip mode"
+          type="enum">
+            <value label="Red" color="#ff0000" default="true">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for slip mode (FLX) button.
+          </description>
+        </option>
+        <option
+          variable="reverseColor"
+          label="Reverse play"
+          type="enum">
+            <value label="Red" color="#ff0000" default="true">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for reverse play (REV) button.
+          </description>
+        </option>
+        <option
+          variable="cueColor"
+          label="Cue"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff" default="true">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for the cue button.
+          </description>
+        </option>
+        <option
+          variable="playColor"
+          label="Play"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00" default="true">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for the play button.
+          </description>
+        </option>
+        <option
+          variable="keylockColor"
+          label="Keylock"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00bf" default="true">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for the keylock button.
+          </description>
+        </option>
+        <option
+          variable="syncColor"
+          label="Sync"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00" default="true">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for sync (SNC) button.
+          </description>
+        </option>
+        <option
+          variable="syncLeaderColor"
+          label="Sync leader"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00" default="true">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for sync leader (MST) button.
+          </description>
+        </option>
+      </group>
+      <group label="Pad mode buttons">
+        <option
+          variable="inactivePadModeColor"
+          label="Inactive mode"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff" default="true">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for inactive pad mode buttons.
+          </description>
+        </option>
+        <option
+          variable="activePadModeColor"
+          label="Active mode"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff" default="true">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for the active pad mode button.
+          </description>
+        </option>
+      </group>
+      <group label="Pads">
+        <option
+          variable="unconnectedPadColor"
+          label="Unconnected pads"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads.
+          </description>
+        </option>
+        <option
+          variable="inactivePadColor"
+          label="Inactive pads"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for connected, but currently inactive pads.
+          </description>
+        </option>
+        <option
+          variable="activePadColor"
+          label="Active pads"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00" default="true">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for currently active pads.
+          </description>
+        </option>
+        <option
+          variable="altPadColor"
+          label="Alternate mode pads"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000" default="true">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for currently active pads in alternate mode. This includes looping samplers and pads activated while holding 'Shift'.
+          </description>
+        </option>
+      </group>
+      <group label="Mixer buttons">
+        <option
+          variable="fxColor"
+          label="Quick FX"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting.
+          </description>
+        </option>
+        <option
+          variable="pflColor"
+          label="Headphone"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for headphone cue buttons.
+          </description>
+        </option>
+        <option
+          variable="micColor"
+          label="Talkback"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff" default="true">white</value>
+          <description>
+            Color for the talkback button.
+          </description>
+        </option>
+      </group>
+      <group label="Indicators">
+        <option
+          variable="peakColor"
+          label="Signal peak"
+          type="enum">
+            <value label="Red" color="#ff0000" default="true">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for main output and microphone input peak indicator LEDs.
+          </description>
+        </option>
+        <option
+          variable="altModeColor"
+          label="Alternate mode"
+          type="enum">
+            <value label="Red" color="#ff0000" default="true">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for buttons in alternate mode. Used by sync leader (MST) button when long range rate faders are active.
+          </description>
+        </option>
+      </group>
     </group>
     <group label="Bottom panel colors">
       <row orientation="vertical">
@@ -664,192 +853,208 @@
         </option>
       </row>
     </group>
-    <group label="Quick FX colors">
+    <group label="Quick FX">
       <row orientation="vertical">
-        <option
-          variable="qfxColor1"
-          label="Button 1"
-          type="enum">
-            <value label="Red" color="#ff0000" default="true">red</value>
-            <value label="Carrot" color="#ff4000">carrot</value>
-            <value label="Orange" color="#ff8000">orange</value>
-            <value label="Honey" color="#ffbf00">honey</value>
-            <value label="Yellow" color="#ffff00">yellow</value>
-            <value label="Lime" color="#bfff00">lime</value>
-            <value label="Green" color="#00ff00">green</value>
-            <value label="Aqua" color="#00ff80">aqua</value>
-            <value label="Celeste" color="#00ffff">celeste</value>
-            <value label="Sky" color="#0080ff">sky</value>
-            <value label="Blue" color="#0000ff">blue</value>
-            <value label="Purple" color="#8000ff">purple</value>
-            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-            <value label="Magenta" color="#ff00ff">magenta</value>
-            <value label="Cerise" color="#ff0080">cerise</value>
-            <value label="Crimson" color="#ff0040">crimson</value>
-          <description>
-            Color for Quick FX preset button '1'.
-          </description>
-        </option>
-        <option
-          variable="qfxColor2"
-          label="Button 2"
-          type="enum">
-            <value label="Red" color="#ff0000">red</value>
-            <value label="Carrot" color="#ff4000">carrot</value>
-            <value label="Orange" color="#ff8000">orange</value>
-            <value label="Honey" color="#ffbf00">honey</value>
-            <value label="Yellow" color="#ffff00">yellow</value>
-            <value label="Lime" color="#80ff00">lime</value>
-            <value label="Green" color="#00ff00" default="true">green</value>
-            <value label="Aqua" color="#00ff80">aqua</value>
-            <value label="Celeste" color="#00ffff">celeste</value>
-            <value label="Sky" color="#0080ff">sky</value>
-            <value label="Blue" color="#0000ff">blue</value>
-            <value label="Purple" color="#8000ff">purple</value>
-            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-            <value label="Magenta" color="#ff00ff">magenta</value>
-            <value label="Cerise" color="#ff0080">cerise</value>
-            <value label="Crimson" color="#ff0040">crimson</value>
-          <description>
-            Color for Quick FX preset button '2'.
-          </description>
-        </option>
-        <option
-          variable="qfxColor3"
-          label="Button 3"
-          type="enum">
-            <value label="Red" color="#ff0000">red</value>
-            <value label="Carrot" color="#ff4000">carrot</value>
-            <value label="Orange" color="#ff8000">orange</value>
-            <value label="Honey" color="#ffbf00">honey</value>
-            <value label="Yellow" color="#ffff00">yellow</value>
-            <value label="Lime" color="#80ff00">lime</value>
-            <value label="Green" color="#00ff00">green</value>
-            <value label="Aqua" color="#00ff80">aqua</value>
-            <value label="Celeste" color="#00ffff">celeste</value>
-            <value label="Sky" color="#0080ff">sky</value>
-            <value label="Blue" color="#0000ff" default="true">blue</value>
-            <value label="Purple" color="#8000ff">purple</value>
-            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-            <value label="Magenta" color="#ff00ff">magenta</value>
-            <value label="Cerise" color="#ff0080">cerise</value>
-            <value label="Crimson" color="#ff0040">crimson</value>
-          <description>
-            Color for Quick FX preset button '3'.
-          </description>
-        </option>
-        <option
-          variable="qfxColor4"
-          label="Button 4"
-          type="enum">
-            <value label="Red" color="#ff0000">red</value>
-            <value label="Carrot" color="#ff4000">carrot</value>
-            <value label="Orange" color="#ff8000">orange</value>
-            <value label="Honey" color="#ffbf00">honey</value>
-            <value label="Yellow" color="#ffff00" default="true">yellow</value>
-            <value label="Lime" color="#80ff00">lime</value>
-            <value label="Green" color="#00ff00">green</value>
-            <value label="Aqua" color="#00ff80">aqua</value>
-            <value label="Celeste" color="#00ffff">celeste</value>
-            <value label="Sky" color="#0080ff">sky</value>
-            <value label="Blue" color="#0000ff">blue</value>
-            <value label="Purple" color="#8000ff">purple</value>
-            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-            <value label="Magenta" color="#ff00ff">magenta</value>
-            <value label="Cerise" color="#ff0080">cerise</value>
-            <value label="Crimson" color="#ff0040">crimson</value>
-          <description>
-            Color for Quick FX preset button '4'.
-          </description>
-        </option>
-        <option
-          variable="qfxColor5"
-          label="Filter button"
-          type="enum">
-            <value label="Red" color="#ff0000">red</value>
-            <value label="Carrot" color="#ff4000">carrot</value>
-            <value label="Orange" color="#ff8000" default="true">orange</value>
-            <value label="Honey" color="#ffbf00">honey</value>
-            <value label="Yellow" color="#ffff00">yellow</value>
-            <value label="Lime" color="#80ff00">lime</value>
-            <value label="Green" color="#00ff00">green</value>
-            <value label="Aqua" color="#00ff80">aqua</value>
-            <value label="Celeste" color="#00ffff">celeste</value>
-            <value label="Sky" color="#0080ff">sky</value>
-            <value label="Blue" color="#0000ff">blue</value>
-            <value label="Purple" color="#8000ff">purple</value>
-            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-            <value label="Magenta" color="#ff00ff">magenta</value>
-            <value label="Cerise" color="#ff0080">cerise</value>
-            <value label="Crimson" color="#ff0040">crimson</value>
-          <description>
-            Color for 'Filter' Quick FX preset button.
-          </description>
-        </option>
-      </row>
-    </group>
-    <group label="Quick FX presets">
-      <row orientation="vertical">
-        <option
-          variable="qfxPreset1"
-          label="Button 1"
-          type="integer"
-          min="1"
-          max="1000"
-          step="1"
-          default="1">
-          <description>
-            Quick FX chain to load when preset button '1' is pressed.
-          </description>
-        </option>
-        <option
-          variable="qfxPreset2"
-          label="Button 2"
-          type="integer"
-          min="1"
-          max="1000"
-          step="1"
-          default="2">
-          <description>
-            Quick FX chain to load when preset button '2' is pressed.
-          </description>
-        </option>
-        <option
-          variable="qfxPreset3"
-          label="Button 3"
-          type="integer"
-          min="1"
-          max="1000"
-          step="1"
-          default="3">
-          <description>
-            Quick FX chain to load when preset button '3' is pressed.
-          </description>
-        </option>
-        <option
-          variable="qfxPreset4"
-          label="Button 4"
-          type="integer"
-          min="1"
-          max="1000"
-          step="1"
-          default="4">
-          <description>
-            Quick FX chain to load when preset button '4' is pressed.
-          </description>
-        </option>
-        <option
-          variable="qfxPreset5"
-          label="Filter button"
-          type="integer"
-          min="1"
-          max="1000"
-          step="1"
-          default="11">
-          <description>
-            Quick FX chain to load when 'Filter' preset button is pressed.
-          </description>
-        </option>
+        <row orientation="vertical">
+          <group label="Button 1">
+            <option
+              variable="qfxPreset1"
+              label="Preset"
+              type="integer"
+              min="1"
+              max="1000"
+              step="1"
+              default="1">
+              <description>
+                Quick FX chain to load when preset button '1' is pressed.
+              </description>
+            </option>
+            <option
+              variable="qfxColor1"
+              label="Color"
+              type="enum">
+                <value label="Red" color="#ff0000" default="true">red</value>
+                <value label="Carrot" color="#ff4000">carrot</value>
+                <value label="Orange" color="#ff8000">orange</value>
+                <value label="Honey" color="#ffbf00">honey</value>
+                <value label="Yellow" color="#ffff00">yellow</value>
+                <value label="Lime" color="#bfff00">lime</value>
+                <value label="Green" color="#00ff00">green</value>
+                <value label="Aqua" color="#00ff80">aqua</value>
+                <value label="Celeste" color="#00ffff">celeste</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff">blue</value>
+                <value label="Purple" color="#8000ff">purple</value>
+                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+                <value label="Magenta" color="#ff00ff">magenta</value>
+                <value label="Cerise" color="#ff0080">cerise</value>
+                <value label="Crimson" color="#ff0040">crimson</value>
+              <description>
+                Color for Quick FX preset button '1'.
+              </description>
+            </option>
+          </group>
+        </row>
+        <row orientation="vertical">
+          <group label="Button 2">
+            <option
+              variable="qfxPreset2"
+              label="Preset"
+              type="integer"
+              min="1"
+              max="1000"
+              step="1"
+              default="2">
+              <description>
+                Quick FX chain to load when preset button '2' is pressed.
+              </description>
+            </option>
+            <option
+              variable="qfxColor2"
+              label="Color"
+              type="enum">
+                <value label="Red" color="#ff0000">red</value>
+                <value label="Carrot" color="#ff4000">carrot</value>
+                <value label="Orange" color="#ff8000">orange</value>
+                <value label="Honey" color="#ffbf00">honey</value>
+                <value label="Yellow" color="#ffff00">yellow</value>
+                <value label="Lime" color="#80ff00">lime</value>
+                <value label="Green" color="#00ff00" default="true">green</value>
+                <value label="Aqua" color="#00ff80">aqua</value>
+                <value label="Celeste" color="#00ffff">celeste</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff">blue</value>
+                <value label="Purple" color="#8000ff">purple</value>
+                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+                <value label="Magenta" color="#ff00ff">magenta</value>
+                <value label="Cerise" color="#ff0080">cerise</value>
+                <value label="Crimson" color="#ff0040">crimson</value>
+              <description>
+                Color for Quick FX preset button '2'.
+              </description>
+            </option>
+          </group>
+        </row>
+        <row orientation="vertical">
+          <group label="Button 3">
+            <option
+              variable="qfxPreset3"
+              label="Preset"
+              type="integer"
+              min="1"
+              max="1000"
+              step="1"
+              default="3">
+              <description>
+                Quick FX chain to load when preset button '3' is pressed.
+              </description>
+            </option>
+            <option
+              variable="qfxColor3"
+              label="Color"
+              type="enum">
+                <value label="Red" color="#ff0000">red</value>
+                <value label="Carrot" color="#ff4000">carrot</value>
+                <value label="Orange" color="#ff8000">orange</value>
+                <value label="Honey" color="#ffbf00">honey</value>
+                <value label="Yellow" color="#ffff00">yellow</value>
+                <value label="Lime" color="#80ff00">lime</value>
+                <value label="Green" color="#00ff00">green</value>
+                <value label="Aqua" color="#00ff80">aqua</value>
+                <value label="Celeste" color="#00ffff">celeste</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff" default="true">blue</value>
+                <value label="Purple" color="#8000ff">purple</value>
+                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+                <value label="Magenta" color="#ff00ff">magenta</value>
+                <value label="Cerise" color="#ff0080">cerise</value>
+                <value label="Crimson" color="#ff0040">crimson</value>
+              <description>
+                Color for Quick FX preset button '3'.
+              </description>
+            </option>
+          </group>
+        </row>
+        <row orientation="vertical">
+          <group label="Button 4">
+            <option
+              variable="qfxPreset4"
+              label="Preset"
+              type="integer"
+              min="1"
+              max="1000"
+              step="1"
+              default="4">
+              <description>
+                Quick FX chain to load when preset button '4' is pressed.
+              </description>
+            </option>
+            <option
+              variable="qfxColor4"
+              label="Color"
+              type="enum">
+                <value label="Red" color="#ff0000">red</value>
+                <value label="Carrot" color="#ff4000">carrot</value>
+                <value label="Orange" color="#ff8000">orange</value>
+                <value label="Honey" color="#ffbf00">honey</value>
+                <value label="Yellow" color="#ffff00" default="true">yellow</value>
+                <value label="Lime" color="#80ff00">lime</value>
+                <value label="Green" color="#00ff00">green</value>
+                <value label="Aqua" color="#00ff80">aqua</value>
+                <value label="Celeste" color="#00ffff">celeste</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff">blue</value>
+                <value label="Purple" color="#8000ff">purple</value>
+                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+                <value label="Magenta" color="#ff00ff">magenta</value>
+                <value label="Cerise" color="#ff0080">cerise</value>
+                <value label="Crimson" color="#ff0040">crimson</value>
+              <description>
+                Color for Quick FX preset button '4'.
+              </description>
+            </option>
+          </group>
+        </row>
+        <row orientation="vertical">
+          <group label="Filter button">
+            <option
+              variable="qfxPreset5"
+              label="Preset"
+              type="integer"
+              min="1"
+              max="1000"
+              step="1"
+              default="11">
+              <description>
+                Quick FX chain to load when 'Filter' preset button is pressed.
+              </description>
+            </option>
+            <option
+              variable="qfxColor5"
+              label="Color"
+              type="enum">
+                <value label="Red" color="#ff0000">red</value>
+                <value label="Carrot" color="#ff4000">carrot</value>
+                <value label="Orange" color="#ff8000" default="true">orange</value>
+                <value label="Honey" color="#ffbf00">honey</value>
+                <value label="Yellow" color="#ffff00">yellow</value>
+                <value label="Lime" color="#80ff00">lime</value>
+                <value label="Green" color="#00ff00">green</value>
+                <value label="Aqua" color="#00ff80">aqua</value>
+                <value label="Celeste" color="#00ffff">celeste</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff">blue</value>
+                <value label="Purple" color="#8000ff">purple</value>
+                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+                <value label="Magenta" color="#ff00ff">magenta</value>
+                <value label="Cerise" color="#ff0080">cerise</value>
+                <value label="Crimson" color="#ff0040">crimson</value>
+              <description>
+                Color for 'Filter' Quick FX preset button.
+              </description>
+            </option>
+          </group>
+        </row>
       </row>
     </group>
     <group label="Jog wheels">

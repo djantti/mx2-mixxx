@@ -51,16 +51,22 @@ const PadColors = {
 };
 
 const DefaultTheme = {
-    // Effect focus and effect toggle buttons
+    // Effect focus, toggle and assign buttons
     focusColor: LedColors.white,
     effectColor: LedColors.orange,
+    assignColor: LedColors.orange,
 
     // Library function buttons
-    libraryColor: LedColors.white,
+    favoriteColor: LedColors.white,
+    prepareColor: LedColors.white,
+    previewColor: LedColors.white,
+    viewColor: LedColors.white,
 
     // Jogwheel side mode buttons
-    transportColor: LedColors.red,
-    jogModeColor: LedColors.blue,
+    ttColor: LedColors.blue,
+    jogColor: LedColors.blue,
+    slipColor: LedColors.red,
+    reverseColor: LedColors.red,
 
     // Cue and play buttons
     cueColor: LedColors.blue,
@@ -87,6 +93,7 @@ const DefaultTheme = {
 
     // Sync buttons
     syncColor: LedColors.yellow,
+    syncLeaderColor: LedColors.yellow,
 
     // FX button color
     fxColor: LedColors.white,
@@ -95,19 +102,25 @@ const DefaultTheme = {
     pflColor: LedColors.white,
     micColor: LedColors.white,
 
-    // Color for buttons in alternate mode
-    altModeColor: LedColors.red,
-
     // Main out and microphone peak indicators
-    peakColor: LedColors.red
+    peakColor: LedColors.red,
+
+    // Color for buttons in alternate mode
+    altModeColor: LedColors.red
 };
 
 const FrostbiteTheme = {
     focusColor: LedColors.white,
     effectColor: LedColors.purple,
-    libraryColor: LedColors.white,
-    transportColor: LedColors.celeste,
-    jogModeColor: LedColors.sky,
+    assignColor: LedColors.purple,
+    favoriteColor: LedColors.white,
+    prepareColor: LedColors.white,
+    previewColor: LedColors.white,
+    viewColor: LedColors.white,
+    ttColor: LedColors.sky,
+    jogColor: LedColors.sky,
+    slipColor: LedColors.celeste,
+    reverseColor: LedColors.celeste,
     cueColor: LedColors.celeste,
     playColor: LedColors.sky,
     keylockColor: LedColors.sky,
@@ -118,19 +131,26 @@ const FrostbiteTheme = {
     activePadColor: LedColors.sky,
     altPadColor: LedColors.purple,
     syncColor: LedColors.celeste,
+    syncLeaderColor: LedColors.celeste,
     fxColor: LedColors.white,
     pflColor: LedColors.celeste,
     micColor: LedColors.white,
-    altModeColor: LedColors.purple,
-    peakColor: LedColors.red
+    peakColor: LedColors.red,
+    altModeColor: LedColors.purple
 };
 
 const MojitoTheme = {
     focusColor: LedColors.lime,
     effectColor: LedColors.honey,
-    libraryColor: LedColors.lime,
-    transportColor: LedColors.sky,
-    jogModeColor: LedColors.green,
+    assignColor: LedColors.honey,
+    favoriteColor: LedColors.lime,
+    prepareColor: LedColors.lime,
+    previewColor: LedColors.lime,
+    viewColor: LedColors.lime,
+    ttColor: LedColors.green,
+    jogColor: LedColors.green,
+    slipColor: LedColors.sky,
+    reverseColor: LedColors.sky,
     cueColor: LedColors.lime,
     playColor: LedColors.sky,
     keylockColor: LedColors.lime,
@@ -141,19 +161,26 @@ const MojitoTheme = {
     activePadColor: LedColors.sky,
     altPadColor: LedColors.honey,
     syncColor: LedColors.green,
+    syncLeaderColor: LedColors.green,
     fxColor: LedColors.white,
     pflColor: LedColors.lime,
     micColor: LedColors.sky,
-    altModeColor: LedColors.honey,
-    peakColor: LedColors.red
+    peakColor: LedColors.red,
+    altModeColor: LedColors.honey
 };
 
 const SynthwaveTheme = {
     focusColor: LedColors.magenta,
     effectColor: LedColors.orange,
-    libraryColor: LedColors.purple,
-    transportColor: LedColors.purple,
-    jogModeColor: LedColors.magenta,
+    assignColor: LedColors.orange,
+    favoriteColor: LedColors.purple,
+    prepareColor: LedColors.purple,
+    previewColor: LedColors.purple,
+    viewColor: LedColors.purple,
+    ttColor: LedColors.magenta,
+    jogColor: LedColors.magenta,
+    slipColor: LedColors.purple,
+    reverseColor: LedColors.purple,
     cueColor: LedColors.sky,
     playColor: LedColors.magenta,
     keylockColor: LedColors.sky,
@@ -164,11 +191,12 @@ const SynthwaveTheme = {
     activePadColor: LedColors.orange,
     altPadColor: LedColors.magenta,
     syncColor: LedColors.sky,
+    syncLeaderColor: LedColors.sky,
     fxColor: LedColors.white,
     pflColor: LedColors.magenta,
     micColor: LedColors.sky,
-    altModeColor: LedColors.orange,
-    peakColor: LedColors.red
+    peakColor: LedColors.red,
+    altModeColor: LedColors.orange
 };
 
 const ColorThemes = {
@@ -681,11 +709,11 @@ class Deck {
     }
 
     enableOutputs() {
-        this.controller.setOutput(this.group, "!favorite", this.colorMap.libraryColor.dim, false);
-        this.controller.setOutput(this.group, "!prepare", this.colorMap.libraryColor.dim, false);
+        this.controller.setOutput(this.group, "!favorite", this.colorMap.favoriteColor.dim, false);
+        this.controller.setOutput(this.group, "!prepare", this.colorMap.prepareColor.dim, false);
         // Turntable mode is on by default
-        this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.full, false);
-        this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.dim, false);
+        this.controller.setOutput(this.group, "!tt", this.colorMap.ttColor.full, false);
+        this.controller.setOutput(this.group, "!jog", this.colorMap.jogColor.dim, false);
         // Hotcue mode is on by default
         this.controller.setOutput(this.group, "!hotcues", this.colorMap.activePadModeColor.full, false);
         this.controller.setOutput(this.group, "!stems", this.colorMap.inactivePadModeColor.dim, false);
@@ -1238,17 +1266,17 @@ class Deck {
 
     previewButtonCallback(value, group, _key) {
         this.controller.setOutput(group, `!preview_${this.number}`,
-            this.mapLedValue(value, this.colorMap.libraryColor), true);
+            this.mapLedValue(value, this.colorMap.previewColor), true);
     }
 
     viewButtonCallback(value, group, _key) {
         this.controller.setOutput(group, `!view_${this.number}`,
-            this.mapLedValue(value, this.colorMap.libraryColor), true);
+            this.mapLedValue(value, this.colorMap.viewColor), true);
     }
 
     mstButtonCallback(value, _group, key) {
         const outColor = engine.getValue(this.group, "rateRange") === 1 ?
-            this.colorMap.altModeColor : this.colorMap.syncColor;
+            this.colorMap.altModeColor : this.colorMap.syncLeaderColor;
 
         if (key === "rateRange") {
             // Store the new default fader range if needed
@@ -1273,12 +1301,12 @@ class Deck {
 
     outputCallback(value, group, key) {
         const outputs = {
-            "!favorite": this.colorMap.libraryColor,
-            "!prepare": this.colorMap.libraryColor,
-            "slip_enabled": this.colorMap.transportColor,
-            "reverse": this.colorMap.transportColor,
+            "!favorite": this.colorMap.favoriteColor,
+            "!prepare": this.colorMap.prepareColor,
+            "slip_enabled": this.colorMap.slipColor,
+            "reverse": this.colorMap.reverseColor,
             "sync_enabled": this.colorMap.syncColor,
-            "sync_leader": this.colorMap.syncColor,
+            "sync_leader": this.colorMap.syncLeaderColor,
             "keylock": this.colorMap.keylockColor,
             "cue_indicator": this.colorMap.cueColor,
             "play_indicator": this.colorMap.playColor,
@@ -1391,8 +1419,8 @@ class Deck {
 
     setJogMode(jogMode) {
         if (jogMode === 0) {
-            this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.full, false);
-            this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.dim, true);
+            this.controller.setOutput(this.group, "!tt", this.colorMap.ttColor.full, false);
+            this.controller.setOutput(this.group, "!jog", this.colorMap.jogColor.dim, true);
             this.jogMode = jogMode;
             return;
         }
@@ -1405,8 +1433,8 @@ class Deck {
                 engine.setValue(this.group, "scratch2_enable", false);
             }
 
-            this.controller.setOutput(this.group, "!jog", this.colorMap.jogModeColor.full, false);
-            this.controller.setOutput(this.group, "!tt", this.colorMap.jogModeColor.dim, true);
+            this.controller.setOutput(this.group, "!jog", this.colorMap.jogColor.full, false);
+            this.controller.setOutput(this.group, "!tt", this.colorMap.ttColor.dim, true);
             this.jogMode = jogMode;
             return;
         }
@@ -1902,8 +1930,8 @@ class EffectUnit {
         engine.makeConnection(this.group, "show_parameters", this.showParametersCallback.bind(this)).trigger();
         engine.makeConnection(this.group, "focused_effect", this.focusedEffectCallback.bind(this)).trigger();
         engine.makeConnection("[App]", "indicator_250ms", this.focusLedCallback.bind(this));
-        engine.makeConnection(this.group, "group_[Channel1]_enable", this.effectGroupCallback.bind(this)).trigger();
-        engine.makeConnection(this.group, "group_[Channel2]_enable", this.effectGroupCallback.bind(this)).trigger();
+        engine.makeConnection(this.group, "group_[Channel1]_enable", this.effectAssignCallback.bind(this)).trigger();
+        engine.makeConnection(this.group, "group_[Channel2]_enable", this.effectAssignCallback.bind(this)).trigger();
     }
 
     enableSoftTakeover() {
@@ -2104,8 +2132,8 @@ class EffectUnit {
             value ? this.colorMap.focusColor.full : this.colorMap.focusColor.dim, true);
     }
 
-    effectGroupCallback(value, group, key) {
-        const ledValue = value ? this.colorMap.effectColor.full : this.colorMap.effectColor.dim;
+    effectAssignCallback(value, group, key) {
+        const ledValue = value ? this.colorMap.assignColor.full : this.colorMap.assignColor.dim;
         this.controller.setOutput(group, key, ledValue, true);
     }
 
