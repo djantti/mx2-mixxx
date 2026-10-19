@@ -1431,7 +1431,6 @@ class Deck {
 
         if (engine.getValue(this.group, "track_loaded")) {
             const baseColor = Settings.bottomLedsPlayColor;
-            console.log(baseColor);
             return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
         }
 
