@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <MixxxControllerPreset mixxxVersion="2.6.0" schemaVersion="1">
   <info>
@@ -54,15 +55,15 @@
         type="boolean"
         default="false">
         <description>
-          Use full brightness for bottom panel standby light effect.
+          Use full brightness for bottom panel standby light effect. This is especially useful with a static always on standby light.
         </description>
       </option>
     </group>
     <group label="Custom theme colors">
-      <group label="Effect buttons">
+      <group label="Effect units">
         <option
           variable="focusColor"
-          label="FX focus"
+          label="FX focus button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -87,7 +88,7 @@
         </option>
         <option
           variable="effectColor"
-          label="FX toggle"
+          label="FX toggle buttons"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -112,7 +113,7 @@
         </option>
         <option
           variable="assignColor"
-          label="Deck FX assign"
+          label="FX assign button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -132,14 +133,14 @@
             <value label="Crimson" color="#ff0040">crimson</value>
             <value label="White" color="#ffffff">white</value>
           <description>
-            Color for effect unit deck asign buttons.
+            Color for effect unit assign buttons.
           </description>
         </option>
       </group>
-      <group label="Library buttons">
+      <group label="Library">
         <option
           variable="favoriteColor"
-          label="Favorite"
+          label="Favorite button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -164,7 +165,7 @@
         </option>
         <option
           variable="prepareColor"
-          label="Prepare"
+          label="Prepare button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -184,12 +185,12 @@
             <value label="Crimson" color="#ff0040">crimson</value>
             <value label="White" color="#ffffff" default="true">white</value>
           <description>
-            Color for the prepare (star) button.
+            Color for the prepare (star symbol) button.
           </description>
         </option>
         <option
           variable="previewColor"
-          label="Preview"
+          label="Preview button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -214,7 +215,7 @@
         </option>
         <option
           variable="viewColor"
-          label="View"
+          label="View button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -238,10 +239,10 @@
           </description>
         </option>
       </group>
-      <group label="Deck buttons">
+      <group label="Decks">
         <option
           variable="ttColor"
-          label="Turntable mode"
+          label="Turntable mode button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -266,7 +267,7 @@
         </option>
         <option
           variable="jogColor"
-          label="Jog mode"
+          label="Jog mode button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -291,7 +292,7 @@
         </option>
         <option
           variable="slipColor"
-          label="Slip mode"
+          label="Slip mode button"
           type="enum">
             <value label="Red" color="#ff0000" default="true">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -316,7 +317,7 @@
         </option>
         <option
           variable="reverseColor"
-          label="Reverse play"
+          label="Reverse play button"
           type="enum">
             <value label="Red" color="#ff0000" default="true">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -341,7 +342,7 @@
         </option>
         <option
           variable="cueColor"
-          label="Cue"
+          label="Cue button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -366,7 +367,7 @@
         </option>
         <option
           variable="playColor"
-          label="Play"
+          label="Play button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -391,7 +392,7 @@
         </option>
         <option
           variable="keylockColor"
-          label="Keylock"
+          label="Keylock button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -416,7 +417,7 @@
         </option>
         <option
           variable="syncColor"
-          label="Sync"
+          label="Sync button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -441,7 +442,7 @@
         </option>
         <option
           variable="syncLeaderColor"
-          label="Sync leader"
+          label="Sync leader button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -465,10 +466,10 @@
           </description>
         </option>
       </group>
-      <group label="Pad mode buttons">
+      <group label="Pad modes">
         <option
           variable="inactivePadModeColor"
-          label="Inactive mode"
+          label="Inactive mode buttons"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -493,7 +494,7 @@
         </option>
         <option
           variable="activePadModeColor"
-          label="Active mode"
+          label="Active mode button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -619,10 +620,10 @@
           </description>
         </option>
       </group>
-      <group label="Mixer buttons">
+      <group label="Mixer">
         <option
           variable="fxColor"
-          label="Quick FX"
+          label="Quick FX button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -647,7 +648,7 @@
         </option>
         <option
           variable="pflColor"
-          label="Headphone"
+          label="Headphone button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -672,7 +673,7 @@
         </option>
         <option
           variable="micColor"
-          label="Talkback"
+          label="Talkover button"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -692,14 +693,14 @@
             <value label="Crimson" color="#ff0040">crimson</value>
             <value label="White" color="#ffffff" default="true">white</value>
           <description>
-            Color for the talkback button.
+            Color for the talkover button.
           </description>
         </option>
       </group>
       <group label="Indicators">
         <option
           variable="peakColor"
-          label="Signal peak"
+          label="Signal peak indicators"
           type="enum">
             <value label="Red" color="#ff0000" default="true">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
@@ -724,7 +725,7 @@
         </option>
         <option
           variable="altModeColor"
-          label="Alternate mode"
+          label="Alternate mode indicators"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
