@@ -2775,7 +2775,7 @@ class MX2 {
     createCustomTheme() {
         const customTheme = {};
 
-        for (const [key, defaultValue] of Object.entries(DefaultTheme)) {
+        for (const key of Object.keys(DefaultTheme)) {
             const setting = engine.getSetting(key);
 
             if (Object.prototype.hasOwnProperty.call(LedColors, setting)) {
