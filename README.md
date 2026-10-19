@@ -18,19 +18,19 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 2 | FX param knob | <p>**Normal mode:** Control FX meta parameter</p><p>**Focus mode:** Adjust focused effect parameter</p> ||
 | 3 | FX focus button | <p>*Press* to toggle FX parameter panel</p><p>*Hold* to enter effect focus select mode ||
 | 4 | FX toggle button | <p>**Normal mode:** *Press* to toggle effect on / off or *hold* for momentary toggle</p><p>**Focus select mode:** Choose focused effect</p><p>**Focus mode:** *Press* to toggle focused effect parameter on / off or *hold* for momentary toggle</p> | Cycle through effects |
-| 5 | FAV button | Use next color for selected track | Use previous color for selected track |
-| 6 | Star button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
+| 5 | Favorites (FAV) button | Use next color for selected track | Use previous color for selected track |
+| 6 | Prepare (star symbol) button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
 | 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
-| 8 | Preview button | Load and play / pause track in preview deck | Eject the currently loaded preview track |
-| 9 | VIEW button | Toggle big library mode ||
-| 10 | REV button | *Hold* to play track in reverse | *Hold* for reverse play with slip mode |
-| 11 | FLX button | Toggle slip mode on / off ||
-| 12 | TT button | Set jog wheel to turntable mode ||
-| 13 | JOG button | Set jog wheel to jog mode ||
+| 8 | Preview (right triangle) button | Load and play / pause track in preview deck | Eject the currently loaded preview track |
+| 9 | View button | Toggle big library mode ||
+| 10 | Reverse play (REV) button | *Hold* to play track in reverse | *Hold* for reverse play with slip mode |
+| 11 | Slip mode (FLX) button | Toggle slip mode on / off ||
+| 12 | Turntable mode (TT) button | Switch jog wheel to turntable mode ||
+| 13 | Jog mode button | Switch jog wheel to joggin mode ||
 | 14 | Jog wheel | <p>*Touch* the top of the jog wheel and *turn* it to scratch</p><p>*Turn* the jog wheel from the outer ring to nudge the track</p> | If a track is playing, *turn* the wheel to scratch in fine scratching speed. Otherwise *turn* the wheel to seek quickly through the track. An active loop will also move while seeking.</p> |
-| 15 | SHIFT button | *Hold* to activate secondary functions ||
-| 16 | PLAY button | Toggle track playback | Go to track start and stop |
-| 17 | CUE button | Set default cue point | Jump to cue point and stop |
+| 15 | Shift button | *Hold* to activate secondary functions ||
+| 16 | Play button | Toggle track playback | Go to track start and stop |
+| 17 | Cue button | Set default cue point | Jump to cue point and stop |
 | 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to control stem track volume</p> | *Press* to activate and jump to current loop while stopping playback |
 | 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and *turn* loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and *press* pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
 | 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to adjust stem track FX super parameter</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to select a stem Quick FX preset</p> |
@@ -40,20 +40,20 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 24 | Loops button | Activate **loops** pad mode ||
 | 25 | Pad buttons 1–4 | <p>**Hotcues mode:** Seek to a set hotcue position. Otherwise set hotcue at the current position.</p><p>**Stems mode:** Toggle stem track mute</p><p>**Samples mode:** *Press* to play loaded sampler track or *hold* to play until the pad is released. If the sampler is empty, load the selected track.</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1/16, 1/8, 1/4 or 1/2 beats</p> | <p>**Hotcues mode:** Clear a set hotcue</p><p>**Samples mode:** Eject the currently loaded track</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
 | 26 | Pad buttons 5–8 | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Stems mode:** *Hold* to use as function modifiers for move (**18**) and loop (**20**) encoders. Multiple modifier pads can be activated simultaneously.</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1, 2, 4 or 8 beats</p> | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
-| 27 | SNC button | <p>*Press* to sync tempo and phase (if quantize is active)</p><p>*Hold* to activate sync lock and *press* again to disable it</p> | Sync phase to the other deck |
-| 28 | MST button | *Press* to set deck as the sync leader. *Hold* to enable / disable long range rate fader. ||
+| 27 | Sync (SNC) button | <p>*Press* to sync tempo and phase (if quantize is active)</p><p>*Hold* to activate sync lock and *press* again to disable it</p> | Sync phase to the other deck |
+| 28 | Sync leader (MST) button | *Press* to set deck as the sync leader. *Hold* to enable / disable long range rate fader. ||
 | 29 | Rate fader | Adjust playback speed ||
 
 ### Mixer deck columns (30–39)
 
 | No. | Element | Function | Secondary function |
 | --- | --- | --- | --- |
-| 30 | GAIN knob | Adjust deck pre-fader gain ||
+| 30 | Gain knob | Adjust deck pre-fader gain ||
 | 31 | Left FX button | Send deck output to FX unit 1 ||
 | 32 | Right FX button | Send deck output to FX unit 2 ||
-| 33 | HI knob | Adjust high frequency filter ||
-| 34 | MID knob | Adjust middle frequency filter ||
-| 35 | LOW knob | Adjust low frequency filter ||
+| 33 | Hi knob | Adjust high frequency filter ||
+| 34 | Mid knob | Adjust middle frequency filter ||
+| 35 | Low knob | Adjust low frequency filter ||
 | 36 | Quick FX knob | Control Quick FX meta parameter ||
 | 37 | Quick FX button | <p>*Press* to toggle Quick FX on / off</p><p>*Hold* for momentary toggle</p> | Cycle through Quick FX effect chain presets |
 | 38 | Headphone button | Toggle headphone cueing ||
@@ -63,12 +63,12 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 
 | No. | Element | Function |
 | --- | --- | --- |
-| 40 | MAIN knob | Adjust main output volume (hardware control) |
+| 40 | Main knob | Adjust main output volume (hardware control) |
 | 41 | Level meters | Show the current instantaneous deck volume |
-| 42 | Headphone MIX knob | Adjust headphone cue / main mix |
-| 43 | Headphone VOL knob | Adjust headphone output volume |
+| 42 | Headphone mix knob | Adjust headphone cue / main mix |
+| 43 | Headphone vol knob | Adjust headphone output volume |
 | 44 | Quick FX preset button | <p>*Press* to load configured Quick FX preset to both decks</p><p>*Hold* and *press* a Quick FX toggle button (**37**) to load for a single deck only</p> |
-| 45 | MIC button | <p>*Press* to toggle microphone talkover</p><p>*Hold* for momentary microphone activation |
+| 45 | Talkover (MIC) button | <p>*Press* to toggle microphone talkover</p><p>*Hold* for momentary microphone activation |
 | 46 | Crossfader | Adjust crossfader between decks |
 
 ## Mapping options
@@ -82,61 +82,67 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Color theme | Default | Color theme used for button LEDs. Select **Custom** to use colors defined in the **Custom theme colors** section. |
 | Match pad colors to on-screen colors | On | Use on-screen colors for pad LEDs. This only applies to **hotcue** and **stem** modes. |
 | Use bright VU meter segments | On | Use full brightness for VU meter LED segments. Dimmed LEDs will be used if disabled. |
-| Enable bottom panel light effects | On | Use bottom panel LEDs to indicate deck state. Effect colors can be customized in the **Bottom panel colors** section. |
+| Use bright bottom panel standby light | Off | Use full brightness for bottom panel standby light effect. This is especially useful with a static always on standby light. |
 
 ### Custom theme colors
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Effect focus button | White | Color for the effect focus button |
-| Effect toggle buttons | Orange | Color for effect on / off toggle buttons |
-| Library buttons | White | Color for library action buttons |
-| Transport buttons | Red | Color for transport mode buttons |
-| Wheel mode buttons | Blue | Color for jog wheel mode buttons |
+| FX focus button | White | Color for the effect focus button |
+| FX toggle buttons | Orange | Color for effect on / off toggle buttons |
+| FX assign buttons | Orange | Color for effect unit assign buttons |
+| Favorite button | White | Color for the favorite (FAV) button |
+| Prepare button | White | Color for the prepare (star symbol) button |
+| Preview button | White | Color for the preview (right triangle) button |
+| View button | White | Color for the view button |
+| Turntable mode button | Red | Color for the wheel turntable mode (TT) button |
+| Jog mode button | Red | Color for the wheel jog mode button |
+| Slip mode button | Blue | Color for the slip mode (FLX) button |
+| Reverse play button | Blue | Color for the reverse play (REV) button |
 | Cue button | Blue | Color for the cue button |
 | Play button | Green | Color for the play button |
 | Keylock button | Magenta | Color for the keylock button |
-| Inactive pad mode buttons | Sky | Color for inactive pad mode buttons |
-| Active pad mode button | Celeste | Color for the active pad mode button |
+| Sync button | Yellow | Color for the sync (SNC) button |
+| Sync leader button | Yellow | Color for the sync leader (MST) button |
+| Inactive mode buttons | Sky | Color for inactive pad mode buttons |
+| Active mode button | Celeste | Color for the active pad mode button |
 | Unconnected pads | White | Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads. |
 | Inactive pads | White | Color for connected, but currently inactive pads |
 | Active pads | Green | Color for currently active pads |
-| Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* SHIFT (**15**). |
-| Sync buttons | Yellow | Color for sync and sync master buttons |
-| FX buttons | White | Color for Quick FX toggle buttons. Quick FX preset colors take preference over this setting. |
-| Headphone buttons | White | Color for headphone cue buttons |
+| Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* shift (**15**). |
+| Quick FX button | White | Color for Quick FX toggle button. Quick FX preset colors take preference over this setting. |
+| Headphone button | White | Color for headphone cue button |
 | Talkback button | White | Color for the talkback button |
+| Signal peak indicators | Red | Color for the main output and microphone input peak indicator LEDs |
 | Alternate mode indicators | Red | Color for buttons in alternate mode. Used by MST (**28**) button when long range rate faders are active. |
-| Peak indicators | Red | Color for main output and microphone input peak indicator LEDs |
 
-### Bottom panel colors
-
-| Setting | Default | Description |
-| --- | --- | --- |
-| Standby | White | Bottom panel LED color when no track is loaded |
-| Playback state | Sky | Bottom panel LED color when a track is currently playing |
-| Loop enabled | Green | Bottom panel LED color when a loop is currently active |
-| Track ending | Red | Bottom panel LED color when the currently playing track is about to end |
-
-### Quick FX colors
+### Bottom panel lights
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Button 1 | Red | Color for Quick FX preset button **1**
-| Button 2 | Green | Color for Quick FX preset button **1**
-| Button 3 | Blue | Color for Quick FX preset button **1**
-| Button 4 | Yellow | Color for Quick FX preset button **1**
-| Filter button | Orange | Color for **Filter** Quick FX preset button
+| Standby enable | On | Enable bottom panel standby light |
+| Standby color | White | Bottom panel LED color when no track is loaded |
+| Track playing enable | On | Enable bottom panel light effect when a track is playing |
+| Track playing color | Sky | Bottom panel LED color when a track is currently playing |
+| Loop active enable | On | Enable bottom panel light effect when a loop is active |
+| Loop active color | Green | Bottom panel LED color when a loop is currently active |
+| Track ending enable | On | Enable bottom panel light effect when a track is ending |
+| Track ending color | Red | Bottom panel LED color when the currently playing track is about to end |
 
-### Quick FX presets
+### Quick FX buttons
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Button 1 | 1 | Quick FX chain to load when preset button **1** is pressed
-| Button 2 | 2 | Quick FX chain to load when preset button **2** is pressed
-| Button 3 | 3 | Quick FX chain to load when preset button **3** is pressed
-| Button 4 | 4 | Quick FX chain to load when preset button **4** is pressed
-| Filter button | 11 | Quick FX chain to load when **Filter** preset button is pressed
+| Button 1 preset | 1 | Quick FX chain to load when preset button **1** is pressed |
+| Button 1 color | Red | Color for Quick FX preset button **1** |
+| Button 2 preset | 2 | Quick FX chain to load when preset button **2** is pressed |
+| Button 2 color | Green | Color for Quick FX preset button **2** |
+| Button 3 preset | 3 | Quick FX chain to load when preset button **3** is pressed |
+| Button 3 color | Blue | Color for Quick FX preset button **3** |
+| Button 4 preset | 4 | Quick FX chain to load when preset button **4** is pressed |
+| Button 4 color | Yellow | Color for Quick FX preset button **4** |
+| Filter preset | 11 | Quick FX chain to load when **Filter** preset button is pressed |
+| Filter color | Orange | Color for **Filter** Quick FX preset button |
 
 ### Jog wheels
 
@@ -145,8 +151,8 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Jogging and nudging sensitivity | Medium | Sensitivity for turning the wheel by touching only the outer ring. Higher settings will allow for faster jogging and nudging movement. |
 | Movement smoothing | Medium | Controls jog wheel movement smoothing. Higher settings produce smooth but less responsive movement, while lower settings produce snappy but noisier movement. |
 | Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive. |
-| Fine scratching speed | 50% | Controls the scratching speed when SHIFT (**15**) button is held |
-| Quick seek speed | 200% | Controls the jog wheel's quick seek speed when SHIFT (**15**) button is held |
+| Fine scratching speed | 50% | Controls the scratching speed when shift (**15**) button is held |
+| Quick seek speed | 200% | Controls the jog wheel's quick seek speed when shift (**15**) button is held |
 | Align quick seek to beatgrid | False | Align quick seek wheel movements to beatgrid. If the track doesn't have a beatgrid, seconds will be used instead. |
 
 ### Controls
@@ -155,9 +161,9 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | --- | --- | --- |
 | Long press timeout | 300 | Time in milliseconds required to hold a button before a long press is registered |
 | Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
-| Make shift button presses global | Off | Use either SHIFT (**15**) button to control shifted functions on both decks |
+| Make shift button presses global | Off | Use either shift (**15**) button to control shifted functions on both decks |
 | Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
-| Use rolling loop pads by default | On | Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the SHIFT (**15**) button. |
+| Use rolling loop pads by default | On | Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the shift (**15**) button. |
 
 
 ### Audio
