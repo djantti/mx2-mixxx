@@ -121,7 +121,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Setting | Default | Description |
 | --- | --- | --- |
 | Standby enable | On | Enable bottom panel standby light |
-| Standby color | White | Bottom panel LED color when no track is loaded |
+| Standby color | White | Color for bottom panel standby light |
 | Track playing enable | On | Enable bottom panel light effect when a track is playing |
 | Track playing color | Sky | Bottom panel LED color when a track is currently playing |
 | Loop active enable | On | Enable bottom panel light effect when a loop is active |
