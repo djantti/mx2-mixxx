@@ -216,8 +216,14 @@ const Settings = {
     // Use bright LEDs for VU meter (default: true)
     brightMeterSegments: !!engine.getSetting("brightMeterSegments"),
 
-    // Enable bottom LED lighting effects (default: true)
-    enableBottomLeds: !!engine.getSetting("enableBottomLeds"),
+    // Use bright bottom panel standby light (default: false)
+    brightStandbyLight: !!engine.getSetting("brightStandbyLight"),
+
+    // Bottom panel lighting effects (default: true)
+    bottomLedsStandby: !!engine.getSetting("bottomLedsStandby"),
+    bottomLedsPlay: !!engine.getSetting("bottomLedsPlay"),
+    bottomLedsLoop: !!engine.getSetting("bottomLedsLoop"),
+    bottomLedsEnd: !!engine.getSetting("bottomLedsEnd"),
 
     // Bottom panel LED colors
     bottomLedsStandbyColor: LedColors[engine.getSetting("bottomLedsStandbyColor")] || LedColors.white,
@@ -688,10 +694,16 @@ class Deck {
         this.linkLed(this.group, "pfl", this.outputCallback);
 
         // Link bottom panel LED callbacks if light effects are enabled in settings
-        if (Settings.enableBottomLeds) {
+        if (Settings.bottomLedsEnd) {
             this.linkLed("[App]", "indicator_500ms", this.bottomLedsCallback, false);
             this.linkLed(this.group, "end_of_track", this.bottomLedsCallback, false);
+        }
+
+        if (Settings.bottomLedsLoop) {
             this.linkLed(this.group, "loop_enabled", this.bottomLedsCallback, false);
+        }
+
+        if (Settings.bottomLedsPlay) {
             this.linkLed(this.group, "play", this.bottomLedsCallback, false);
             this.linkLed(this.group, "track_loaded", this.bottomLedsCallback);
         }
@@ -719,6 +731,15 @@ class Deck {
         this.controller.setOutput(this.group, "!stems", this.colorMap.inactivePadModeColor.dim, false);
         this.controller.setOutput(this.group, "!samples", this.colorMap.inactivePadModeColor.dim, false);
         this.controller.setOutput(this.group, "!loops", this.colorMap.inactivePadModeColor.dim, false);
+
+        // Use a static standby color if enabled
+        if (Settings.bottomLedsStandby) {
+            for (let i = 1; i <= 6; i++) {
+                const standbyColor = Settings.brightStandbyLight
+                    ? Settings.bottomLedsStandbyColor : dimColor(Settings.bottomLedsStandbyColor);
+                this.controller.setOutput(this.group, `!bottom_led_${i}`, standbyColor, false);
+            }
+        }
     }
 
     disableOutputs() {
@@ -1410,11 +1431,13 @@ class Deck {
 
         if (engine.getValue(this.group, "track_loaded")) {
             const baseColor = Settings.bottomLedsPlayColor;
+            console.log(baseColor);
             return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
         }
 
         // Return standby color by default
-        return dimColor(Settings.bottomLedsStandbyColor);
+        const baseColor = Settings.bottomLedsStandby ? Settings.bottomLedsStandbyColor : LedOff;
+        return Settings.brightStandbyLight ? baseColor : dimColor(baseColor);
     }
 
     setJogMode(jogMode) {
