@@ -1474,6 +1474,33 @@ class Deck {
         return LedOff;
     }
 
+    getPanelColor(value, key) {
+        if (key === "indicator_500ms") {
+            // Use callback value as blinking LED brightness
+            return this.getPanelBrightness(Settings.bottomLedsEndColor, value);
+        }
+
+        if (engine.getValue(this.group, "loop_enabled")) {
+            // Switch loop color brightness based on playback state
+            return this.getPanelBrightness(Settings.bottomLedsLoopColor, engine.getValue(this.group, "play"));
+        }
+
+        if (engine.getValue(this.group, "track_loaded")) {
+            return this.getPanelBrightness(Settings.bottomLedsPlayColor, engine.getValue(this.group, "play"));
+        }
+
+        // Disable bottom panel LEDs by default
+        return LedOff;
+    }
+
+    getPanelBrightness(color, value) {
+        const dimColor = dimColor(color);
+        const onColor = Settings.brightPanelLights ? color : dimColor;
+        const offColor = Settings.brightPanelLights ? dimColor : LedOff;
+
+        return value ? onColor : offColor;
+    }
+
     updateMeter(value, state, color, output) {
         // Figure out the number of illuminated segments
         const segments = state.length;
