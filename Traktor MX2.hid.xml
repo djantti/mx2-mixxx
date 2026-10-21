@@ -842,8 +842,8 @@
                 <value label="Green" color="#00ff00">green</value>
                 <value label="Aqua" color="#00ff80">aqua</value>
                 <value label="Celeste" color="#00ffff">celeste</value>
-                <value label="Sky" color="#0080ff" default="true">sky</value>
-                <value label="Blue" color="#0000ff">blue</value>
+                <value label="Sky" color="#0080ff">sky</value>
+                <value label="Blue" color="#0000ff" default="true">blue</value>
                 <value label="Purple" color="#8000ff">purple</value>
                 <value label="Fuchsia" color="#bf00ff">fuchsia</value>
                 <value label="Magenta" color="#ff00ff">magenta</value>

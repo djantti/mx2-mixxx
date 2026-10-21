@@ -232,7 +232,7 @@ const Settings = {
     bottomLedsEnd: !!engine.getSetting("bottomLedsEnd"),
 
     // Bottom panel LED colors
-    bottomLedsPlayColor: LedColors[engine.getSetting("bottomLedsPlayColor")] || LedColors.sky,
+    bottomLedsPlayColor: LedColors[engine.getSetting("bottomLedsPlayColor")] || LedColors.blue,
     bottomLedsLoopColor: LedColors[engine.getSetting("bottomLedsLoopColor")] || LedColors.green,
     bottomLedsEndColor: LedColors[engine.getSetting("bottomLedsEndColor")] || LedColors.red,
 

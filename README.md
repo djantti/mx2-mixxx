@@ -128,7 +128,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Setting | Default | Description |
 | --- | --- | --- |
 | Track playing enable | On | Enable bottom panel light trigger for a playing track |
-| Track playing color | Sky | Bottom panel light color when a track is currently playing |
+| Track playing color | Blue | Bottom panel light color when a track is currently playing |
 | Loop active enable | On | Enable bottom panel light trigger for an active loop |
 | Loop active color | Green | Bottom panel light color when a loop is currently active |
 | Track ending enable | On | Enable bottom panel light trigger for track ending |
