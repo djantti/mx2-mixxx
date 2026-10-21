@@ -1439,11 +1439,7 @@ class Deck {
     }
 
     mapLedValue(value, color) {
-        if (value) {
-            return color.full;
-        } else {
-            return color.dim;
-        }
+        return value ? color.full : color.dim;
     }
 
     getPanelColor(value, key) {
