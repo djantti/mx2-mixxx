@@ -761,7 +761,7 @@
           type="boolean"
           default="true">
           <description>
-            Use full LED brightness for bottom panel lights.
+            Use full LED brightness for bottom panel lights. This also enables dim standby lights for beat indicators and state triggers.
           </description>
         </option>
         <option

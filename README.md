@@ -1,6 +1,6 @@
 # Traktor MX2 Mixxx mapping
 
-This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads (8 per deck), rate fader midpoint snapping and range functions, user configurable settings and customizable LED color themes.
+This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads (8 per deck), bottom panel light modes, rate fader midpoint snapping and range functions, user configurable settings and customizable LED color themes.
 
 ## Controller overview
 
@@ -82,7 +82,6 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Color theme | Default | Color theme used for button LEDs. Select **Custom** to use colors defined in the **Custom theme colors** section. |
 | Match pad colors to on-screen colors | On | Use on-screen colors for pad LEDs. This only applies to **hotcue** and **stem** modes. |
 | Use bright VU meter segments | On | Use full brightness for VU meter LED segments. Dimmed LEDs will be used if disabled. |
-| Use bright bottom panel standby light | Off | Use full brightness for bottom panel standby light effect. This is especially useful with a static always on standby light. |
 
 ### Custom theme colors
 
@@ -116,18 +115,24 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Signal peak indicators | Red | Color for the main output and microphone input peak indicator LEDs |
 | Alternate mode indicators | Red | Color for buttons in alternate mode. Used by MST (**28**) button when long range rate faders are active. |
 
-### Bottom panel lights
+### Panel effect colors
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Standby enable | On | Enable bottom panel standby light |
-| Standby color | White | Color for bottom panel standby light |
-| Track playing enable | On | Enable bottom panel light effect when a track is playing |
-| Track playing color | Sky | Bottom panel LED color when a track is currently playing |
-| Loop active enable | On | Enable bottom panel light effect when a loop is active |
-| Loop active color | Green | Bottom panel LED color when a loop is currently active |
-| Track ending enable | On | Enable bottom panel light effect when a track is ending |
-| Track ending color | Red | Bottom panel LED color when the currently playing track is about to end |
+| Use bright panel lights | On | Use full LED brightness for bottom panel lights. This also enables dim standby lights for beat indicators and state triggers. |
+| Left deck color | Red | Color for left deck (A) bottom panel light effects |
+| Right deck color | Blue | Color for right deck (B) bottom panel light effects |
+
+### Panel light triggers
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| Track playing enable | On | Enable bottom panel light trigger for a playing track |
+| Track playing color | Sky | Bottom panel light color when a track is currently playing |
+| Loop active enable | On | Enable bottom panel light trigger for an active loop |
+| Loop active color | Green | Bottom panel light color when a loop is currently active |
+| Track ending enable | On | Enable bottom panel light trigger for track ending |
+| Track ending color | Red | Bottom panel light color when the currently playing track is about to end |
 
 ### Quick FX buttons
 
