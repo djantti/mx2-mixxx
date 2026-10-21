@@ -970,6 +970,7 @@
                 <value label="Magenta" color="#ff00ff">magenta</value>
                 <value label="Cerise" color="#ff0080">cerise</value>
                 <value label="Crimson" color="#ff0040">crimson</value>
+                <value label="White" color="#ffffff">white</value>
               <description>
                 Color for Quick FX preset button '1'.
               </description>
@@ -1010,6 +1011,7 @@
                 <value label="Magenta" color="#ff00ff">magenta</value>
                 <value label="Cerise" color="#ff0080">cerise</value>
                 <value label="Crimson" color="#ff0040">crimson</value>
+                <value label="White" color="#ffffff">white</value>
               <description>
                 Color for Quick FX preset button '2'.
               </description>
@@ -1050,6 +1052,7 @@
                 <value label="Magenta" color="#ff00ff">magenta</value>
                 <value label="Cerise" color="#ff0080">cerise</value>
                 <value label="Crimson" color="#ff0040">crimson</value>
+                <value label="White" color="#ffffff">white</value>
               <description>
                 Color for Quick FX preset button '3'.
               </description>
@@ -1090,6 +1093,7 @@
                 <value label="Magenta" color="#ff00ff">magenta</value>
                 <value label="Cerise" color="#ff0080">cerise</value>
                 <value label="Crimson" color="#ff0040">crimson</value>
+                <value label="White" color="#ffffff">white</value>
               <description>
                 Color for Quick FX preset button '4'.
               </description>
@@ -1130,6 +1134,7 @@
                 <value label="Magenta" color="#ff00ff">magenta</value>
                 <value label="Cerise" color="#ff0080">cerise</value>
                 <value label="Crimson" color="#ff0040">crimson</value>
+                <value label="White" color="#ffffff">white</value>
               <description>
                 Color for 'Filter' Quick FX preset button.
               </description>
