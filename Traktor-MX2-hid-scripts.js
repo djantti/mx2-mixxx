@@ -1494,9 +1494,9 @@ class Deck {
     }
 
     getPanelBrightness(color, value) {
-        const dimColor = dimColor(color);
-        const onColor = Settings.brightPanelLights ? color : dimColor;
-        const offColor = Settings.brightPanelLights ? dimColor : LedOff;
+        const dimmedColor = dimColor(color);
+        const onColor = Settings.brightPanelLights ? color : dimmedColor;
+        const offColor = Settings.brightPanelLights ? dimmedColor : LedOff;
 
         return value ? onColor : offColor;
     }
