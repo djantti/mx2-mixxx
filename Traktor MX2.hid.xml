@@ -116,7 +116,7 @@
         </option>
         <option
           variable="assignColor"
-          label="FX assign button"
+          label="FX assign buttons"
           type="enum">
             <value label="Red" color="#ff0000">red</value>
             <value label="Carrot" color="#ff4000">carrot</value>
