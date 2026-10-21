@@ -210,23 +210,28 @@ const Settings = {
     // Selected color theme
     colorTheme: engine.getSetting("colorTheme") || "Default",
 
+    lightEffectMode: Number(engine.getSetting("lightEffectMode")) || 3,
+
     // Use on-screen stem and hotcue colors for pad LEDs (default: true)
     matchPadColors: !!engine.getSetting("matchPadColors"),
 
     // Use bright LEDs for VU meter (default: true)
     brightMeterSegments: !!engine.getSetting("brightMeterSegments"),
 
-    // Use bright bottom panel standby light (default: false)
-    brightStandbyLight: !!engine.getSetting("brightStandbyLight"),
+    // Use bright bottom panel lights (default: true)
+    brightPanelLights: !!engine.getSetting("brightPanelLights"),
+
+    deckColors: [
+        LedColors[engine.getSetting("deckColorA")] || LedColors.red,
+        LedColors[engine.getSetting("deckColorB")] || LedColors.blue
+    ],
 
     // Bottom panel lighting effects (default: true)
-    bottomLedsStandby: !!engine.getSetting("bottomLedsStandby"),
     bottomLedsPlay: !!engine.getSetting("bottomLedsPlay"),
     bottomLedsLoop: !!engine.getSetting("bottomLedsLoop"),
     bottomLedsEnd: !!engine.getSetting("bottomLedsEnd"),
 
     // Bottom panel LED colors
-    bottomLedsStandbyColor: LedColors[engine.getSetting("bottomLedsStandbyColor")] || LedColors.white,
     bottomLedsPlayColor: LedColors[engine.getSetting("bottomLedsPlayColor")] || LedColors.sky,
     bottomLedsLoopColor: LedColors[engine.getSetting("bottomLedsLoopColor")] || LedColors.green,
     bottomLedsEndColor: LedColors[engine.getSetting("bottomLedsEndColor")] || LedColors.red,
@@ -528,7 +533,8 @@ class Deck {
 
         this.colorMap = this.mx2.colorMap;
 
-        this.vuMeterState = new Array(8).fill(LedOff);
+        this.mainMeterState = new Array(8).fill(LedOff);
+        this.panelMeterState = new Array(6).fill(LedOff);
 
         this.moveEncoderPressed = false;
         this.loopEncoderPressed = false;
@@ -693,23 +699,37 @@ class Deck {
         this.linkLed(qfxGroup(this.number), "enabled", this.qfxButtonCallback);
         this.linkLed(this.group, "pfl", this.outputCallback);
 
-        // Link bottom panel LED callbacks if light effects are enabled in settings
-        if (Settings.bottomLedsEnd) {
-            this.linkLed("[App]", "indicator_500ms", this.bottomLedsCallback, false);
-            this.linkLed(this.group, "end_of_track", this.bottomLedsCallback, false);
-        }
+        switch (Settings.lightEffectMode) {
+        case 3:
+            // Link light triggers only if enabled in settings
+            if (Settings.bottomLedsEnd) {
+                this.linkLed("[App]", "indicator_500ms", this.panelTriggerCallback, false);
+                this.linkLed(this.group, "end_of_track", this.panelTriggerCallback, false);
+            }
 
-        if (Settings.bottomLedsLoop) {
-            this.linkLed(this.group, "loop_enabled", this.bottomLedsCallback, false);
-        }
+            if (Settings.bottomLedsLoop) {
+                this.linkLed(this.group, "loop_enabled", this.panelTriggerCallback, false);
+            }
 
-        if (Settings.bottomLedsPlay) {
-            this.linkLed(this.group, "play", this.bottomLedsCallback, false);
-            this.linkLed(this.group, "track_loaded", this.bottomLedsCallback);
+            if (Settings.bottomLedsPlay) {
+                this.linkLed(this.group, "play", this.panelTriggerCallback, false);
+                this.linkLed(this.group, "track_loaded", this.panelTriggerCallback);
+            }
+
+            break;
+        case 4:
+            this.linkLed(this.group, "beat_active", this.panelBeatCallback, true);
+            break;
+        case 5:
+            this.linkLed(this.group, "vu_meter", this.panelMeterCallback, false);
+            break;
+        default:
+            console.warn(`Unknown panel light effect mode: ${Settings.lightEffectMode}`);
+            break;
         }
 
         this.linkLed(this.group, "peak_indicator", this.peakIndicatorCallback, false);
-        this.linkLed(this.group, "vu_meter", this.vuMeterCallback, false);
+        this.linkLed(this.group, "vu_meter", this.mainMeterCallback, false);
     }
 
     enableSoftTakeover() {
@@ -732,12 +752,18 @@ class Deck {
         this.controller.setOutput(this.group, "!samples", this.colorMap.inactivePadModeColor.dim, false);
         this.controller.setOutput(this.group, "!loops", this.colorMap.inactivePadModeColor.dim, false);
 
-        // Use a static standby color if enabled
-        if (Settings.bottomLedsStandby) {
+        if (Settings.lightEffectMode === 1) {
             for (let i = 1; i <= 6; i++) {
-                const standbyColor = Settings.brightStandbyLight
-                    ? Settings.bottomLedsStandbyColor : dimColor(Settings.bottomLedsStandbyColor);
-                this.controller.setOutput(this.group, `!bottom_led_${i}`, standbyColor, false);
+                this.controller.setOutput(this.group, `!bottom_led_${i}`, LedOff, false);
+            }
+        }
+
+        // Use a static bottom lights if enabled
+        if (Settings.lightEffectMode === 2) {
+            for (let i = 1; i <= 6; i++) {
+                const color = Settings.brightPanelLights
+                    ? Settings.deckColors[this.number - 1] : dimColor(Settings.deckColors[this.number - 1]);
+                this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
             }
         }
     }
@@ -1355,13 +1381,13 @@ class Deck {
         }
     }
 
-    bottomLedsCallback(value, _group, key) {
+    panelTriggerCallback(value, _group, key) {
         // Skip blinking LED updates if track is not ending
         if (key === "indicator_500ms" && !engine.getValue(this.group, "end_of_track")) {
             return;
         }
 
-        const color = this.getBottomLedsColor(value, key);
+        const color = this.getPanelColor(value, key);
 
         for (let i = 1; i <= 6; i++) {
             this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
@@ -1370,34 +1396,38 @@ class Deck {
         this.controller.OutputPackets.outputReport0x80.send();
     }
 
+    panelBeatCallback(value, _group, _key) {
+        const baseColor = Settings.deckColors[this.number - 1];
+        const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor);
+        const offColor = Settings.brightPanelLights ? dimColor(onColor) : LedOff;
+
+        for (let i = 0; i < 6; i++) {
+            if (value) {
+                this.controller.setOutput(this.group, `!bottom_led_${i + 1}`, onColor, false);
+            } else {
+                this.controller.setOutput(this.group, `!bottom_led_${i + 1}`, offColor, false);
+            }
+        }
+
+        this.controller.OutputPackets.outputReport0x80.send();
+    }
+
+    panelMeterCallback(value, _group, _key) {
+        const deck = this.number - 1;
+        const color = Settings.brightPanelLights
+            ? Settings.deckColors[deck] : dimColor(Settings.deckColors[deck]);
+
+        this.updateMeter(value, this.panelMeterState, color, "bottom_led");
+    }
+
     peakIndicatorCallback(value, group, key) {
         const ledValue = value ? LedFull : LedOff;
         this.controller.setOutput(group, key, ledValue, true);
     }
 
-    vuMeterCallback(value, _group, _key) {
-        // Figure out the number of illuminated segments
-        const scaledValue = value * 8.0;
-        const fullIllumCount = Math.floor(scaledValue);
-        const ledBrightness = Settings.brightMeterSegments ? LedFull : LedDim;
-
-        let sendUpdate = false;
-
-        for (let i = 0; i < 8; i++) {
-            const ledUpdate = i < fullIllumCount ? ledBrightness : LedOff;
-
-            if (ledUpdate !== this.vuMeterState[i]) {
-                this.controller.setOutput(this.group, `!vu_meter_${i + 1}`, ledUpdate, false);
-                // Store the new segment state
-                this.vuMeterState[i] = ledUpdate;
-                sendUpdate = true;
-            }
-        }
-
-        // Only send the report if LED states have changed
-        if (sendUpdate) {
-            this.controller.OutputPackets.outputReport0x80.send();
-        }
+    mainMeterCallback(value, _group, _key) {
+        const color = Settings.brightMeterSegments ? LedFull : LedDim;
+        this.updateMeter(value, this.mainMeterState, color, "vu_meter");
     }
 
     setPadMode(padMode) {
@@ -1416,27 +1446,55 @@ class Deck {
         }
     }
 
-    getBottomLedsColor(value, key) {
+    getPanelColor(value, key) {
         if (key === "indicator_500ms") {
             // Use callback value as blinking LED brightness
             const baseColor = Settings.bottomLedsEndColor;
-            return value ? baseColor : dimColor(baseColor);
+            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
+            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
+            return value ? onColor : offColor;
         }
 
         if (engine.getValue(this.group, "loop_enabled")) {
             // Switch loop color brightness based on playback state
             const baseColor = Settings.bottomLedsLoopColor;
-            return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
+            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
+            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
+            return engine.getValue(this.group, "play") ? onColor : offColor;
         }
 
         if (engine.getValue(this.group, "track_loaded")) {
             const baseColor = Settings.bottomLedsPlayColor;
-            return engine.getValue(this.group, "play") ? baseColor : dimColor(baseColor);
+            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
+            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
+            return engine.getValue(this.group, "play") ? onColor : offColor;
         }
 
-        // Return standby color by default
-        const baseColor = Settings.bottomLedsStandby ? Settings.bottomLedsStandbyColor : LedOff;
-        return Settings.brightStandbyLight ? baseColor : dimColor(baseColor);
+        // Disable bottom panel LEDs by default
+        return LedOff;
+    }
+
+    updateMeter(value, state, color, output) {
+        // Figure out the number of illuminated segments
+        const segments = state.length;
+        const fullIllumCount = Math.floor(value * segments);
+        let sendUpdate = false;
+
+        for (let i = 0; i < segments; i++) {
+            const ledUpdate = i < fullIllumCount ? color : LedOff;
+
+            if (ledUpdate !== state[i]) {
+                this.controller.setOutput(this.group, `!${output}_${i + 1}`, ledUpdate, false);
+                // Store the new segment state
+                state[i] = ledUpdate;
+                sendUpdate = true;
+            }
+        }
+
+        // Only send the report if LED states have changed
+        if (sendUpdate) {
+            this.controller.OutputPackets.outputReport0x80.send();
+        }
     }
 
     setJogMode(jogMode) {
@@ -2610,12 +2668,13 @@ class MX2 {
             qfxButton: {hidReport: outputReport0x80, offset: 0x3f},
             pflButton: {hidReport: outputReport0x80, offset: 0x40},
             bottomLeds: [
-                {hidReport: outputReport0x80, offset: 0x4b},
-                {hidReport: outputReport0x80, offset: 0x4c},
-                {hidReport: outputReport0x80, offset: 0x4d},
-                {hidReport: outputReport0x80, offset: 0x4e},
+                // Reversed order for bottom panel VU meter orientation
+                {hidReport: outputReport0x80, offset: 0x50},
                 {hidReport: outputReport0x80, offset: 0x4f},
-                {hidReport: outputReport0x80, offset: 0x50}
+                {hidReport: outputReport0x80, offset: 0x4e},
+                {hidReport: outputReport0x80, offset: 0x4d},
+                {hidReport: outputReport0x80, offset: 0x4c},
+                {hidReport: outputReport0x80, offset: 0x4b}
             ],
             vuMeters: [
                 {hidReport: outputReport0x80, offset: 0x58},
@@ -2662,12 +2721,13 @@ class MX2 {
             qfxButton: {hidReport: outputReport0x80, offset: 0x43},
             pflButton: {hidReport: outputReport0x80, offset: 0x44},
             bottomLeds: [
-                {hidReport: outputReport0x80, offset: 0x51},
-                {hidReport: outputReport0x80, offset: 0x52},
-                {hidReport: outputReport0x80, offset: 0x53},
-                {hidReport: outputReport0x80, offset: 0x54},
+                // Reversed order for bottom panel VU meter orientation
+                {hidReport: outputReport0x80, offset: 0x56},
                 {hidReport: outputReport0x80, offset: 0x55},
-                {hidReport: outputReport0x80, offset: 0x56}
+                {hidReport: outputReport0x80, offset: 0x54},
+                {hidReport: outputReport0x80, offset: 0x53},
+                {hidReport: outputReport0x80, offset: 0x52},
+                {hidReport: outputReport0x80, offset: 0x51}
             ],
             vuMeters: [
                 {hidReport: outputReport0x80, offset: 0x61},

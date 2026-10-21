@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <MixxxControllerPreset mixxxVersion="2.6.0" schemaVersion="1">
   <info>
@@ -32,6 +31,19 @@
         </description>
       </option>
       <option
+        variable="lightEffectMode"
+        label="Panel light effects"
+        type="enum">
+        <value label="Off">1</value>
+        <value label="Deck lights">2</value>
+        <value label="State triggers" default="true">3</value>
+        <value label="Beat indicators">4</value>
+        <value label="VU meters">5</value>
+        <description>
+          Sets the active bottom panel light effect mode.
+        </description>
+      </option>
+      <option
         variable="matchPadColors"
         label="Match pad colors to on-screen colors"
         type="boolean"
@@ -42,20 +54,11 @@
       </option>
       <option
         variable="brightMeterSegments"
-        label="Use bright VU meter segments"
+        label="Use bright main VU meter segments"
         type="boolean"
         default="true">
         <description>
-          Use full brightness for VU meter LED segments. Dimmed LED brightness will be used if this option is off.
-        </description>
-      </option>
-      <option
-        variable="brightStandbyLight"
-        label="Use bright bottom panel standby light"
-        type="boolean"
-        default="false">
-        <description>
-          Use full brightness for bottom panel standby light effect. This is especially useful with a static always on standby light.
+          Use full brightness for main VU meter LED segments. Dimmed LED brightness will be used if this option is off.
         </description>
       </option>
     </group>
@@ -750,46 +753,71 @@
         </option>
       </group>
     </group>
-    <group label="Bottom panel lights">
+    <group label="Panel effect colors">
       <row>
-        <row orientation="vertical">
-          <group label="Standby">
-            <option
-              variable="bottomLedsStandby"
-              label="Enable"
-              type="boolean"
-              default="true">
-              <description>
-                Enable bottom panel standby light.
-              </description>
-            </option>
-            <option
-              variable="bottomLedsStandbyColor"
-              label="Color"
-              type="enum">
-                <value label="Red" color="#ff0000">red</value>
-                <value label="Carrot" color="#ff4000">carrot</value>
-                <value label="Orange" color="#ff8000">orange</value>
-                <value label="Honey" color="#ffbf00">honey</value>
-                <value label="Yellow" color="#ffff00">yellow</value>
-                <value label="Lime" color="#80ff00">lime</value>
-                <value label="Green" color="#00ff00">green</value>
-                <value label="Aqua" color="#00ff80">aqua</value>
-                <value label="Celeste" color="#00ffff">celeste</value>
-                <value label="Sky" color="#0080ff">sky</value>
-                <value label="Blue" color="#0000ff">blue</value>
-                <value label="Purple" color="#8000ff">purple</value>
-                <value label="Fuchsia" color="#bf00ff">fuchsia</value>
-                <value label="Magenta" color="#ff00ff">magenta</value>
-                <value label="Cerise" color="#ff0080">cerise</value>
-                <value label="Crimson" color="#ff0040">crimson</value>
-                <value label="White" color="#ffffff" default="true">white</value>
-              <description>
-                Color for bottom panel standby light.
-              </description>
-            </option>
-          </group>
-        </row>
+        <option
+          variable="brightPanelLights"
+          label="Use bright panel lights"
+          type="boolean"
+          default="true">
+          <description>
+            Use full LED brightness for bottom panel lights.
+          </description>
+        </option>
+        <option
+          variable="deckColorA"
+          label="Left deck color"
+          type="enum">
+            <value label="Red" color="#ff0000" default="true">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for left deck (A) bottom panel light effects.
+          </description>
+        </option>
+        <option
+          variable="deckColorB"
+          label="Right deck color"
+          type="enum">
+            <value label="Red" color="#ff0000">red</value>
+            <value label="Carrot" color="#ff4000">carrot</value>
+            <value label="Orange" color="#ff8000">orange</value>
+            <value label="Honey" color="#ffbf00">honey</value>
+            <value label="Yellow" color="#ffff00">yellow</value>
+            <value label="Lime" color="#80ff00">lime</value>
+            <value label="Green" color="#00ff00">green</value>
+            <value label="Aqua" color="#00ff80">aqua</value>
+            <value label="Celeste" color="#00ffff">celeste</value>
+            <value label="Sky" color="#0080ff">sky</value>
+            <value label="Blue" color="#0000ff" default="true">blue</value>
+            <value label="Purple" color="#8000ff">purple</value>
+            <value label="Fuchsia" color="#bf00ff">fuchsia</value>
+            <value label="Magenta" color="#ff00ff">magenta</value>
+            <value label="Cerise" color="#ff0080">cerise</value>
+            <value label="Crimson" color="#ff0040">crimson</value>
+            <value label="White" color="#ffffff">white</value>
+          <description>
+            Color for right deck (B) bottom panel light effects.
+          </description>
+        </option>
+      </row>
+    </group>
+    <group label="Panel light triggers">
+      <row>
         <row orientation="vertical">
           <group label="Track playing">
             <option
@@ -798,7 +826,7 @@
               type="boolean"
               default="true">
               <description>
-                Enable bottom panel light effect when a track is playing.
+                Enable bottom panel light trigger for a playing track.
               </description>
             </option>
             <option
@@ -836,7 +864,7 @@
               type="boolean"
               default="true">
               <description>
-                Enable bottom panel light effect when a loop is active.
+                Enable bottom panel light trigger for an active loop.
               </description>
             </option>
             <option
@@ -874,7 +902,7 @@
               type="boolean"
               default="true">
               <description>
-                Enable bottom panel light effect when a track is ending.
+                Enable bottom panel light trigger for track ending.
               </description>
             </option>
             <option
@@ -899,7 +927,7 @@
                 <value label="Crimson" color="#ff0040">crimson</value>
                 <value label="White" color="#ffffff">white</value>
               <description>
-                Bottom panel LED color when the currently playing track is about to end.
+                Bottom panel light color when the currently playing track is about to end.
               </description>
             </option>
           </group>
