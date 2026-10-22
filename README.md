@@ -80,8 +80,9 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Setting | Default | Description |
 | --- | --- | --- |
 | Color theme | Default | Color theme used for button LEDs. Select **Custom** to use colors defined in the **Custom theme colors** section. |
-| Match pad colors to on-screen colors | On | Use on-screen colors for pad LEDs. This only applies to **hotcue** and **stem** modes. |
-| Use bright VU meter segments | On | Use full brightness for VU meter LED segments. Dimmed LEDs will be used if disabled. |
+| Panel light effects | State triggers | Sets the active bottom panel light effect mode |
+| Match pad colors to on-screen colors | On | Use on-screen colors for pad LEDs while in **hotcues** or **stems** mode. Theme colors will be used if this option is off. |
+| Use bright VU meter segments | On | Use full brightness for main VU meter LED segments. Dimmed LED brightness will be used if this option is off. |
 
 ### Custom theme colors
 
@@ -127,9 +128,9 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Track playing enable | On | Enable bottom panel light trigger for a playing track |
+| Track playing enable | On | Enable bottom panel light trigger for track playback |
 | Track playing color | Blue | Bottom panel light color when a track is currently playing |
-| Loop active enable | On | Enable bottom panel light trigger for an active loop |
+| Loop active enable | On | Enable bottom panel light trigger for active loops |
 | Loop active color | Green | Bottom panel light color when a loop is currently active |
 | Track ending enable | On | Enable bottom panel light trigger for track ending |
 | Track ending color | Red | Bottom panel light color when the currently playing track is about to end |
@@ -175,4 +176,4 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Enable master gain knob control | Off | Use Mixxx's master gain knob instead of sending audio directly to the output. Enabling this is not recommended as it can lead to audio clipping issues. |
+| Enable software output gain control | Off | Use the 'Main' knob to control Mixxx's internal output gain. Enabling this is not recommended as it can lead to audio clipping issues. |
