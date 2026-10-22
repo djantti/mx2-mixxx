@@ -1447,34 +1447,6 @@ class Deck {
     getPanelColor(value, key) {
         if (key === "indicator_500ms") {
             // Use callback value as blinking LED brightness
-            const baseColor = Settings.bottomLedsEndColor;
-            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
-            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
-            return value ? onColor : offColor;
-        }
-
-        if (engine.getValue(this.group, "loop_enabled")) {
-            // Switch loop color brightness based on playback state
-            const baseColor = Settings.bottomLedsLoopColor;
-            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
-            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
-            return engine.getValue(this.group, "play") ? onColor : offColor;
-        }
-
-        if (engine.getValue(this.group, "track_loaded")) {
-            const baseColor = Settings.bottomLedsPlayColor;
-            const onColor = Settings.brightPanelLights ? baseColor : dimColor(baseColor)
-            const offColor = Settings.brightPanelLights ? dimColor(baseColor) : LedOff
-            return engine.getValue(this.group, "play") ? onColor : offColor;
-        }
-
-        // Disable bottom panel LEDs by default
-        return LedOff;
-    }
-
-    getPanelColor(value, key) {
-        if (key === "indicator_500ms") {
-            // Use callback value as blinking LED brightness
             return this.getPanelBrightness(Settings.bottomLedsEndColor, value);
         }
 
