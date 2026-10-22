@@ -210,6 +210,7 @@ const Settings = {
     // Selected color theme
     colorTheme: engine.getSetting("colorTheme") || "Default",
 
+    // Sets the active bottom panel light effect mode
     lightEffectMode: Number(engine.getSetting("lightEffectMode")) || 3,
 
     // Use on-screen stem and hotcue colors for pad LEDs (default: true)
@@ -221,17 +222,18 @@ const Settings = {
     // Use bright bottom panel lights (default: true)
     brightPanelLights: !!engine.getSetting("brightPanelLights"),
 
+    // Deck colors for bottom panel light effects
     deckColors: [
         LedColors[engine.getSetting("deckColorA")] || LedColors.red,
         LedColors[engine.getSetting("deckColorB")] || LedColors.blue
     ],
 
-    // Bottom panel lighting effects (default: true)
+    // Enabled panel light effect triggers (default: true)
     bottomLedsPlay: !!engine.getSetting("bottomLedsPlay"),
     bottomLedsLoop: !!engine.getSetting("bottomLedsLoop"),
     bottomLedsEnd: !!engine.getSetting("bottomLedsEnd"),
 
-    // Bottom panel LED colors
+    // Panel light effect trigger colors
     bottomLedsPlayColor: LedColors[engine.getSetting("bottomLedsPlayColor")] || LedColors.blue,
     bottomLedsLoopColor: LedColors[engine.getSetting("bottomLedsLoopColor")] || LedColors.green,
     bottomLedsEndColor: LedColors[engine.getSetting("bottomLedsEndColor")] || LedColors.red,
