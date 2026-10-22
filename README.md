@@ -22,7 +22,7 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 6 | Prepare (star symbol) button | Add track to Auto DJ queue (bottom) | Add track to Auto DJ queue (top) |
 | 7 | Browse encoder | <p>*Press* to load selected track</p><p>*Turn* to scroll through items in tracks listing</p> | <p>*Press* to enter the active sidebar item</p><p>*Turn* to scroll through items in library sidebar</p> |
 | 8 | Preview (right triangle) button | Load and play / pause track in preview deck | Eject the currently loaded preview track |
-| 9 | View button | Toggle big library mode ||
+| 9 | View button | Toggle big library mode | Cycle bottom panel light effects for both decks |
 | 10 | Reverse play (REV) button | *Hold* to play track in reverse | *Hold* for reverse play with slip mode |
 | 11 | Slip mode (FLX) button | Toggle slip mode on / off ||
 | 12 | Turntable mode (TT) button | Switch jog wheel to turntable mode ||

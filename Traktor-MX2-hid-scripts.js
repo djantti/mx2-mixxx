@@ -559,6 +559,8 @@ class Deck {
 
         this.defaultRateRange = 0.08;
 
+        this.panelConnections = [];
+
         // 0 = turntable mode, 1 = jog mode
         this.jogMode = 0;
 
@@ -700,36 +702,6 @@ class Deck {
         this.linkLed(qfxGroup(this.number), "loaded_chain_preset", this.qfxButtonCallback);
         this.linkLed(qfxGroup(this.number), "enabled", this.qfxButtonCallback);
         this.linkLed(this.group, "pfl", this.outputCallback);
-
-        switch (Settings.lightEffectMode) {
-        case 3:
-            // Link light triggers only if enabled in settings
-            if (Settings.bottomLedsEnd) {
-                this.linkLed("[App]", "indicator_500ms", this.panelTriggerCallback, false);
-                this.linkLed(this.group, "end_of_track", this.panelTriggerCallback, false);
-            }
-
-            if (Settings.bottomLedsLoop) {
-                this.linkLed(this.group, "loop_enabled", this.panelTriggerCallback, false);
-            }
-
-            if (Settings.bottomLedsPlay) {
-                this.linkLed(this.group, "play", this.panelTriggerCallback, false);
-                this.linkLed(this.group, "track_loaded", this.panelTriggerCallback);
-            }
-
-            break;
-        case 4:
-            this.linkLed(this.group, "beat_active", this.panelBeatCallback, true);
-            break;
-        case 5:
-            this.linkLed(this.group, "vu_meter", this.panelMeterCallback, false);
-            break;
-        default:
-            console.warn(`Unknown panel light effect mode: ${Settings.lightEffectMode}`);
-            break;
-        }
-
         this.linkLed(this.group, "peak_indicator", this.peakIndicatorCallback, false);
         this.linkLed(this.group, "vu_meter", this.mainMeterCallback, false);
     }
@@ -757,15 +729,6 @@ class Deck {
         if (Settings.lightEffectMode === 1) {
             for (let i = 1; i <= 6; i++) {
                 this.controller.setOutput(this.group, `!bottom_led_${i}`, LedOff, false);
-            }
-        }
-
-        // Use a static bottom lights if enabled
-        if (Settings.lightEffectMode === 2) {
-            for (let i = 1; i <= 6; i++) {
-                const color = Settings.brightPanelLights
-                    ? Settings.deckColors[this.number - 1] : dimColor(Settings.deckColors[this.number - 1]);
-                this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
             }
         }
     }
@@ -888,6 +851,15 @@ class Deck {
     }
 
     viewButtonHandler(field) {
+        if (field.value === 0) {
+            return;
+        }
+
+        if (this.isShiftPressed()) {
+            this.mx2.cyclePanelMode();
+            return;
+        }
+
         if (field.value === 1) {
             script.toggleControl("[Skin]", "show_maximized_library");
         }
@@ -1494,6 +1466,80 @@ class Deck {
         }
     }
 
+    panelModeChanged() {
+        const panelMode = this.mx2.activePanelMode;
+
+        this.panelConnections.forEach(function(connection) {
+            connection.disconnect();
+        });
+
+        this.panelConnections = [];
+
+        switch (panelMode) {
+        case 1:
+            this.clearPanel();
+            break;
+        case 2:
+            for (let i = 1; i <= 6; i++) {
+                const color = Settings.brightPanelLights
+                    ? Settings.deckColors[this.number - 1] : dimColor(Settings.deckColors[this.number - 1]);
+                this.controller.setOutput(this.group, `!bottom_led_${i}`, color, false);
+            }
+
+            this.controller.OutputPackets.outputReport0x80.send();
+            break;
+        case 3:
+            // Link state triggers only if enabled in settings
+            if (Settings.bottomLedsEnd) {
+                this.panelConnections.push(engine.makeConnection(
+                    "[App]", "indicator_500ms", this.panelTriggerCallback.bind(this)));
+                this.panelConnections.push(engine.makeConnection(
+                    this.group, "end_of_track", this.panelTriggerCallback.bind(this)));
+            }
+
+            if (Settings.bottomLedsLoop) {
+                this.panelConnections.push(engine.makeConnection(
+                    this.group, "loop_enabled", this.panelTriggerCallback.bind(this)));
+            }
+
+            if (Settings.bottomLedsPlay) {
+                this.panelConnections.push(engine.makeConnection(
+                    this.group, "play", this.panelTriggerCallback.bind(this)));
+                this.panelConnections.push(engine.makeConnection(
+                    this.group, "track_loaded", this.panelTriggerCallback.bind(this)));
+            }
+            break;
+        case 4:
+            this.panelConnections.push(engine.makeConnection(
+                this.group, "beat_active", this.panelBeatCallback.bind(this)));
+            break;
+        case 5:
+            this.clearPanel();
+
+            // Reset meter state to default values
+            this.panelMeterState.fill(LedOff);
+
+            this.panelConnections.push(engine.makeConnection(
+                this.group, "vu_meter", this.panelMeterCallback.bind(this)));
+            break;
+        default:
+            console.warn(`Unknown panel mode: ${panelMode}`);
+            break;
+        }
+
+        this.panelConnections.forEach(function(connection) {
+            connection.trigger();
+        });
+    }
+
+    clearPanel() {
+        for (let i = 1; i <= 6; i++) {
+            this.controller.setOutput(this.group, `!bottom_led_${i}`, LedOff, false);
+        }
+
+        this.controller.OutputPackets.outputReport0x80.send();
+    }
+
     setJogMode(jogMode) {
         if (jogMode === 0) {
             this.controller.setOutput(this.group, "!tt", this.colorMap.ttColor.full, false);
@@ -1516,7 +1562,7 @@ class Deck {
             return;
         }
 
-        console.warn(`Unknown mode: ${jogMode}`);
+        console.warn(`Unknown pad mode: ${jogMode}`);
     }
 
     jogStopper() {
@@ -2430,6 +2476,7 @@ class MX2 {
 
         this.colorMap = this.getColorMap(Settings.colorTheme);
 
+        this.activePanelMode = Settings.lightEffectMode;
         this.shiftPressed = [false, false];
 
         if (engine.getValue("[App]", "num_samplers") < 16) {
@@ -2775,6 +2822,8 @@ class MX2 {
 
         this.controller.registerOutputPacket(outputReport0x80);
 
+        this.setPanelMode(Settings.lightEffectMode);
+
         this.decks.forEach(function(deck) {
             deck.enableOutputs();
             deck.linkOutputs();
@@ -2886,6 +2935,18 @@ class MX2 {
         }
 
         return this.createColorMap(selectedTheme);
+    }
+
+    setPanelMode(panelMode) {
+        this.activePanelMode = panelMode;
+
+        for (const deck in this.decks) {
+            this.decks[deck].panelModeChanged();
+        }
+    }
+
+    cyclePanelMode() {
+        this.setPanelMode(this.activePanelMode === 5 ? 1 : this.activePanelMode + 1);
     }
 
     isShiftPressed(deck) {
