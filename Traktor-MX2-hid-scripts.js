@@ -360,9 +360,9 @@ class Mixer {
             this.qfxPresetButtons[i].linkOutputs();
         }
 
-        engine.makeConnection("[Microphone]", "talkover", this.talkoverCallback.bind(this)).trigger();
-        engine.makeConnection("[Microphone]", "peak_indicator", this.talkoverCallback.bind(this));
-        engine.makeConnection("[Main]", "peak_indicator", this.peakIndicatorCallback.bind(this));
+        this.linkLed("[Microphone]", "talkover", this.talkoverCallback);
+        this.linkLed("[Microphone]", "peak_indicator", this.talkoverCallback, false);
+        this.linkLed("[Main]", "peak_indicator", this.peakIndicatorCallback, false);
     }
 
     enableSoftTakeover() {
@@ -405,6 +405,14 @@ class Mixer {
 
     registerGroupLed(group, name, config) {
         config.hidReport.addOutput(group, name, config.offset, "B");
+    }
+
+    linkLed(group, name, callback, trigger = true) {
+        const connection = engine.makeConnection(group, name, callback.bind(this));
+
+        if (trigger) {
+            connection.trigger();
+        }
     }
 
     talkoverHandler(field) {
@@ -472,8 +480,7 @@ class QfxPresetButton {
     }
 
     enableOutputs() {
-        this.controller.setOutput(this.group, this.output,
-            dimColor(Settings.qfxColors[this.number - 1]), false);
+        this.controller.setOutput(this.group, this.output, dimColor(Settings.qfxColors[this.number - 1]), false);
     }
 
     linkOutputs() {
@@ -2050,11 +2057,11 @@ class EffectUnit {
     }
 
     linkOutputs() {
-        engine.makeConnection(this.group, "show_parameters", this.showParametersCallback.bind(this)).trigger();
-        engine.makeConnection(this.group, "focused_effect", this.focusedEffectCallback.bind(this)).trigger();
-        engine.makeConnection("[App]", "indicator_250ms", this.focusLedCallback.bind(this));
-        engine.makeConnection(this.group, "group_[Channel1]_enable", this.effectAssignCallback.bind(this)).trigger();
-        engine.makeConnection(this.group, "group_[Channel2]_enable", this.effectAssignCallback.bind(this)).trigger();
+        this.linkLed(this.group, "show_parameters", this.showParametersCallback);
+        this.linkLed(this.group, "focused_effect", this.focusedEffectCallback);
+        this.linkLed("[App]", "indicator_250ms", this.focusLedCallback, false);
+        this.linkLed(this.group, "group_[Channel1]_enable", this.effectAssignCallback);
+        this.linkLed(this.group, "group_[Channel2]_enable", this.effectAssignCallback);
     }
 
     enableSoftTakeover() {
@@ -2096,6 +2103,14 @@ class EffectUnit {
 
     registerLed(name, config) {
         config.hidReport.addOutput(this.group, name, config.offset, "B");
+    }
+
+    linkLed(group, name, callback, trigger = true) {
+        const connection = engine.makeConnection(group, name, callback.bind(this));
+
+        if (trigger) {
+            connection.trigger();
+        }
     }
 
     focusButtonHandler(field) {
@@ -2284,8 +2299,10 @@ class EffectParameter {
     }
 
     registerInputs(config) {
-        this.registerButton(`!effect_button_${this.number}`, config.paramButton, this.effectButtonHandler);
-        this.registerScalar(`!effect_knob_${this.number}`, config.paramKnob, this.effectKnobHandler);
+        config.paramButton.hidReport.addControl(this.group, `!effect_button_${this.number}`,
+            config.paramButton.offset, "B", config.paramButton.mask, false, this.effectButtonHandler.bind(this));
+        config.paramKnob.hidReport.addControl(this.group, `!effect_knob_${this.number}`,
+            config.paramKnob.offset, "H", 0xffff, false, this.effectKnobHandler.bind(this));
     }
 
     registerOutputs(config) {
@@ -2305,22 +2322,6 @@ class EffectParameter {
         for (let i = 1; i <= 3; i++) {
             this.controller.setOutput(this.group, `!effect_button_${i}`, LedOff, false);
         }
-    }
-
-    registerButton(name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(this.group, name, config.offset, "B", config.mask, false, callback);
-    }
-
-    registerScalar(name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(this.group, name, config.offset, "H", 0xffff, false, callback);
     }
 
     effectButtonHandler(field) {
