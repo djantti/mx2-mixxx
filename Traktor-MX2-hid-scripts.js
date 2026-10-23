@@ -484,8 +484,10 @@ class QfxPresetButton {
     }
 
     linkOutputs() {
-        engine.makeConnection(qfxGroup(1), "loaded_chain_preset", this.qfxPresetButtonCallback.bind(this)).trigger();
-        engine.makeConnection(qfxGroup(2), "loaded_chain_preset", this.qfxPresetButtonCallback.bind(this)).trigger();
+        [1, 2].forEach(channel => {
+            engine.makeConnection(qfxGroup(channel), "loaded_chain_preset",
+                this.qfxPresetButtonCallback.bind(this)).trigger();
+        });
     }
 
     disableOutputs() {
