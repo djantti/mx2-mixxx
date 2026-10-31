@@ -1,6 +1,6 @@
 # Traktor MX2 Mixxx mapping
 
-This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads (8 per deck), bottom panel light modes, rate fader midpoint snapping and range functions, user configurable settings and customizable LED color themes.
+This is an improved Native Instruments **Traktor MX2** mapping for [Mixxx](https://www.mixxx.org) (version 2.6 or higher). New features include expanded effect controls, sampler pads (8 or 4 per deck), bottom panel light modes, rate fader midpoint snapping and range functions, user configurable settings and customizable LED color themes.
 
 ## Controller overview
 
@@ -31,15 +31,15 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | 15 | Shift button | *Hold* to activate secondary functions ||
 | 16 | Play button | Toggle track playback | Go to track start and stop |
 | 17 | Cue button | Set default cue point | Jump to cue point and stop |
-| 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to control stem track volume</p> | *Press* to activate and jump to current loop while stopping playback |
+| 18 | Move encoder | <p>*Hold* to activate a rolling loop of the defined number of beats. Once released, playback will resume from the original position.</p><p>*Turn* to beatjump backwards / forwards</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to control stem track volume</p><p>**Samples mode (4 samplers):** *Turn* while *holding* pad 5–8 (**26**) to control upper row sampler pre-fader gain</p> | *Press* to activate and jump to current loop while stopping playback |
 | 19 | Keylock button | <p>*Press* to toggle keylock</p><p>*Hold* and *turn* loop encoder (**20**) to change track pitch</p><p>**Samples mode:** *Hold* and *press* pad buttons (**25** and **26**) to toggle sampler keylock</p> ||
-| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to adjust stem track FX super parameter</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to select a stem Quick FX preset</p> |
+| 20 | Loop encoder | <p>*Press* to set and enable a loop of the defined number of beats</p><p>*Turn* to halve or double loop size</p><p>*Turn* while *holding* keylock (**19**) to adjust track pitch</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to adjust stem track FX super parameter</p><p>**Samples mode (4 samplers):** *Turn* while *holding* pad 5–8 (**26**) to control upper row sampler playback speed</p> | <p>*Press* to toggle current loop on / off</p><p>**Stems mode:** *Turn* while *holding* pad 5–8 (**26**) to select a stem Quick FX preset</p> |
 | 21 | Hotcues button | Activate **hotcues** pad mode ||
 | 22 | Stems button | Activate **stems** pad mode ||
 | 23 | Samples button | Activate **samples** pad mode ||
 | 24 | Loops button | Activate **loops** pad mode ||
-| 25 | Pad buttons 1–4 | <p>**Hotcues mode:** Seek to a set hotcue position. Otherwise set hotcue at the current position.</p><p>**Stems mode:** Toggle stem track mute</p><p>**Samples mode:** *Press* to play loaded sampler track or *hold* to play until the pad is released. If the sampler is empty, load the selected track.</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1/16, 1/8, 1/4 or 1/2 beats</p> | <p>**Hotcues mode:** Clear a set hotcue</p><p>**Samples mode:** Eject the currently loaded track</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
-| 26 | Pad buttons 5–8 | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Stems mode:** *Hold* to use as function modifiers for move (**18**) and loop (**20**) encoders. Multiple modifier pads can be activated simultaneously.</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1, 2, 4 or 8 beats</p> | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Samples mode:** Same as for pads 1–4 (**25**)</p><p>**Loops mode:** *Hold* to enable a default loop</p> |
+| 25 | Pad buttons 1–4 | <p>**Hotcues mode:** Seek to a set hotcue position. Otherwise set hotcue at the current position.</p><p>**Stems mode:** Toggle stem track mute</p><p>**Samples mode:** *Press* to play loaded sampler track or *hold* to play until the pad is released. If the sampler is empty, load the selected track.</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1/16, 1/8, 1/4 or 1/2 beats</p> | <p>**Hotcues mode:** Clear a set hotcue</p><p>**Samples mode:** Eject the currently loaded track</p><p>**Loops mode:** *Hold* to enable the default loop</p> |
+| 26 | Pad buttons 5–8 | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Stems mode:** *Hold* to use as function modifiers for move (**18**) and loop (**20**) encoders. Multiple modifier pads can be activated simultaneously.</p><p>**Samples mode (8 samplers):** Same as for pads 1–4 (**25**)</p><p>**Samples mode (4 samplers):** *Hold* to use as function modifiers for move (**18**) and loop (**20**) encoders, headphone button (**38**) and left (**31**) and right (**32**) FX buttons. Multiple modifier pads can be activated simultaneously.</p><p>**Loops mode:** *Hold* to enable a rolling loop of 1, 2, 4 or 8 beats</p> | <p>**Hotcues mode:** Same as for pads 1–4 (**25**)</p><p>**Samples mode:** Same as for pads 1–4 (**25**)<p>**Loops mode:** *Hold* to enable the default loop</p> |
 | 27 | Sync (SNC) button | <p>*Press* to sync tempo and phase (if quantize is active)</p><p>*Hold* to activate sync lock and *press* again to disable it</p> | Sync phase to the other deck |
 | 28 | Sync leader (MST) button | *Press* to set deck as the sync leader. *Hold* to enable / disable long range rate fader. ||
 | 29 | Rate fader | Adjust playback speed ||
@@ -49,14 +49,14 @@ Most knobs and buttons function as they are labeled and follow the manufacturer'
 | No. | Element | Function | Secondary function |
 | --- | --- | --- | --- |
 | 30 | Gain knob | Adjust deck pre-fader gain ||
-| 31 | Left FX button | Send deck output to FX unit 1 ||
-| 32 | Right FX button | Send deck output to FX unit 2 ||
+| 31 | Left FX button | <p>Send deck output to FX unit 1<p><p>**Samples mode (4 samplers):** *Press* while *holding* pad 5–8 (**26**) to send upper row sampler to FX unit 1</p> ||
+| 32 | Right FX button | <p>Send deck output to FX unit 2<p><p>**Samples mode (4 samplers):** *Press* while *holding* pad 5–8 (**26**) to send upper row sampler to FX unit 2</p> ||
 | 33 | Hi knob | Adjust high frequency filter ||
 | 34 | Mid knob | Adjust middle frequency filter ||
 | 35 | Low knob | Adjust low frequency filter ||
 | 36 | Quick FX knob | Control Quick FX meta parameter ||
 | 37 | Quick FX button | <p>*Press* to toggle Quick FX on / off</p><p>*Hold* for momentary toggle</p> | Cycle through Quick FX effect chain presets |
-| 38 | Headphone button | Toggle headphone cueing ||
+| 38 | Headphone button | <p>Toggle headphone cueing</p><p>**Samples mode (4 samplers):** *Press* while *holding* pad 5–8 (**26**) to toggle upper row sampler headphone cueing</p> ||
 | 39 | Volume fader | Adjust deck volume ||
 
 ### Center mixer column (40–46)
@@ -159,7 +159,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Input dead zone | Medium | Adjusts the jog-wheel input dead zone. Higher settings ignore more subtle movements, but can make the wheel feel less responsive. |
 | Fine scratching speed | 50% | Controls the scratching speed when shift (**15**) button is held |
 | Quick seek speed | 200% | Controls the jog wheel's quick seek speed when shift (**15**) button is held |
-| Align quick seek to beatgrid | False | Align quick seek wheel movements to beatgrid. If the track doesn't have a beatgrid, seconds will be used instead. |
+| Align quick seek to beatgrid | Off | Align quick seek wheel movements to beatgrid. If the track doesn't have a beatgrid, seconds will be used instead. |
 
 ### Controls
 
@@ -167,6 +167,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | --- | --- | --- |
 | Long press timeout | 300 | Time in milliseconds required to hold a button before a long press is registered |
 | Rate fader midpoint snapping | Off | Range over which rate faders automatically snap to the midpoint |
+| Samplers per deck | 8 | Sets how many samplers each deck controls. When set to '4', the bottom row pads act as modifier buttons. |
 | Make shift button presses global | Off | Use either shift (**15**) button to control shifted functions on both decks |
 | Use soft takeover for knobs and faders | On | Ignore knob and fader movements until they pass the current on-screen position. This can prevent sudden level jumps when physical and on-screen controls are out of sync. |
 | Use rolling loop pads by default | On | Use rolling loops as the default loop pad mode. Regular loops can be activated by holding the shift (**15**) button. |
