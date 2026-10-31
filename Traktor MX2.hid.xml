@@ -1238,6 +1238,16 @@
         </description>
       </option>
       <option
+        variable="samplersPerDeck"
+        label="Samplers per deck"
+        type="enum">
+        <value label="4">4</value>
+        <value label="8" default="true">8</value>
+        <description>
+          Sets how many samplers each deck controls. When set to '4', the bottom row pads act as modifier buttons.
+        </description>
+      </option>
+      <option
         variable="globalShiftButtons"
         label="Make shift button presses global"
         type="boolean"

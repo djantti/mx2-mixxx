@@ -280,6 +280,9 @@ const Settings = {
     // Snap rate faders to mid point
     rateFaderSnap: Number(engine.getSetting("rateFaderSnap")) || 0,
 
+    // Number of controlled samplers per deck
+    samplersPerDeck: Number(engine.getSetting("samplersPerDeck")) || 8,
+
     // Use global shift buttons (default: false)
     globalShiftButtons: !!engine.getSetting("globalShiftButtons"),
 
@@ -306,6 +309,15 @@ const stemGroup = (channel, stem) => {
 
 const stemQfxGroup = (channel, stem) => {
     return `[QuickEffectRack1_[Channel${channel}_Stem${stem}]]`;
+};
+
+const samplerGroup = (channel, pad) => {
+    const padRelations = {
+        "[Channel1]": {1: 1, 2: 2, 3: 3, 4: 4, 5: 9, 6: 10, 7: 11, 8: 12},
+        "[Channel2]": {1: 5, 2: 6, 3: 7, 4: 8, 5: 13, 6: 14, 7: 15, 8: 16}
+    };
+
+    return `[Sampler${padRelations[channel][pad]}]`;
 };
 
 class Mixer {
@@ -552,7 +564,7 @@ class Deck {
         this.keylockPressed = false;
         this.keylockIgnore = false;
 
-        this.padPressed = {5: false, 6: false, 7: false, 8: false};
+        this.padModifiers = {5: false, 6: false, 7: false, 8: false};
 
         // 0 = hotcues, 1 = stems, 2 = samples, 3 = loops
         this.activePadMode = 0;
@@ -1055,6 +1067,16 @@ class Deck {
             return;
         }
 
+        const modPads = this.activePadModifiers();
+
+        if (this.activePadMode === 2 && modPads.length) {
+            for (const padNum of modPads) {
+                script.toggleControl(samplerGroup(this.group, padNum - 3), "pfl");
+            }
+
+            return;
+        }
+
         if (this.isShiftPressed()) {
             script.toggleControl(this.group, "quantize");
         } else {
@@ -1107,16 +1129,30 @@ class Deck {
 
     moveEncoderTurnHandler(field) {
         const direction = this.moveEncoder.readTurnDirection(field.value);
-        const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
+        const modPads = this.activePadModifiers();
 
-        if (this.activePadMode === 1 && pressedPads.length) {
-            for (const padNum of pressedPads) {
+        if (this.activePadMode === 1 && modPads.length) {
+            for (const padNum of modPads) {
                 const stem = stemGroup(this.number, padNum - 3);
 
                 if (direction === 1) {
                     script.triggerControl(stem, "volume_up");
                 } else if (direction === -1) {
                     script.triggerControl(stem, "volume_down");
+                }
+            }
+
+            return;
+        }
+
+        if (this.activePadMode === 2 && modPads.length) {
+            for (const padNum of modPads) {
+                const sampler = samplerGroup(this.group, padNum - 3);
+
+                if (direction === 1) {
+                    script.triggerControl(sampler, "pregain_up");
+                } else if (direction === -1) {
+                    script.triggerControl(sampler, "pregain_down");
                 }
             }
 
@@ -1152,10 +1188,10 @@ class Deck {
 
     loopEncoderTurnHandler(field) {
         const direction = this.loopEncoder.readTurnDirection(field.value);
-        const pressedPads = Object.keys(this.padPressed).filter((padNum) => this.padPressed[padNum]);
+        const modPads = this.activePadModifiers();
 
-        if (this.activePadMode === 1 && pressedPads.length) {
-            for (const padNum of pressedPads) {
+        if (this.activePadMode === 1 && modPads.length) {
+            for (const padNum of modPads) {
                 const stem = stemQfxGroup(this.number, padNum - 3);
 
                 if (this.isShiftPressed()) {
@@ -1170,6 +1206,20 @@ class Deck {
                     } else if (direction === -1) {
                         script.triggerControl(stem, "super1_down");
                     }
+                }
+            }
+
+            return;
+        }
+
+        if (this.activePadMode === 2 && modPads.length) {
+            for (const padNum of modPads) {
+                const sampler = samplerGroup(this.group, padNum - 3);
+
+                if (direction === 1) {
+                    script.triggerControl(sampler, "rate_up");
+                } else if (direction === -1) {
+                    script.triggerControl(sampler, "rate_down");
                 }
             }
 
@@ -1200,11 +1250,21 @@ class Deck {
             return;
         }
 
-        if (this.activePadMode === 1 && Object.values(this.padPressed).some(Boolean)) {
-            for (const padNum in this.padPressed) {
-                if (this.padPressed[padNum]) {
+        const modPads = this.activePadModifiers();
+
+        if (this.activePadMode === 1 && modPads.length) {
+            for (const padNum of modPads) {
+                if (this.padModifiers[padNum]) {
                     script.toggleControl(stemQfxGroup(this.number, padNum - 3), "enabled");
                 }
+            }
+
+            return;
+        }
+
+        if (this.activePadMode === 2 && modPads.length) {
+            for (const padNum of modPads) {
+                script.toggleControl(samplerGroup(this.group, padNum - 3), "repeat");
             }
 
             return;
@@ -1419,6 +1479,10 @@ class Deck {
         for (const pad in this.padButtons) {
             this.padButtons[pad].padModeChanged();
         }
+    }
+
+    activePadModifiers() {
+        return Object.keys(this.padModifiers).filter((padNum) => this.padModifiers[padNum]);
     }
 
     mapLedValue(value, color) {
@@ -1681,12 +1745,7 @@ class PadButton {
         this.pressTimer = 0;
         this.longPress = false;
 
-        const padRelations = {
-            "[Channel1]": {1: 1, 2: 2, 3: 3, 4: 4, 5: 9, 6: 10, 7: 11, 8: 12},
-            "[Channel2]": {1: 5, 2: 6, 3: 7, 4: 8, 5: 13, 6: 14, 7: 15, 8: 16}
-        };
-
-        this.samplerGroup = `[Sampler${padRelations[this.deck.group][this.number]}]`;
+        this.samplerGroup = samplerGroup(this.deck.group, this.number);
 
         this.padConnections = [];
     }
@@ -1745,50 +1804,54 @@ class PadButton {
             script.toggleControl(stemGroup(this.deck.number, this.number), "mute");
         } else if (this.number >= 5) {
             // Lower four pads are used as stem control modifiers
-            this.deck.padPressed[this.number - 1] = (value === 1);
+            this.deck.padModifiers[this.number - 1] = (value === 1);
         }
     }
 
     samplePadHandler(value) {
         const samplerPlaying = engine.getValue(this.samplerGroup, "play");
 
-        if (value === 1) {
-            if (this.isShiftPressed()) {
-                if (samplerPlaying) {
-                    engine.setValue(this.samplerGroup, "play", 0);
-                } else {
-                    script.triggerControl(this.samplerGroup, "eject");
+        if (this.number <= Settings.samplersPerDeck) {
+            if (value === 1) {
+                if (this.isShiftPressed()) {
+                    if (samplerPlaying) {
+                        engine.setValue(this.samplerGroup, "play", 0);
+                    } else {
+                        script.triggerControl(this.samplerGroup, "eject");
+                    }
+
+                    return;
+                } else if (this.deck.keylockPressed) {
+                    script.toggleControl(this.samplerGroup, "keylock");
+                    this.deck.keylockIgnore = true;
+                    return;
                 }
 
-                return;
-            } else if (this.deck.keylockPressed) {
-                script.toggleControl(this.samplerGroup, "keylock");
-                this.deck.keylockIgnore = true;
+                this.pressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                    this.longPress = true;
+                    this.pressTimer = 0;
+                }, true);
+
+                script.triggerControl(this.samplerGroup,
+                    engine.getValue(this.samplerGroup, "track_loaded") ? "cue_gotoandplay" : "LoadSelectedTrack");
+
                 return;
             }
 
-            this.pressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                this.longPress = true;
+            if (this.pressTimer !== 0) {
+                engine.stopTimer(this.pressTimer);
                 this.pressTimer = 0;
-            }, true);
-
-            script.triggerControl(this.samplerGroup,
-                engine.getValue(this.samplerGroup, "track_loaded") ? "cue_gotoandplay" : "LoadSelectedTrack");
-
-            return;
-        }
-
-        if (this.pressTimer !== 0) {
-            engine.stopTimer(this.pressTimer);
-            this.pressTimer = 0;
-        }
-
-        if (this.longPress) {
-            this.longPress = false;
-            // Stop the sampler on long button release
-            if (samplerPlaying) {
-                engine.setValue(this.samplerGroup, "play", 0);
             }
+
+            if (this.longPress) {
+                this.longPress = false;
+                // Stop the sampler on long button release
+                if (samplerPlaying) {
+                    engine.setValue(this.samplerGroup, "play", 0);
+                }
+            }
+        } else if (this.number >= Settings.samplersPerDeck) {
+            this.deck.padModifiers[this.number - 1] = (value === 1);
         }
     }
 
@@ -1852,6 +1915,7 @@ class PadButton {
             return;
         }
 
+        // Set bottom row modifier pad colors
         this.controller.setOutput(this.deck.group, modifier,
             this.colorMap.unconnectedPadColor.dim, false);
 
@@ -1875,6 +1939,12 @@ class PadButton {
     }
 
     samplePadCallback() {
+        // Set bottom row modifier pad colors if enabled
+        if (Settings.samplersPerDeck === 4) {
+            this.controller.setOutput(this.deck.group, `!pad_button_${this.number + 4}`,
+                this.colorMap.unconnectedPadColor.dim, false);
+        }
+
         if (!engine.getValue(this.samplerGroup, "track_loaded")) {
             this.controller.setOutput(this.deck.group, this.output, this.colorMap.unconnectedPadColor.dim, true);
             return;
@@ -1928,12 +1998,16 @@ class PadButton {
 
             break;
         case 2:
-            this.padConnections.push(engine.makeConnection(
-                this.samplerGroup, "track_loaded", this.samplePadCallback.bind(this)));
-            this.padConnections.push(engine.makeConnection(
-                this.samplerGroup, "play", this.samplePadCallback.bind(this)));
-            this.padConnections.push(engine.makeConnection(
-                this.samplerGroup, "repeat", this.samplePadCallback.bind(this)));
+            // Apply callbacks to the configured number of sample pads
+            if (this.number <= Settings.samplersPerDeck) {
+                this.padConnections.push(engine.makeConnection(
+                    this.samplerGroup, "track_loaded", this.samplePadCallback.bind(this)));
+                this.padConnections.push(engine.makeConnection(
+                    this.samplerGroup, "play", this.samplePadCallback.bind(this)));
+                this.padConnections.push(engine.makeConnection(
+                    this.samplerGroup, "repeat", this.samplePadCallback.bind(this)));
+            }
+
             break;
         case 3:
             this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, false);
@@ -2039,8 +2113,10 @@ class EffectUnit {
 
     registerInputs(config) {
         this.registerButton("!effect_focus", config.focusButton, this.focusButtonHandler);
-        this.registerButton("group_[Channel1]_enable", config.fxAssignButton1);
-        this.registerButton("group_[Channel2]_enable", config.fxAssignButton2);
+        this.registerGroupButton("[EffectRack1_EffectUnit1]",
+            `group_[Channel${this.number}]_enable`, config.fxAssignButton1, this.effectAssignHandler);
+        this.registerGroupButton("[EffectRack1_EffectUnit2]",
+            `group_[Channel${this.number}]_enable`, config.fxAssignButton2, this.effectAssignHandler);
         this.registerScalar("!mix", config.mixKnob, this.mixKnobHandler);
 
         for (let i = 0; i < 3; i++) {
@@ -2050,8 +2126,10 @@ class EffectUnit {
 
     registerOutputs(config) {
         this.registerLed("!effect_focus", config.focusButton);
-        this.registerLed("group_[Channel1]_enable", config.fxAssignButton1);
-        this.registerLed("group_[Channel2]_enable", config.fxAssignButton2);
+        this.registerGroupLed("[EffectRack1_EffectUnit1]",
+            `group_[Channel${this.number}]_enable`, config.fxAssignButton1);
+        this.registerGroupLed("[EffectRack1_EffectUnit2]",
+            `group_[Channel${this.number}]_enable`, config.fxAssignButton2);
 
         for (let i = 0; i < 3; i++) {
             this.fxParams[i].registerOutputs(config.fxParams[i]);
@@ -2062,8 +2140,8 @@ class EffectUnit {
         this.linkLed(this.group, "show_parameters", this.showParametersCallback);
         this.linkLed(this.group, "focused_effect", this.focusedEffectCallback);
         this.linkLed("[App]", "indicator_250ms", this.focusLedCallback, false);
-        this.linkLed(this.group, "group_[Channel1]_enable", this.effectAssignCallback);
-        this.linkLed(this.group, "group_[Channel2]_enable", this.effectAssignCallback);
+        this.linkLed("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, this.effectAssignCallback);
+        this.linkLed("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, this.effectAssignCallback);
     }
 
     enableSoftTakeover() {
@@ -2088,11 +2166,15 @@ class EffectUnit {
     }
 
     registerButton(name, config, callback) {
+        this.registerGroupButton(this.group, name, config, callback);
+    }
+
+    registerGroupButton(group, name, config, callback) {
         if (callback !== undefined) {
             callback = callback.bind(this);
         }
 
-        config.hidReport.addControl(this.group, name, config.offset, "B", config.mask, false, callback);
+        config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
     }
 
     registerScalar(name, config, callback) {
@@ -2104,7 +2186,11 @@ class EffectUnit {
     }
 
     registerLed(name, config) {
-        config.hidReport.addOutput(this.group, name, config.offset, "B");
+        this.registerGroupLed(this.group, name, config);
+    }
+
+    registerGroupLed(group, name, config) {
+        config.hidReport.addOutput(group, name, config.offset, "B");
     }
 
     linkLed(group, name, callback, trigger = true) {
@@ -2157,6 +2243,25 @@ class EffectUnit {
         }
 
         script.toggleControl(this.group, "show_parameters");
+    }
+
+    effectAssignHandler(field) {
+        if (field.value === 0) {
+            return;
+        }
+
+        const deck = this.mx2.decks[this.number - 1];
+        const modPads = deck.activePadModifiers();
+
+        if (deck.activePadMode === 2 && modPads.length) {
+            for (const padNum of modPads) {
+                script.toggleControl(field.group, `group_${samplerGroup(`[Channel${this.number}]`, padNum - 3)}_enable`);
+            }
+
+            return;
+        }
+
+        script.toggleControl(field.group, field.name);
     }
 
     mixKnobHandler(field) {
@@ -2635,7 +2740,7 @@ class MX2 {
                 },
             ],
             fxAssignButton1: {hidReport: inputReport0x01, offset: 0x08, mask: 0x10},
-            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01}
+            fxAssignButton2: {hidReport: inputReport0x01, offset: 0x08, mask: 0x20}
         });
 
         this.effectUnits[1].registerInputs({
@@ -2655,7 +2760,7 @@ class MX2 {
                     paramKnob: {hidReport: inputReport0x02, offset: 0x0f}
                 },
             ],
-            fxAssignButton1: {hidReport: inputReport0x01, offset: 0x08, mask: 0x20},
+            fxAssignButton1: {hidReport: inputReport0x01, offset: 0x09, mask: 0x01},
             fxAssignButton2: {hidReport: inputReport0x01, offset: 0x09, mask: 0x02}
         });
 
@@ -2797,7 +2902,7 @@ class MX2 {
                 {hidReport: outputReport0x80, offset: 0x04}
             ],
             fxAssignButton1: {hidReport: outputReport0x80, offset: 0x3d},
-            fxAssignButton2: {hidReport: outputReport0x80, offset: 0x41}
+            fxAssignButton2: {hidReport: outputReport0x80, offset: 0x3e}
         });
 
         this.effectUnits[1].registerOutputs({
@@ -2807,7 +2912,7 @@ class MX2 {
                 {hidReport: outputReport0x80, offset: 0x21},
                 {hidReport: outputReport0x80, offset: 0x22}
             ],
-            fxAssignButton1: {hidReport: outputReport0x80, offset: 0x3e},
+            fxAssignButton1: {hidReport: outputReport0x80, offset: 0x41},
             fxAssignButton2: {hidReport: outputReport0x80, offset: 0x42}
         });
 
