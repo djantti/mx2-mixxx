@@ -1035,18 +1035,21 @@ class Deck {
 
             if (this.isShiftPressed()) {
                 engine.setValue(field.group, "next_chain_preset", 1);
-            } else if (qfxPressed > 0) {
-                this.mx2.mixer.qfxIgnore = true;
-                engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
-            } else {
-                this.qfxPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
-                    this.qfxLongPress = true;
-                    this.qfxPressTimer = 0;
-                }, true);
-
-                script.toggleControl(field.group, "enabled");
+                return;
             }
 
+            if (qfxPressed > 0) {
+                this.mx2.mixer.qfxIgnore = true;
+                engine.setValue(field.group, "loaded_chain_preset", Settings.qfxPresets[qfxPressed - 1]);
+                return;
+            }
+
+            this.qfxPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                this.qfxLongPress = true;
+                this.qfxPressTimer = 0;
+            }, true);
+
+            script.toggleControl(field.group, "enabled");
             return;
         }
 
@@ -1821,7 +1824,9 @@ class PadButton {
                     }
 
                     return;
-                } else if (this.deck.keylockPressed) {
+                }
+
+                if (this.deck.keylockPressed) {
                     script.toggleControl(this.samplerGroup, "keylock");
                     this.deck.keylockIgnore = true;
                     return;
