@@ -1136,13 +1136,8 @@ class Deck {
 
         if (this.activePadMode === 1 && modPads.length) {
             for (const padNum of modPads) {
-                const stem = stemGroup(this.number, padNum - 3);
-
-                if (direction === 1) {
-                    script.triggerControl(stem, "volume_up");
-                } else if (direction === -1) {
-                    script.triggerControl(stem, "volume_down");
-                }
+                const control = direction === 1 ? "volume_up" : "volume_down";
+                script.triggerControl(stemGroup(this.number, padNum - 3), control);
             }
 
             return;
@@ -1150,35 +1145,22 @@ class Deck {
 
         if (this.activePadMode === 2 && modPads.length) {
             for (const padNum of modPads) {
-                const sampler = samplerGroup(this.group, padNum - 3);
-
-                if (direction === 1) {
-                    script.triggerControl(sampler, "pregain_up");
-                } else if (direction === -1) {
-                    script.triggerControl(sampler, "pregain_down");
-                }
+                const control = direction === 1 ? "pregain_up" : "pregain_down";
+                script.triggerControl(samplerGroup(this.group, padNum - 3), control);
             }
 
             return;
         }
 
         if (this.isShiftPressed()) {
-            const beatjumpSize = engine.getValue(field.group, "beatjump_size");
-
-            if (direction === 1) {
-                engine.setValue(field.group, "beatjump_size", beatjumpSize * 2);
-            } else if (direction === -1) {
-                engine.setValue(field.group, "beatjump_size", beatjumpSize / 2);
-            }
-
+            const oldSize = engine.getValue(field.group, "beatjump_size");
+            const newSize = direction === 1 ? oldSize * 2 : oldSize / 2;
+            engine.setValue(field.group, "beatjump_size", newSize);
             return;
         }
 
-        if (direction === 1) {
-            script.triggerControl(field.group, "beatjump_backward");
-        } else if (direction === -1) {
-            script.triggerControl(field.group, "beatjump_forward");
-        }
+        const control = direction === 1 ? "beatjump_backward" : "beatjump_forward";
+        script.triggerControl(field.group, control);
     }
 
     moveEncoderPressHandler(field) {
@@ -1192,11 +1174,8 @@ class Deck {
             return;
         }
 
-        if (this.isShiftPressed()) {
-            engine.setValue(this.group, "reloop_andstop", field.value);
-        } else {
-            engine.setValue(this.group, "beatlooproll_activate", field.value);
-        }
+        const control = this.isShiftPressed() ? "reloop_andstop" : "beatlooproll_activate";
+        engine.setValue(this.group, control, field.value);
     }
 
     loopEncoderTurnHandler(field) {
@@ -1205,13 +1184,8 @@ class Deck {
 
         if (this.activePadMode === 1 && modPads.length) {
             for (const padNum of modPads) {
-                const stem = stemQfxGroup(this.number, padNum - 3);
-
-                if (direction === 1) {
-                    script.triggerControl(stem, "super1_up");
-                } else if (direction === -1) {
-                    script.triggerControl(stem, "super1_down");
-                }
+                const control = direction === 1 ? "super1_up" : "super1_down";
+                script.triggerControl(stemQfxGroup(this.number, padNum - 3), control);
             }
 
             return;
@@ -1219,35 +1193,22 @@ class Deck {
 
         if (this.activePadMode === 2 && modPads.length) {
             for (const padNum of modPads) {
-                const sampler = samplerGroup(this.group, padNum - 3);
-
-                if (direction === 1) {
-                    script.triggerControl(sampler, "rate_up");
-                } else if (direction === -1) {
-                    script.triggerControl(sampler, "rate_down");
-                }
+                const control = direction === 1 ? "rate_up" : "rate_down";
+                script.triggerControl(samplerGroup(this.group, padNum - 3), control);
             }
 
             return;
         }
 
         if (this.keylockPressed) {
+            const control = direction === 1 ? "pitch_adjust_up_small" : "pitch_adjust_down_small";
+            engine.setValue(this.group, control, 1);
             this.keylockIgnore = true;
-
-            if (direction === 1) {
-                engine.setValue(this.group, "pitch_adjust_up_small", 1);
-            } else if (direction === -1) {
-                engine.setValue(this.group, "pitch_adjust_down_small", 1);
-            }
-
             return;
         }
 
-        if (direction === 1) {
-            script.triggerControl(this.group, "loop_double");
-        } else if (direction === -1) {
-            script.triggerControl(this.group, "loop_halve");
-        }
+        const control = direction === 1 ? "loop_double" : "loop_halve";
+        script.triggerControl(this.group, control);
     }
 
     loopEncoderPressHandler(field) {
