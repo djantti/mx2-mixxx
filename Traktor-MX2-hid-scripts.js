@@ -559,8 +559,6 @@ class Deck {
         this.mainMeterState = new Array(8).fill(LedOff);
         this.panelMeterState = new Array(6).fill(LedOff);
 
-        this.moveEncoderPressed = false;
-        this.loopEncoderPressed = false;
         this.keylockPressed = false;
         this.keylockIgnore = false;
 
@@ -568,6 +566,9 @@ class Deck {
 
         // 0 = hotcues, 1 = stems, 2 = samples, 3 = loops
         this.activePadMode = 0;
+
+        this.loopEncoderPressTimer = 0;
+        this.loopEncoderLongPress = false;
 
         this.syncPressTimer = 0;
         this.syncLongPress = false;
@@ -1212,36 +1213,58 @@ class Deck {
     }
 
     loopEncoderPressHandler(field) {
-        if (field.value === 0) {
-            return;
+        const modPads = this.activePadModifiers();
+        const modActive = modPads.length > 0;
+
+        if (field.value === 1) {
+            if (modActive && this.activePadMode === 1) {
+                this.loopEncoderPressTimer = engine.beginTimer(Settings.longPressTimeout, () => {
+                    this.loopEncoderLongPress = true;
+                    this.loopEncoderPressTimer = 0;
+                }, true);
+
+                for (const padNum of modPads) {
+                    if (this.padModifiers[padNum]) {
+                        script.toggleControl(stemQfxGroup(this.number, padNum - 3), "enabled");
+                    }
+                }
+
+                return;
+            }
+
+            if (modActive && this.activePadMode === 2) {
+                for (const padNum of modPads) {
+                    script.toggleControl(samplerGroup(this.group, padNum - 3), "repeat");
+                }
+
+                return;
+            }
+
+            if (this.isShiftPressed()) {
+                engine.setValue(this.group, "reloop_toggle", field.value);
+                return;
+            }
+
+            engine.setValue(this.group, "beatloop_activate", field.value);
         }
 
-        const modPads = this.activePadModifiers();
+        if (this.loopEncoderPressTimer !== 0) {
+            engine.stopTimer(this.loopEncoderPressTimer);
+            this.loopEncoderPressTimer = 0;
+        }
 
-        if (this.activePadMode === 1 && modPads.length) {
-            for (const padNum of modPads) {
-                if (this.padModifiers[padNum]) {
-                    script.toggleControl(stemQfxGroup(this.number, padNum - 3), "enabled");
+        if (this.loopEncoderLongPress) {
+            this.loopEncoderLongPress = false;
+
+            // Toggle stem track Quick FX again on long button release
+            if (modActive && this.activePadMode === 1) {
+                for (const padNum of modPads) {
+                    if (this.padModifiers[padNum]) {
+                        script.toggleControl(stemQfxGroup(this.number, padNum - 3), "enabled");
+                    }
                 }
             }
-
-            return;
         }
-
-        if (this.activePadMode === 2 && modPads.length) {
-            for (const padNum of modPads) {
-                script.toggleControl(samplerGroup(this.group, padNum - 3), "repeat");
-            }
-
-            return;
-        }
-
-        if (this.isShiftPressed()) {
-            engine.setValue(this.group, "reloop_toggle", field.value);
-            return;
-        }
-
-        engine.setValue(this.group, "beatloop_activate", field.value);
     }
 
     scalarHandler(field) {
