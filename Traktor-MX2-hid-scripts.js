@@ -1182,6 +1182,16 @@ class Deck {
     }
 
     moveEncoderPressHandler(field) {
+        const modPads = this.activePadModifiers();
+
+        if (field.value === 1 && this.activePadMode === 1 && modPads.length) {
+            for (const padNum of modPads) {
+                engine.setValue(stemQfxGroup(this.number, padNum - 3), "next_chain_preset", 1);
+            }
+
+            return;
+        }
+
         if (this.isShiftPressed()) {
             engine.setValue(this.group, "reloop_andstop", field.value);
         } else {
@@ -1197,18 +1207,10 @@ class Deck {
             for (const padNum of modPads) {
                 const stem = stemQfxGroup(this.number, padNum - 3);
 
-                if (this.isShiftPressed()) {
-                    if (direction === 1) {
-                        engine.setValue(stem, "next_chain_preset", 1);
-                    } else if (direction === -1) {
-                        engine.setValue(stem, "prev_chain_preset", 1);
-                    }
-                } else {
-                    if (direction === 1) {
-                        script.triggerControl(stem, "super1_up");
-                    } else if (direction === -1) {
-                        script.triggerControl(stem, "super1_down");
-                    }
+                if (direction === 1) {
+                    script.triggerControl(stem, "super1_up");
+                } else if (direction === -1) {
+                    script.triggerControl(stem, "super1_down");
                 }
             }
 
