@@ -1777,6 +1777,11 @@ class PadButton {
     samplePadHandler(value) {
         const samplerPlaying = engine.getValue(this.samplerGroup, "play");
 
+        if (this.number > Settings.samplersPerDeck) {
+            this.deck.padModifiers[this.number - 1] = (value === 1);
+            return;
+        }
+
         if (this.number <= Settings.samplersPerDeck) {
             if (value === 1) {
                 if (this.isShiftPressed()) {
@@ -1818,8 +1823,6 @@ class PadButton {
                     engine.setValue(this.samplerGroup, "play", 0);
                 }
             }
-        } else if (this.number >= Settings.samplersPerDeck) {
-            this.deck.padModifiers[this.number - 1] = (value === 1);
         }
     }
 
