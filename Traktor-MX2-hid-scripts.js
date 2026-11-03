@@ -1062,25 +1062,30 @@ class Deck {
 
     browseEncoderTurnHandler(field) {
         const direction = this.browseEncoder.readTurnDirection(field.value);
+        const focus = engine.getValue("[Library]", "focused_widget");
 
         if (!direction) {
             return;
         }
 
-        if (this.isShiftPressed()) {
-            engine.setValue("[Library]", "focused_widget", 2);
-        } else {
-            engine.setValue("[Library]", "focused_widget", 3);
+        // Set focus only if search, tree view or tracks table is active
+        if ([1, 2, 3].includes(focus)) {
+            if (this.isShiftPressed()) {
+                engine.setValue("[Library]", "focused_widget", 2);
+            } else {
+                engine.setValue("[Library]", "focused_widget", 3);
+            }
         }
 
         engine.setValue("[Library]", "MoveVertical", direction);
     }
 
     browseEncoderPressHandler(field) {
-        if (this.isShiftPressed()) {
-            engine.setValue("[Library]", "GoToItem", field.value);
-        } else {
+        // Load to deck if tracks table is active
+        if (engine.getValue("[Library]", "focused_widget") === 3) {
             engine.setValue(field.group, "LoadSelectedTrack", field.value);
+        } else {
+            engine.setValue("[Library]", "GoToItem", field.value);
         }
     }
 
