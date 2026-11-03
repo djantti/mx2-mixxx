@@ -644,14 +644,12 @@ class Deck {
         addButton(qfxGroup(this.number), "enabled", config.qfxButton, this.qfxButtonHandler.bind(this));
         addButton(this.group, "pfl", config.pflButton, this.pflButtonHandler.bind(this));
         addButton(this.group, "!jog_touch", config.jogTouch, this.jogTouchHandler.bind(this));
-        addButton(this.group, "!top_encoder_turn", config.browseEncoderTurn, this.browseEncoderTurnHandler.bind(this));
-        addButton(this.group, "!top_encoder_press", config.browseEncoderPress,
-            this.browseEncoderPressHandler.bind(this));
-        addButton(this.group, "!left_encoder_turn", config.moveEncoderTurn, this.moveEncoderTurnHandler.bind(this));
-        addButton(this.group, "!left_encoder_press", config.moveEncoderPress, this.moveEncoderPressHandler.bind(this));
-        addButton(this.group, "!right_encoder_turn", config.loopEncoderTurn, this.loopEncoderTurnHandler.bind(this));
-        addButton(this.group, "!right_encoder_press", config.loopEncoderPress,
-            this.loopEncoderPressHandler.bind(this));
+        addButton(this.group, "!browse_turn", config.browseEncoderTurn, this.browseEncoderTurnHandler.bind(this));
+        addButton(this.group, "!browse_press", config.browseEncoderPress, this.browseEncoderPressHandler.bind(this));
+        addButton(this.group, "!move_turn", config.moveEncoderTurn, this.moveEncoderTurnHandler.bind(this));
+        addButton(this.group, "!move_press", config.moveEncoderPress, this.moveEncoderPressHandler.bind(this));
+        addButton(this.group, "!loop_turn", config.loopEncoderTurn, this.loopEncoderTurnHandler.bind(this));
+        addButton(this.group, "!loop_press", config.loopEncoderPress, this.loopEncoderPressHandler.bind(this));
 
         for (let i = 0; i < 8; i++) {
             this.padButtons[i].registerInputs(config.padButtons[i]);
@@ -2052,7 +2050,7 @@ class EffectUnit {
     }
 
     registerInputs(config) {
-        addButton(this.group, "!effect_focus", config.focusButton, this.focusButtonHandler.bind(this));
+        addButton(this.group, "!fx_focus", config.focusButton, this.focusButtonHandler.bind(this));
         addButton("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, config.fxAssignButton1,
             this.effectAssignHandler.bind(this));
         addButton("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, config.fxAssignButton2,
@@ -2065,7 +2063,7 @@ class EffectUnit {
     }
 
     registerOutputs(config) {
-        addLed(this.group, "!effect_focus", config.focusButton);
+        addLed(this.group, "!fx_focus", config.focusButton);
         addLed("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, config.fxAssignButton1);
         addLed("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, config.fxAssignButton2);
 
@@ -2094,7 +2092,7 @@ class EffectUnit {
     }
 
     disableOutputs() {
-        this.controller.setOutput(this.group, "!effect_focus", LedOff, false);
+        this.controller.setOutput(this.group, "!fx_focus", LedOff, false);
 
         [1, 2].forEach(channel => {
             this.controller.setOutput(this.group, `group_[Channel${channel}]_enable`, LedOff, false);
@@ -2159,7 +2157,8 @@ class EffectUnit {
 
         if (deck.activePadMode === 2 && modPads.length) {
             for (const padNum of modPads) {
-                script.toggleControl(field.group, `group_${samplerGroup(`[Channel${this.number}]`, padNum - 3)}_enable`);
+                script.toggleControl(field.group,
+                    `group_${samplerGroup(`[Channel${this.number}]`, padNum - 3)}_enable`);
             }
 
             return;
@@ -2249,7 +2248,7 @@ class EffectUnit {
                 engine.setValue(this.group, "show_focus", 1);
             }
         } else {
-            this.controller.setOutput(this.group, "!effect_focus", this.colorMap.focusColor.dim, true);
+            this.controller.setOutput(this.group, "!fx_focus", this.colorMap.focusColor.dim, true);
             engine.setValue(this.group, "show_focus", 0);
         }
 
@@ -2277,7 +2276,7 @@ class EffectUnit {
             return;
         }
 
-        this.controller.setOutput(this.group, "!effect_focus",
+        this.controller.setOutput(this.group, "!fx_focus",
             value ? this.colorMap.focusColor.full : this.colorMap.focusColor.dim, true);
     }
 
@@ -2300,7 +2299,7 @@ class EffectParameter {
         this.number = number;
         this.groupPrefix = this.effectUnit.group.slice(0, -1);
         this.group = this.effectUnit.group;
-        this.output = `!effect_button_${this.number}`;
+        this.output = `!fx_button_${this.number}`;
 
         this.colorMap = this.effectUnit.colorMap;
 
@@ -2310,17 +2309,16 @@ class EffectParameter {
     }
 
     registerInputs(config) {
-        addButton(this.group, `!effect_button_${this.number}`, config.paramButton,
-            this.effectButtonHandler.bind(this));
-        addScalar(this.group, `!effect_knob_${this.number}`, config.paramKnob, this.effectKnobHandler.bind(this));
+        addButton(this.group, `!fx_button_${this.number}`, config.paramButton, this.effectButtonHandler.bind(this));
+        addScalar(this.group, `!fx_knob_${this.number}`, config.paramKnob, this.effectKnobHandler.bind(this));
     }
 
     registerOutputs(config) {
-        addLed(this.group, `!effect_button_${this.number}`, config);
+        addLed(this.group, `!fx_button_${this.number}`, config);
     }
 
     enableSoftTakeover() {
-        const group = `${this.groupPrefix }_Effect${this.number }]`;
+        const group = `${this.groupPrefix}_Effect${this.number}]`;
         engine.softTakeover(group, "meta", true);
 
         for (let i = 1; i <= 3; i++) {
@@ -2330,7 +2328,7 @@ class EffectParameter {
 
     disableOutputs() {
         for (let i = 1; i <= 3; i++) {
-            this.controller.setOutput(this.group, `!effect_button_${i}`, LedOff, false);
+            this.controller.setOutput(this.group, `!fx_button_${i}`, LedOff, false);
         }
     }
 
