@@ -296,6 +296,7 @@ const Settings = {
     enableMasterGain: !!engine.getSetting("masterGain")
 };
 
+// Input / output registration helpers
 const addButton = (group, name, config, callback = undefined) => {
     config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
 };
@@ -316,9 +317,11 @@ const connectLed = (group, name, callback, trigger = true) => {
     }
 }
 
+// Helpers for commonly used calculations
 const normalizeScalar = (value) => value / 4095;
 const dimColor = (color) => Math.max(LedOff, color - 2);
 
+// Control group name generators
 const qfxGroup = (channel) => {
     return `[QuickEffectRack1_[Channel${channel}]]`;
 };
