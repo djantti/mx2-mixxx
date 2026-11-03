@@ -2149,7 +2149,11 @@ class EffectUnit {
             return;
         }
 
-        script.toggleControl(this.group, "show_parameters");
+        if (this.isShiftPressed()) {
+            engine.setValue(this.group, "next_chain_preset", 1);
+        } else {
+            script.toggleControl(this.group, "show_parameters");
+        }
     }
 
     effectAssignHandler(field) {
