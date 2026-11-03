@@ -296,6 +296,26 @@ const Settings = {
     enableMasterGain: !!engine.getSetting("masterGain")
 };
 
+const addButton = (group, name, config, callback = undefined) => {
+    config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
+};
+
+const addScalar = (group, name, config, callback = undefined) => {
+    config.hidReport.addControl(group, name, config.offset, "H", 0xffff, false, callback);
+};
+
+const addLed = (group, name, config) => {
+    config.hidReport.addOutput(group, name, config.offset, "B");
+};
+
+const connectLed = (group, name, callback, trigger = true) => {
+    const connection = engine.makeConnection(group, name, callback);
+
+    if (trigger) {
+        connection.trigger();
+    }
+}
+
 const normalizeScalar = (value) => value / 4095;
 const dimColor = (color) => Math.max(LedOff, color - 2);
 
@@ -347,15 +367,15 @@ class Mixer {
             this.qfxPresetButtons[i].registerInputs(config.qfxPresetButtons[i]);
         }
 
-        this.registerGroupButton("[Microphone]", "talkover", config.micButton, this.talkoverHandler);
+        addButton("[Microphone]", "talkover", config.micButton, this.talkoverHandler.bind(this));
 
         if (Settings.enableMasterGain) {
-            this.registerGroupScalar("[Master]", "gain", config.gainKnob, this.scalarHandler);
+            addScalar("[Master]", "gain", config.gainKnob, this.scalarHandler.bind(this));
         }
 
-        this.registerGroupScalar("[Master]", "headMix", config.mixKnob, this.scalarHandler);
-        this.registerGroupScalar("[Master]", "headGain", config.volKnob, this.scalarHandler);
-        this.registerGroupScalar("[Master]", "crossfader", config.crossfader, this.scalarHandler);
+        addScalar("[Master]", "headMix", config.mixKnob, this.scalarHandler.bind(this));
+        addScalar("[Master]", "headGain", config.volKnob, this.scalarHandler.bind(this));
+        addScalar("[Master]", "crossfader", config.crossfader, this.scalarHandler.bind(this));
     }
 
     registerOutputs(config) {
@@ -363,8 +383,8 @@ class Mixer {
             this.qfxPresetButtons[i].registerOutputs(config.qfxPresetButtons[i]);
         }
 
-        this.registerGroupLed("[Microphone]", "talkover", config.micButton);
-        this.registerGroupLed("[Main]", "peak_indicator", config.peakIndicator);
+        addLed("[Microphone]", "talkover", config.micButton);
+        addLed("[Main]", "peak_indicator", config.peakIndicator);
     }
 
     linkOutputs() {
@@ -372,9 +392,9 @@ class Mixer {
             this.qfxPresetButtons[i].linkOutputs();
         }
 
-        this.linkLed("[Microphone]", "talkover", this.talkoverCallback);
-        this.linkLed("[Microphone]", "peak_indicator", this.talkoverCallback, false);
-        this.linkLed("[Main]", "peak_indicator", this.peakIndicatorCallback, false);
+        connectLed("[Microphone]", "talkover", this.talkoverCallback.bind(this));
+        connectLed("[Microphone]", "peak_indicator", this.talkoverCallback.bind(this), false);
+        connectLed("[Main]", "peak_indicator", this.peakIndicatorCallback.bind(this), false);
     }
 
     enableSoftTakeover() {
@@ -397,34 +417,6 @@ class Mixer {
 
         this.controller.setOutput("[Microphone]", "talkover", LedOff, false);
         this.controller.setOutput("[Main]", "peak_indicator", LedOff, false);
-    }
-
-    registerGroupButton(group, name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
-    }
-
-    registerGroupScalar(group, name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(group, name, config.offset, "H", 0xffff, false, callback);
-    }
-
-    registerGroupLed(group, name, config) {
-        config.hidReport.addOutput(group, name, config.offset, "B");
-    }
-
-    linkLed(group, name, callback, trigger = true) {
-        const connection = engine.makeConnection(group, name, callback.bind(this));
-
-        if (trigger) {
-            connection.trigger();
-        }
     }
 
     talkoverHandler(field) {
@@ -483,23 +475,21 @@ class QfxPresetButton {
     }
 
     registerInputs(config) {
-        config.hidReport.addControl(this.group, this.output, config.offset, "B", config.mask, false,
-            this.qfxPresetButtonHandler.bind(this));
+        addButton(this.group, this.output, config, this.qfxPresetButtonHandler.bind(this));
     }
 
     registerOutputs(config) {
-        config.hidReport.addOutput(this.group, this.output, config.offset, "B");
-    }
-
-    enableOutputs() {
-        this.controller.setOutput(this.group, this.output, dimColor(Settings.qfxColors[this.number - 1]), false);
+        addLed(this.group, this.output, config);
     }
 
     linkOutputs() {
         [1, 2].forEach(channel => {
-            engine.makeConnection(qfxGroup(channel), "loaded_chain_preset",
-                this.qfxPresetButtonCallback.bind(this)).trigger();
+            connectLed(qfxGroup(channel), "loaded_chain_preset", this.qfxPresetButtonCallback.bind(this));
         });
+    }
+
+    enableOutputs() {
+        this.controller.setOutput(this.group, this.output, dimColor(Settings.qfxColors[this.number - 1]), false);
     }
 
     disableOutputs() {
@@ -629,48 +619,50 @@ class Deck {
     }
 
     registerInputs(config) {
-        this.registerButton("!favorite", config.favButton, this.favButtonHandler);
-        this.registerButton("!prepare", config.prepButton, this.prepButtonHandler);
-        this.registerGroupButton("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton,
-            this.previewButtonHandler);
-        this.registerGroupButton("[Skin]", `!view_${this.number}`, config.viewButton, this.viewButtonHandler);
-        this.registerButton("slip_enabled", config.flxButton);
-        this.registerButton("reverse", config.revButton, this.revButtonHandler);
-        this.registerButton("!tt", config.ttButton, this.jogModeButtonHandler);
-        this.registerButton("!jog", config.jogButton, this.jogModeButtonHandler);
-        this.registerButton("!shift", config.shiftButton, this.shiftButtonHandler);
-        this.registerButton("sync_enabled", config.sncButton, this.sncButtonHandler);
-        this.registerButton("sync_leader", config.mstButton, this.mstButtonHandler);
-        this.registerButton("keylock", config.keylockButton, this.keylockButtonHandler);
-        this.registerButton("!hotcues", config.hotcueButton, this.padModeButtonHandler);
-        this.registerButton("!stems", config.stemButton, this.padModeButtonHandler);
-        this.registerButton("!samples", config.sampleButton, this.padModeButtonHandler);
-        this.registerButton("!loops", config.loopButton, this.padModeButtonHandler);
-        this.registerButton("!cue_default", config.cueButton, this.cueButtonHandler);
-        this.registerButton("!play", config.playButton, this.playButtonHandler);
-        this.registerGroupButton(qfxGroup(this.number), "enabled", config.qfxButton, this.qfxButtonHandler);
-        this.registerButton("pfl", config.pflButton, this.pflButtonHandler);
-        this.registerButton("!jog_touch", config.jogTouch, this.jogTouchHandler);
-        this.registerButton("!browse_encoder_press", config.browseEncoderPress, this.browseEncoderPressHandler);
-        this.registerButton("!browse_encoder", config.browseEncoderTurn, this.browseEncoderTurnHandler);
-        this.registerButton("!left_encoder_turn", config.moveEncoderTurn, this.moveEncoderTurnHandler);
-        this.registerButton("!left_encoder_press", config.moveEncoderPress, this.moveEncoderPressHandler);
-        this.registerButton("!right_encoder_turn", config.loopEncoderTurn, this.loopEncoderTurnHandler);
-        this.registerButton("!right_encoder_press", config.loopEncoderPress, this.loopEncoderPressHandler);
+        addButton(this.group, "!favorite", config.favButton, this.favButtonHandler.bind(this));
+        addButton(this.group, "!prepare", config.prepButton, this.prepButtonHandler.bind(this));
+        addButton("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton,
+            this.previewButtonHandler.bind(this));
+        addButton("[Skin]", `!view_${this.number}`, config.viewButton, this.viewButtonHandler.bind(this));
+        addButton(this.group, "slip_enabled", config.flxButton);
+        addButton(this.group, "reverse", config.revButton, this.revButtonHandler.bind(this));
+        addButton(this.group, "!tt", config.ttButton, this.jogModeButtonHandler.bind(this));
+        addButton(this.group, "!jog", config.jogButton, this.jogModeButtonHandler.bind(this));
+        addButton(this.group, "!shift", config.shiftButton, this.shiftButtonHandler.bind(this));
+        addButton(this.group, "sync_enabled", config.sncButton, this.sncButtonHandler.bind(this));
+        addButton(this.group, "sync_leader", config.mstButton, this.mstButtonHandler.bind(this));
+        addButton(this.group, "keylock", config.keylockButton, this.keylockButtonHandler.bind(this));
+        addButton(this.group, "!hotcues", config.hotcueButton, this.padModeButtonHandler.bind(this));
+        addButton(this.group, "!stems", config.stemButton, this.padModeButtonHandler.bind(this));
+        addButton(this.group, "!samples", config.sampleButton, this.padModeButtonHandler.bind(this));
+        addButton(this.group, "!loops", config.loopButton, this.padModeButtonHandler.bind(this));
+        addButton(this.group, "!cue_default", config.cueButton, this.cueButtonHandler.bind(this));
+        addButton(this.group, "!play", config.playButton, this.playButtonHandler.bind(this));
+        addButton(qfxGroup(this.number), "enabled", config.qfxButton, this.qfxButtonHandler.bind(this));
+        addButton(this.group, "pfl", config.pflButton, this.pflButtonHandler.bind(this));
+        addButton(this.group, "!jog_touch", config.jogTouch, this.jogTouchHandler.bind(this));
+        addButton(this.group, "!top_encoder_turn", config.browseEncoderTurn, this.browseEncoderTurnHandler.bind(this));
+        addButton(this.group, "!top_encoder_press", config.browseEncoderPress,
+            this.browseEncoderPressHandler.bind(this));
+        addButton(this.group, "!left_encoder_turn", config.moveEncoderTurn, this.moveEncoderTurnHandler.bind(this));
+        addButton(this.group, "!left_encoder_press", config.moveEncoderPress, this.moveEncoderPressHandler.bind(this));
+        addButton(this.group, "!right_encoder_turn", config.loopEncoderTurn, this.loopEncoderTurnHandler.bind(this));
+        addButton(this.group, "!right_encoder_press", config.loopEncoderPress,
+            this.loopEncoderPressHandler.bind(this));
 
         for (let i = 0; i < 8; i++) {
             this.padButtons[i].registerInputs(config.padButtons[i]);
         }
 
-        this.registerScalar("pregain", config.gainKnob, this.scalarHandler);
-        this.registerGroupScalar(qfxGroup(this.number), "super1", config.fxKnob, this.scalarHandler);
-        this.registerScalar("volume", config.volumeFader, this.scalarHandler);
-        this.registerScalar("rate", config.rateFader, this.rateFaderHandler);
+        addScalar(this.group, "pregain", config.gainKnob, this.scalarHandler.bind(this));
+        addScalar(qfxGroup(this.number), "super1", config.fxKnob, this.scalarHandler.bind(this));
+        addScalar(this.group, "volume", config.volumeFader, this.scalarHandler.bind(this));
+        addScalar(this.group, "rate", config.rateFader, this.rateFaderHandler.bind(this));
 
         this.eq.registerInputs(config.eqKnobs);
 
-        this.registerJog("!jog_timer", config.jogTimer, this.timecodeHandler);
-        this.registerJog("!jog_wheel", config.jogWheel, this.jogMoveHandler);
+        this.addJog("!jog_timer", config.jogTimer, this.timecodeHandler);
+        this.addJog("!jog_wheel", config.jogWheel, this.jogMoveHandler);
     }
 
     registerOutputs(config) {
@@ -679,53 +671,53 @@ class Deck {
         }
 
         for (let i = 0; i < 8; i++) {
-            this.registerLed(`!vu_meter_${i + 1}`,
+            addLed(this.group, `!vu_meter_${i + 1}`,
                 {hidReport: config.vuMeters[i].hidReport, offset: config.vuMeters[i].offset});
         }
 
         for (let i = 0; i < 6; i++) {
-            this.registerLed(`!bottom_led_${i + 1}`,
+            addLed(this.group, `!bottom_led_${i + 1}`,
                 {hidReport: config.bottomLeds[i].hidReport, offset: config.bottomLeds[i].offset});
         }
 
-        this.registerLed("!favorite", config.favButton);
-        this.registerLed("!prepare", config.prepButton);
-        this.registerGroupLed("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton);
-        this.registerGroupLed("[Skin]", `!view_${this.number}`, config.viewButton);
-        this.registerLed("slip_enabled", config.flxButton);
-        this.registerLed("reverse", config.revButton);
-        this.registerLed("!tt", config.ttButton);
-        this.registerLed("!jog", config.jogButton);
-        this.registerLed("sync_enabled", config.sncButton);
-        this.registerLed("sync_leader", config.mstButton);
-        this.registerLed("keylock", config.keylockButton);
-        this.registerLed("!hotcues", config.hotcueButton);
-        this.registerLed("!stems", config.stemButton);
-        this.registerLed("!samples", config.sampleButton);
-        this.registerLed("!loops", config.loopButton);
-        this.registerLed("cue_indicator", config.cueButton);
-        this.registerLed("play_indicator", config.playButton);
-        this.registerGroupLed(qfxGroup(this.number), "enabled", config.qfxButton);
-        this.registerLed("pfl", config.pflButton);
-        this.registerLed("peak_indicator", config.peakIndicator);
+        addLed(this.group, "!favorite", config.favButton);
+        addLed(this.group, "!prepare", config.prepButton);
+        addLed("[PreviewDeck1]", `!preview_${this.number}`, config.previewButton);
+        addLed("[Skin]", `!view_${this.number}`, config.viewButton);
+        addLed(this.group, "slip_enabled", config.flxButton);
+        addLed(this.group, "reverse", config.revButton);
+        addLed(this.group, "!tt", config.ttButton);
+        addLed(this.group, "!jog", config.jogButton);
+        addLed(this.group, "sync_enabled", config.sncButton);
+        addLed(this.group, "sync_leader", config.mstButton);
+        addLed(this.group, "keylock", config.keylockButton);
+        addLed(this.group, "!hotcues", config.hotcueButton);
+        addLed(this.group, "!stems", config.stemButton);
+        addLed(this.group, "!samples", config.sampleButton);
+        addLed(this.group, "!loops", config.loopButton);
+        addLed(this.group, "cue_indicator", config.cueButton);
+        addLed(this.group, "play_indicator", config.playButton);
+        addLed(qfxGroup(this.number), "enabled", config.qfxButton);
+        addLed(this.group, "pfl", config.pflButton);
+        addLed(this.group, "peak_indicator", config.peakIndicator);
     }
 
     linkOutputs() {
-        this.linkLed("[PreviewDeck1]", "play", this.previewButtonCallback);
-        this.linkLed("[Skin]", "show_maximized_library", this.viewButtonCallback);
-        this.linkLed(this.group, "slip_enabled", this.outputCallback);
-        this.linkLed(this.group, "reverse", this.outputCallback);
-        this.linkLed(this.group, "sync_enabled", this.outputCallback);
-        this.linkLed(this.group, "sync_leader", this.mstButtonCallback);
-        this.linkLed(this.group, "rateRange", this.mstButtonCallback);
-        this.linkLed(this.group, "keylock", this.outputCallback);
-        this.linkLed(this.group, "cue_indicator", this.outputCallback);
-        this.linkLed(this.group, "play_indicator", this.outputCallback);
-        this.linkLed(qfxGroup(this.number), "loaded_chain_preset", this.qfxButtonCallback);
-        this.linkLed(qfxGroup(this.number), "enabled", this.qfxButtonCallback);
-        this.linkLed(this.group, "pfl", this.outputCallback);
-        this.linkLed(this.group, "peak_indicator", this.peakIndicatorCallback, false);
-        this.linkLed(this.group, "vu_meter", this.mainMeterCallback, false);
+        connectLed("[PreviewDeck1]", "play", this.previewButtonCallback.bind(this));
+        connectLed("[Skin]", "show_maximized_library", this.viewButtonCallback.bind(this));
+        connectLed(this.group, "slip_enabled", this.outputCallback.bind(this));
+        connectLed(this.group, "reverse", this.outputCallback.bind(this));
+        connectLed(this.group, "sync_enabled", this.outputCallback.bind(this));
+        connectLed(this.group, "sync_leader", this.mstButtonCallback.bind(this));
+        connectLed(this.group, "rateRange", this.mstButtonCallback.bind(this));
+        connectLed(this.group, "keylock", this.outputCallback.bind(this));
+        connectLed(this.group, "cue_indicator", this.outputCallback.bind(this));
+        connectLed(this.group, "play_indicator", this.outputCallback.bind(this));
+        connectLed(qfxGroup(this.number), "loaded_chain_preset", this.qfxButtonCallback.bind(this));
+        connectLed(qfxGroup(this.number), "enabled", this.qfxButtonCallback.bind(this));
+        connectLed(this.group, "pfl", this.outputCallback.bind(this));
+        connectLed(this.group, "peak_indicator", this.peakIndicatorCallback.bind(this), false);
+        connectLed(this.group, "vu_meter", this.mainMeterCallback.bind(this), false);
     }
 
     enableSoftTakeover() {
@@ -792,48 +784,8 @@ class Deck {
         });
     }
 
-    registerButton(name, config, callback) {
-        this.registerGroupButton(this.group, name, config, callback);
-    }
-
-    registerGroupButton(group, name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
-    }
-
-    registerScalar(name, config, callback) {
-        this.registerGroupScalar(this.group, name, config, callback);
-    }
-
-    registerGroupScalar(group, name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(group, name, config.offset, "H", 0xffff, false, callback);
-    }
-
-    registerJog(name, config, callback) {
+    addJog(name, config, callback) {
         config.hidReport.addControl(this.group, name, config.offset, "I", 0xffffffff, false, callback.bind(this));
-    }
-
-    registerLed(name, config) {
-        this.registerGroupLed(this.group, name, config);
-    }
-
-    registerGroupLed(group, name, config) {
-        config.hidReport.addOutput(group, name, config.offset, "B");
-    }
-
-    linkLed(group, name, callback, trigger = true) {
-        const connection = engine.makeConnection(group, name, callback.bind(this));
-
-        if (trigger) {
-            connection.trigger();
-        }
     }
 
     favButtonHandler(field) {
@@ -1107,14 +1059,6 @@ class Deck {
         engine.setValue(this.group, "scratch2_enable", true);
     }
 
-    browseEncoderPressHandler(field) {
-        if (this.isShiftPressed()) {
-            engine.setValue("[Library]", "GoToItem", field.value);
-        } else {
-            engine.setValue(field.group, "LoadSelectedTrack", field.value);
-        }
-    }
-
     browseEncoderTurnHandler(field) {
         const direction = this.browseEncoder.readTurnDirection(field.value);
 
@@ -1129,6 +1073,14 @@ class Deck {
         }
 
         engine.setValue("[Library]", "MoveVertical", direction);
+    }
+
+    browseEncoderPressHandler(field) {
+        if (this.isShiftPressed()) {
+            engine.setValue("[Library]", "GoToItem", field.value);
+        } else {
+            engine.setValue(field.group, "LoadSelectedTrack", field.value);
+        }
     }
 
     moveEncoderTurnHandler(field) {
@@ -1740,12 +1692,11 @@ class PadButton {
     }
 
     registerInputs(config) {
-        config.hidReport.addControl(this.deck.group, this.output, config.offset, "B", config.mask, false,
-            this.padButtonHandler.bind(this));
+        addButton(this.deck.group, this.output, config, this.padButtonHandler.bind(this));
     }
 
     registerOutputs(config) {
-        config.hidReport.addOutput(this.deck.group, this.output, config.offset, "B");
+        addLed(this.deck.group, this.output, config);
     }
 
     padButtonHandler(field) {
@@ -2062,19 +2013,11 @@ class EqualizerParameter {
     }
 
     registerInputs(config) {
-        this.registerScalar(`parameter${this.number}`, config, this.eqKnobHandler);
+        addScalar(this.group, `parameter${this.number}`, config, this.eqKnobHandler.bind(this));
     }
 
     enableSoftTakeover() {
         engine.softTakeover(this.group, `parameter${this.number}`, true);
-    }
-
-    registerScalar(name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(this.group, name, config.offset, "H", 0xffff, false, callback);
     }
 
     eqKnobHandler(field) {
@@ -2106,12 +2049,12 @@ class EffectUnit {
     }
 
     registerInputs(config) {
-        this.registerButton("!effect_focus", config.focusButton, this.focusButtonHandler);
-        this.registerGroupButton("[EffectRack1_EffectUnit1]",
-            `group_[Channel${this.number}]_enable`, config.fxAssignButton1, this.effectAssignHandler);
-        this.registerGroupButton("[EffectRack1_EffectUnit2]",
-            `group_[Channel${this.number}]_enable`, config.fxAssignButton2, this.effectAssignHandler);
-        this.registerScalar("!mix", config.mixKnob, this.mixKnobHandler);
+        addButton(this.group, "!effect_focus", config.focusButton, this.focusButtonHandler.bind(this));
+        addButton("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, config.fxAssignButton1,
+            this.effectAssignHandler.bind(this));
+        addButton("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, config.fxAssignButton2,
+            this.effectAssignHandler.bind(this));
+        addScalar(this.group, "!mix", config.mixKnob, this.mixKnobHandler.bind(this));
 
         for (let i = 0; i < 3; i++) {
             this.fxParams[i].registerInputs(config.fxParams[i]);
@@ -2119,11 +2062,9 @@ class EffectUnit {
     }
 
     registerOutputs(config) {
-        this.registerLed("!effect_focus", config.focusButton);
-        this.registerGroupLed("[EffectRack1_EffectUnit1]",
-            `group_[Channel${this.number}]_enable`, config.fxAssignButton1);
-        this.registerGroupLed("[EffectRack1_EffectUnit2]",
-            `group_[Channel${this.number}]_enable`, config.fxAssignButton2);
+        addLed(this.group, "!effect_focus", config.focusButton);
+        addLed("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, config.fxAssignButton1);
+        addLed("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, config.fxAssignButton2);
 
         for (let i = 0; i < 3; i++) {
             this.fxParams[i].registerOutputs(config.fxParams[i]);
@@ -2131,11 +2072,13 @@ class EffectUnit {
     }
 
     linkOutputs() {
-        this.linkLed(this.group, "show_parameters", this.showParametersCallback);
-        this.linkLed(this.group, "focused_effect", this.focusedEffectCallback);
-        this.linkLed("[App]", "indicator_250ms", this.focusLedCallback, false);
-        this.linkLed("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`, this.effectAssignCallback);
-        this.linkLed("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`, this.effectAssignCallback);
+        connectLed(this.group, "show_parameters", this.showParametersCallback.bind(this));
+        connectLed(this.group, "focused_effect", this.focusedEffectCallback.bind(this));
+        connectLed("[App]", "indicator_250ms", this.focusLedCallback.bind(this), false);
+        connectLed("[EffectRack1_EffectUnit1]", `group_[Channel${this.number}]_enable`,
+            this.effectAssignCallback.bind(this));
+        connectLed("[EffectRack1_EffectUnit2]", `group_[Channel${this.number}]_enable`,
+            this.effectAssignCallback.bind(this));
     }
 
     enableSoftTakeover() {
@@ -2157,42 +2100,6 @@ class EffectUnit {
         this.fxParams.forEach(function(effectParam) {
             effectParam.disableOutputs();
         });
-    }
-
-    registerButton(name, config, callback) {
-        this.registerGroupButton(this.group, name, config, callback);
-    }
-
-    registerGroupButton(group, name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(group, name, config.offset, "B", config.mask, false, callback);
-    }
-
-    registerScalar(name, config, callback) {
-        if (callback !== undefined) {
-            callback = callback.bind(this);
-        }
-
-        config.hidReport.addControl(this.group, name, config.offset, "H", 0xffff, false, callback);
-    }
-
-    registerLed(name, config) {
-        this.registerGroupLed(this.group, name, config);
-    }
-
-    registerGroupLed(group, name, config) {
-        config.hidReport.addOutput(group, name, config.offset, "B");
-    }
-
-    linkLed(group, name, callback, trigger = true) {
-        const connection = engine.makeConnection(group, name, callback.bind(this));
-
-        if (trigger) {
-            connection.trigger();
-        }
     }
 
     focusButtonHandler(field) {
@@ -2400,14 +2307,13 @@ class EffectParameter {
     }
 
     registerInputs(config) {
-        config.paramButton.hidReport.addControl(this.group, `!effect_button_${this.number}`,
-            config.paramButton.offset, "B", config.paramButton.mask, false, this.effectButtonHandler.bind(this));
-        config.paramKnob.hidReport.addControl(this.group, `!effect_knob_${this.number}`,
-            config.paramKnob.offset, "H", 0xffff, false, this.effectKnobHandler.bind(this));
+        addButton(this.group, `!effect_button_${this.number}`, config.paramButton,
+            this.effectButtonHandler.bind(this));
+        addScalar(this.group, `!effect_knob_${this.number}`, config.paramKnob, this.effectKnobHandler.bind(this));
     }
 
     registerOutputs(config) {
-        config.hidReport.addOutput(this.group, `!effect_button_${this.number}`, config.offset, "B");
+        addLed(this.group, `!effect_button_${this.number}`, config);
     }
 
     enableSoftTakeover() {
