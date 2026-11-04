@@ -1922,14 +1922,6 @@ class PadButton {
         this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
     }
 
-    loopCallback(value, _group, _key) {
-        if (value === 0) {
-            this.controller.setOutput(this.deck.group, this.output, this.colorMap.inactivePadColor.full, true);
-        } else if (engine.getValue(this.deck.group, "loop_enabled") === 1) {
-            this.controller.setOutput(this.deck.group, this.output, this.colorMap.activePadColor.full, true);
-        }
-    }
-
     padModeChanged() {
         const padMode = this.deck.activePadMode;
 
