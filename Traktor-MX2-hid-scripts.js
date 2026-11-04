@@ -260,7 +260,7 @@ const Settings = {
     ],
 
     // Jogging and nudging sensitivity
-    jogWheelSensitivity: Number(engine.getSetting("jogWheelSensivity")) || 0.5,
+    jogWheelSensitivity: Number(engine.getSetting("jogWheelSensitivity")) || 0.5,
 
     // Low-pass filter coefficient for jog wheel input
     jogWheelAlpha: Number(engine.getSetting("jogWheelAlpha")) || 0.5,

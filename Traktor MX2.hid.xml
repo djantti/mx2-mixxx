@@ -1154,7 +1154,7 @@
     </group>
     <group label="Jog wheels">
       <option
-        variable="jogWheelSensivity"
+        variable="jogWheelSensitivity"
         label="Jogging and nudging sensitivity"
         type="enum">
         <value label="Low">0.25</value>
