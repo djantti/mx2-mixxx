@@ -44,6 +44,15 @@
         </description>
       </option>
       <option
+        variable="syncLightEffects"
+        label="Sync panel light effects for both decks"
+        type="boolean"
+        default="true">
+        <description>
+          Use the same panel light effect mode for both decks. If disabled, separate modes can be set for each deck.
+        </description>
+      </option>
+      <option
         variable="matchPadColors"
         label="Match pad colors to on-screen colors"
         type="boolean"

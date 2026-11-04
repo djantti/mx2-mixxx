@@ -213,6 +213,9 @@ const Settings = {
     // Sets the active bottom panel light effect mode
     lightEffectMode: Number(engine.getSetting("lightEffectMode")) || 3,
 
+    // Use the same light effect mode for both decks (default: true)
+    syncLightEffects: !!engine.getSetting("syncLightEffects"),
+
     // Use on-screen stem and hotcue colors for pad LEDs (default: true)
     matchPadColors: !!engine.getSetting("matchPadColors"),
 
@@ -831,7 +834,12 @@ class Deck {
         }
 
         if (this.isShiftPressed()) {
-            this.mx2.cyclePanelMode();
+            if (Settings.syncLightEffects) {
+                this.mx2.cyclePanelMode();
+            } else {
+                this.mx2.cyclePanelMode(this.number - 1);
+            }
+
             return;
         }
 
@@ -1487,7 +1495,7 @@ class Deck {
     }
 
     panelModeChanged() {
-        const panelMode = this.mx2.activePanelMode;
+        const panelMode = this.mx2.activePanelMode[this.number - 1];
 
         this.panelConnections.forEach(function(connection) {
             connection.disconnect();
@@ -2494,7 +2502,7 @@ class MX2 {
 
         this.colorMap = this.getColorMap(Settings.colorTheme);
 
-        this.activePanelMode = Settings.lightEffectMode;
+        this.activePanelMode = new Array(2).fill(Settings.lightEffectMode);
         this.shiftPressed = [false, false];
 
         if (engine.getValue("[App]", "num_samplers") < 16) {
@@ -2840,7 +2848,9 @@ class MX2 {
 
         this.controller.registerOutputPacket(outputReport0x80);
 
-        this.setPanelMode(Settings.lightEffectMode);
+        [0, 1].forEach(deck => {
+            this.setPanelMode(deck, Settings.lightEffectMode);
+        });
 
         this.decks.forEach(function(deck) {
             deck.enableOutputs();
@@ -2955,16 +2965,19 @@ class MX2 {
         return this.createColorMap(selectedTheme);
     }
 
-    setPanelMode(panelMode) {
-        this.activePanelMode = panelMode;
-
-        for (const deck in this.decks) {
-            this.decks[deck].panelModeChanged();
-        }
+    setPanelMode(targetDeck, panelMode) {
+        this.activePanelMode[targetDeck] = panelMode;
+        this.decks[targetDeck].panelModeChanged();
     }
 
-    cyclePanelMode() {
-        this.setPanelMode(this.activePanelMode === 5 ? 1 : this.activePanelMode + 1);
+    cyclePanelMode(deck) {
+        // Change both decks unless specified
+        const decks = deck === undefined ? [0, 1] : [deck];
+
+        decks.forEach(targetDeck => {
+            const panelMode = this.activePanelMode[targetDeck] === 5 ? 1 : this.activePanelMode[targetDeck] + 1;
+            this.setPanelMode(targetDeck, panelMode);
+        });
     }
 
     isShiftPressed(deck) {

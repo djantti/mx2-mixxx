@@ -81,6 +81,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | --- | --- | --- |
 | Color theme | Default | Color theme used for button LEDs. Select **Custom** to use colors defined in the **Custom theme colors** section. |
 | Panel light effects | State triggers | Sets the active bottom panel light effect mode |
+| Sync panel light effects for both decks | On | Use the same panel light effect mode for both decks. If disabled, separate modes can be set for each deck. |
 | Match pad colors to on-screen colors | On | Use on-screen colors for pad LEDs while in **hotcues** or **stems** mode. Theme colors will be used if this option is off. |
 | Use bright VU meter segments | On | Use full brightness for main VU meter LED segments. Dimmed LED brightness will be used if this option is off. |
 
