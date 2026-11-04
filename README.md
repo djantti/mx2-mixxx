@@ -96,10 +96,10 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Prepare button | White | Color for the prepare (star symbol) button |
 | Preview button | White | Color for the preview (right triangle) button |
 | View button | White | Color for the view button |
-| Turntable mode button | Red | Color for the wheel turntable mode (TT) button |
-| Jog mode button | Red | Color for the wheel jog mode button |
-| Slip mode button | Blue | Color for the slip mode (FLX) button |
-| Reverse play button | Blue | Color for the reverse play (REV) button |
+| Turntable mode button | Blue | Color for the wheel turntable mode (TT) button |
+| Jog mode button | Blue | Color for the wheel jog mode button |
+| Slip mode button | Red | Color for the slip mode (FLX) button |
+| Reverse play button | Red | Color for the reverse play (REV) button |
 | Cue button | Blue | Color for the cue button |
 | Play button | Green | Color for the play button |
 | Keylock button | Magenta | Color for the keylock button |
@@ -107,7 +107,7 @@ Mapping options can be accessed from *Options -> Preferences -> Controllers -> T
 | Sync leader button | Yellow | Color for the sync leader (MST) button |
 | Inactive mode buttons | Sky | Color for inactive pad mode buttons |
 | Active mode button | Celeste | Color for the active pad mode button |
-| Unconnected pads | White | Color for unconnected pads. Used for unset hotcues, unloaded sampers and modifier pads. |
+| Unconnected pads | White | Color for unconnected pads. Used for unset hotcues, unloaded samplers and modifier pads. |
 | Inactive pads | White | Color for connected, but currently inactive pads |
 | Active pads | Green | Color for currently active pads |
 | Alternate mode pads | Orange | Color for currently active pads in alternate mode. This includes looping samplers and pads activated while *holding* shift (**15**). |
